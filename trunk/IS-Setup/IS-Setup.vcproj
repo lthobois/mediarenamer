@@ -46,7 +46,7 @@
 			<Tool
 				Name="VCNMakeTool"
 				BuildCommandLine="start &quot;Compiler&quot; /WAIT /B &quot;C:\Program Files (x86)\Inno Setup 5\ISCC.exe&quot; &quot;$(InputDir)\MediaRenamerSetup.iss&quot;"
-				ReBuildCommandLine="start &quot;Compiler&quot; /WAIT /B &quot;C:\$(InputDir)\Inno Setup 5\ISCC.exe&quot; &quot;$(InputDir)\MediaRenamerSetup.iss&quot;"
+				ReBuildCommandLine="start &quot;Compiler&quot; /WAIT /B &quot;C:\Program Files (x86)\Inno Setup 5\ISCC.exe&quot; &quot;$(InputDir)\MediaRenamerSetup.iss&quot;"
 				CleanCommandLine="echo &quot;This command is not available. You can only build or rebuild the setup&quot;"
 				Output="Output\"
 				PreprocessorDefinitions=""
