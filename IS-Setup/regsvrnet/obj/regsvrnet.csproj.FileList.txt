@@ -1,0 +1,8 @@
+bin\Release\regsvrnet.exe
+obj\Release\ResolveAssemblyReference.cache
+obj\Release\regsvrnet.exe
+bin\Debug\regsvrnet.exe
+bin\Debug\regsvrnet.pdb
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\regsvrnet.exe
+obj\Debug\regsvrnet.pdb

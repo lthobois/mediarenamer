@@ -1,0 +1,148 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BF714B4C-E34C-48BC-BE62-564B44576EF3}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MediaRenamerService</RootNamespace>
+    <AssemblyName>MediaRenamerService</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\MediaRenamer\Common\EventHandlers.cs">
+      <Link>Common\EventHandlers.cs</Link>
+    </Compile>
+    <Compile Include="..\MediaRenamer\Common\FileSystemWatcher.cs">
+      <Link>Common\FileSystemWatcher.cs</Link>
+    </Compile>
+    <Compile Include="..\MediaRenamer\Common\i18n.cs">
+      <Link>Common\i18n.cs</Link>
+    </Compile>
+    <Compile Include="..\MediaRenamer\Common\Log.cs">
+      <Link>Common\Log.cs</Link>
+    </Compile>
+    <Compile Include="..\MediaRenamer\Common\Settings.cs">
+      <Link>Common\Settings.cs</Link>
+    </Compile>
+    <Compile Include="..\MediaRenamer\Common\watchedFolderEntry.cs">
+      <Link>Common\watchedFolderEntry.cs</Link>
+    </Compile>
+    <Compile Include="..\MediaRenamer\Movies\Movie.cs">
+      <Link>Movies\Movie.cs</Link>
+    </Compile>
+    <Compile Include="..\MediaRenamer\Movies\OnlineParser.cs">
+      <Link>Movies\OnlineParser.cs</Link>
+    </Compile>
+    <Compile Include="..\MediaRenamer\Movies\Parser.cs">
+      <Link>Movies\Parser.cs</Link>
+    </Compile>
+    <Compile Include="..\MediaRenamer\Movies\SelectMovie.cs">
+      <Link>Movies\SelectMovie.cs</Link>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="..\MediaRenamer\Series\Episode.cs">
+      <Link>Series\Episode.cs</Link>
+    </Compile>
+    <Compile Include="..\MediaRenamer\Series\OnlineParser.cs">
+      <Link>Series\OnlineParser.cs</Link>
+    </Compile>
+    <Compile Include="..\MediaRenamer\Series\Parser.cs">
+      <Link>Series\Parser.cs</Link>
+    </Compile>
+    <Compile Include="..\MediaRenamer\Series\SelectShow.cs">
+      <Link>Series\SelectShow.cs</Link>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="..\MediaRenamer\Series\showClass.cs">
+      <Link>Series\showClass.cs</Link>
+    </Compile>
+    <Compile Include="..\MediaRenamer\XmlSerializer\BinaryContainer.cs">
+      <Link>XMLSerializer\BinaryContainer.cs</Link>
+    </Compile>
+    <Compile Include="..\MediaRenamer\XmlSerializer\IXmlSerializationTag.cs">
+      <Link>XMLSerializer\IXmlSerializationTag.cs</Link>
+    </Compile>
+    <Compile Include="..\MediaRenamer\XmlSerializer\XmlDeserializer.cs">
+      <Link>XMLSerializer\XmlDeserializer.cs</Link>
+    </Compile>
+    <Compile Include="..\MediaRenamer\XmlSerializer\XmlSerializationHelpers.cs">
+      <Link>XMLSerializer\XmlSerializationHelpers.cs</Link>
+    </Compile>
+    <Compile Include="..\MediaRenamer\XmlSerializer\XmlSerializationTag.cs">
+      <Link>XMLSerializer\XmlSerializationTag.cs</Link>
+    </Compile>
+    <Compile Include="..\MediaRenamer\XmlSerializer\XmlSerializer.cs">
+      <Link>XMLSerializer\XmlSerializer.cs</Link>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Service.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Service.Designer.cs">
+      <DependentUpon>Service.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="..\MediaRenamer\Movies\SelectMovie.resx">
+      <Link>Movies\SelectMovie.resx</Link>
+      <DependentUpon>SelectMovie.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\MediaRenamer\Series\SelectShow.resx">
+      <Link>Series\SelectShow.resx</Link>
+      <DependentUpon>SelectShow.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Service.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Service.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
