@@ -1,7 +1,7 @@
 #define MyAppName "MediaRenamer"
-#define MyAppVer "1.4"
+#define MyAppVer "2.0"
 #define MyAppPublisher "ccMatrix"
-#define MyAppURL "http://forum.team-mediaportal.com/showthread.php?t=13547"
+#define MyAppURL "http://code.google.com/p/mediarenamer/"
 
 #define DLLVersion "Release"
 
@@ -56,24 +56,19 @@ de.installSource=Source Code installieren
 en.installSource=install Source Code
 
 [Files]
-Source: IS-Setup\regsvrnet\bin\Release\regsvrnet.exe; DestDir: {app}; Flags: ignoreversion; Components: shellex
+Source: IS-Setup\regsvrnet\bin\Release\regsvrnet.exe; DestDir: {app}; Flags: ignoreversion
 
-Source: ShellExtension\bin\Release\MediaRenamer.dll; DestDir: {app}; Flags: restartreplace uninsrestartdelete; Components: shellex
 
-Source: TVShowRenamer\bin\Release\TVShowRenamer.exe; DestDir: {app}; Components: tvshow
-Source: MovieRenamer\bin\Release\MovieRenamer.exe; DestDir: {app}; Components: movie
 Source: IS-Setup\Language\*.ini; DestDir: {app}\Language
 Source: IS-Setup\MediaRenamer.tar.gz; DestDir: {app}; Components: source
 Source: IS-Setup\Files\MovieRenamer\format.dat; DestDir: {userappdata}\MovieRenamer; Flags: onlyifdoesntexist
 Source: IS-Setup\Files\TVShowRenamer\format.dat; DestDir: {userappdata}\TVShowRenamer; Flags: onlyifdoesntexist
+Source: MediaRenamer\bin\Release\MediaRenamer.exe; DestDir: {app}
 
 [Dirs]
-Name: {app}\Language; Components: tvshow
+Name: {app}\Language
 
 [Components]
-Name: tvshow; Description: TV Show Renamer; Types: custom full compact
-Name: shellex; Description: Shell Extension; Types: custom full
-Name: movie; Description: Movie Renamer; Types: custom compact full
 Name: source; Description: Source Code; Types: custom
 
 [Run]
@@ -90,8 +85,8 @@ Filename: {app}\regsvrnet.exe; Parameters: "installasm ""{app}\TVShowRenamer.dll
 Filename: {app}\regsvrnet.exe; Parameters: "removeasm ""{app}\TVShowRenamer.dll"""; WorkingDir: {app}; StatusMsg: {cm:Register}; Flags: runhidden
 
 [UninstallDelete]
-Name: {userappdata}\TVShowRenamer; Type: filesandordirs; Components: tvshow
-Name: {userappdata}\MovieRenamer; Type: filesandordirs; Components: movie
+Name: {userappdata}\TVShowRenamer; Type: filesandordirs
+Name: {userappdata}\MovieRenamer; Type: filesandordirs
 
 [Registry]
 Root: HKCU; Subkey: Software\MediaRenamer; ValueType: string; ValueName: locale; ValueData: {language}; Flags: uninsdeletekey deletevalue
@@ -100,8 +95,7 @@ Root: HKCU; Subkey: Software\MediaRenamer\Series
 
 [Icons]
 Name: {group}\{cm:UninstallProgram,{#MyAppName}}; Filename: {uninstallexe}
-Name: {group}\Movie Renamer; Filename: {app}\MovieRenamer.exe; WorkingDir: {app}; IconFilename: {app}\MovieRenamer.exe
-Name: {group}\TV Show Renamer; Filename: {app}\TVShowRenamer.exe; WorkingDir: {app}
+Name: {group}\MediaRenamer; Filename: {app}\MediaRenamer.exe; WorkingDir: {app}; IconFilename: {app}\MediaRenamer.exe
 
 [Code]
 var
