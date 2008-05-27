@@ -24,7 +24,9 @@ namespace TVShowRenamer
 		// This are the regular Expressions to find season and episode number
 		private static String[] regEx = {	
 									@"([0-9]+)x([0-9]+)-([0-9]+)",
+									@"s([0-9]+)e([0-9]+)e([0-9]+)",
 									@"s([0-9]+)e([0-9]+)",
+                                    @"s([0-9]+)ep([0-9]+)",
 									@"s([0-9]+) e([0-9]+)",
 									@"([0-9]+)x([0-9]+)", 
 									@"([0-9]{1,})([0-9]{2})"
@@ -180,13 +182,16 @@ namespace TVShowRenamer
 						}
 						ep.episodes = eps;
 						
-						series = name.Substring( 0, name.ToLower().IndexOf(m.Value));
+						series = name.Substring( 0, name.ToLower().IndexOf(m.Value)-1);
 						//series = series.Replace(".", " ");
-						series = eregi_replace("([a-zA-Z]{1})([0-9]{1})", "\\1 \\2", series);
-						series = eregi_replace("([0-9]{1})([a-zA-Z]{1})", "\\1 \\2", series);
+                        series = Eregi.replace("([a-zA-Z]{1})([0-9]{1})", "\\1 \\2", series);
+                        series = Eregi.replace("([0-9]{1})([a-zA-Z]{1})", "\\1 \\2", series);
+                        series = Eregi.replace("([a-zA-Z]{2})\\.([a-zA-Z]{1})", "\\1 \\2", series);
+                        series = Eregi.replace("([a-zA-Z]{1})\\.([a-zA-Z]{2})", "\\1 \\2", series);
 						series = series.Replace("_", " ");
 						series = series.Replace("  ", " ");
 						series = series.Replace(" - ", " ");
+                        series = series.Replace(" -", " ");
 						series = series.Replace("[", "");
 						series = series.Replace("]", "");
 						series = series.Replace("(", "");
@@ -254,32 +259,6 @@ namespace TVShowRenamer
 				}
 			}
 			return false;
-		}
-
-		/// <summary>
-		/// Replace regular expression in string
-		/// </summary>
-		/// <param name="pat">Search pattern</param>
-		/// <param name="newStr">New String. \\0..\\n for found values</param>
-		/// <param name="input">Inputstring</param>
-		/// <returns>modified String</returns>
-		public static String eregi_replace(String pat, String newStr, String input)
-		{
-			Regex reg = new Regex(pat, RegexOptions.IgnoreCase | RegexOptions.None);
-			Match m = null;
-			m = reg.Match(input);
-			if (m.Success)
-			{
-				for (int i=0; i<m.Groups.Count; i++)
-				{
-					newStr = newStr.Replace("\\"+i, m.Groups[i].Captures[0].Value);
-				}
-				return input.Replace(m.Groups[0].Captures[0].Value, newStr);
-			}
-			else
-			{
-				return input;
-			}
 		}
 
     	/// <summary>

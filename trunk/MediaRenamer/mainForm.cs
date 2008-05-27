@@ -14,7 +14,7 @@ namespace MediaRenamer
 {
     public partial class mainForm : Form
     {
-        public static Form instance = null;
+        public static mainForm instance = null;
 
         public mainForm()
         {
@@ -155,11 +155,6 @@ namespace MediaRenamer
             }
         }
 
-        private void tabOptions_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void pictureBox1_Click(object sender, EventArgs e)
         {
             option_tvSourceEPW.Select();
@@ -190,7 +185,6 @@ namespace MediaRenamer
             addWatchType.SelectedIndex = -1;
 
             saveWatchedFolders();
-            reloadService();
         }
 
         private void watchedFolders_DrawItem(object sender, DrawItemEventArgs e)
@@ -206,14 +200,14 @@ namespace MediaRenamer
                 e.DrawBackground();
                 Brush b = new SolidBrush(e.ForeColor);
                 // get type of watched folder
-                String iconName = "movie";
+                String iconName = "movies";
                 switch (watchedFolder.watchType)
                 {
                     case WatchFolderEntryType.MOVIES:
-                        iconName = "movie";
+                        iconName = "movies";
                         break;
                     case WatchFolderEntryType.SERIES:
-                        iconName = "television";
+                        iconName = "series";
                         break;
                 }
 
@@ -263,21 +257,6 @@ namespace MediaRenamer
             }
         }
 
-        private void watchedFolders_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (watchedFolders.SelectedItems.Count > 0)
-            {
-                WatchedFolderEntry selectedFolder = (WatchedFolderEntry)watchedFolders.SelectedItem;
-                watchThreadRun.Enabled = !selectedFolder.threadRunning;
-                watchThreadStop.Enabled = selectedFolder.threadRunning;
-            }
-            else
-            {
-                watchThreadRun.Enabled = false;
-                watchThreadStop.Enabled = false;
-            }
-        }
-
         private void watchThreadRun_Click(object sender, EventArgs e)
         {
             if (watchedFolders.SelectedItems.Count > 0)
@@ -286,7 +265,6 @@ namespace MediaRenamer
                 selectedFolder.runThread();
                 watchedFolders.SelectedItems.Clear();
             }
-            reloadService();
         }
 
         private void watchThreadStop_Click(object sender, EventArgs e)
@@ -297,14 +275,6 @@ namespace MediaRenamer
                 selectedFolder.stopThread();
                 watchedFolders.SelectedItems.Clear();
             }
-            reloadService();
-        }
-
-        private void reloadService()
-        {
-            ServiceController control = new ServiceController("MediaRenamerService");
-            control.Stop();
-            control.Start();
         }
 
         #endregion
@@ -351,7 +321,12 @@ namespace MediaRenamer
 
         void movie_ListMovie(MovieRenamer.Movie m)
         {
-            scanMovieList.Items.Add(m);
+            ListViewItem node = scanMovieList.Items.Add(m.title);
+            node.SubItems.Add(m.year.ToString());
+            FileInfo fi = new FileInfo(m.filename);
+            node.SubItems.Add(fi.Name);
+            node.SubItems.Add(m.modifiedName());
+            node.Tag = m;
         }
 
         void movie_ScanProgress(int pos, int max)
@@ -395,7 +370,14 @@ namespace MediaRenamer
 
         void series_ListEpisode(TVShowRenamer.Episode ep)
         {
-            scanSeriesList.Items.Add(ep);
+            ListViewItem node = scanSeriesList.Items.Add(ep.series);
+            node.SubItems.Add(ep.season.ToString());
+            node.SubItems.Add(ep.episode.ToString());
+            node.SubItems.Add(ep.title);
+            FileInfo fi = new FileInfo(ep.filename);
+            node.SubItems.Add(fi.Name);
+            node.SubItems.Add(ep.modifiedName());
+            node.Tag = ep;
         }
 
         void series_ScanProgress(int pos, int max)
@@ -428,39 +410,41 @@ namespace MediaRenamer
         {
             if (tabControl.SelectedTab == tabSeries)
             {
-                contextOptionRename.Enabled = (scanSeriesList.SelectedItems.Count > 0);
+                contextOptionRename.Enabled = (scanSeriesList.CheckedItems.Count > 0);
+                contextOptionRename.Text = i18n.t("context_rename_series");
             }
             if (tabControl.SelectedTab == tabMovies)
             {
-                contextOptionRename.Enabled = (scanMovieList.SelectedItems.Count > 0);
+                contextOptionRename.Enabled = (scanMovieList.CheckedItems.Count > 0);
+                contextOptionRename.Text = i18n.t("context_rename_movies");
             }
 
         }
 
         private void renameSelectedMovies()
         {
-            if (scanMovieList.SelectedItems.Count > 0)
+            if (scanMovieList.CheckedItems.Count > 0)
             {
                 MovieRenamer.Movie m;
-                for (int i = scanMovieList.SelectedItems.Count - 1; i >= 0; i--)
+                for (int i = scanMovieList.CheckedItems.Count - 1; i >= 0; i--)
                 {
-                    m = (MovieRenamer.Movie)scanMovieList.SelectedItems[i];
+                    m = (MovieRenamer.Movie)scanMovieList.CheckedItems[i].Tag;
                     m.renameMovie();
-                    scanMovieList.Items.Remove(m);
+                    scanMovieList.CheckedItems[i].Remove();
                 }
             }
         }
 
         private void renameSelectedSeries()
         {
-            if (scanSeriesList.SelectedItems.Count > 0)
+            if (scanSeriesList.CheckedItems.Count > 0)
             {
                 TVShowRenamer.Episode ep;
-                for (int i = scanSeriesList.SelectedItems.Count - 1; i >= 0; i--)
+                for (int i = scanSeriesList.CheckedItems.Count - 1; i >= 0; i--)
                 {
-                    ep = (TVShowRenamer.Episode)scanSeriesList.SelectedItems[i];
+                    ep = (TVShowRenamer.Episode)scanSeriesList.CheckedItems[i].Tag;
                     ep.renameEpisode();
-                    scanSeriesList.Items.Remove(ep);
+                    scanSeriesList.CheckedItems[i].Remove();
                 }
             }
         }
@@ -514,11 +498,6 @@ namespace MediaRenamer
             }
         }
 
-        private void notifyIcon_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-
-        }
-
         private void sysTrayOpen_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Normal;
@@ -543,16 +522,125 @@ namespace MediaRenamer
         private void seriesScanPath_TextUpdate(object sender, EventArgs e)
         {
             btnSeriesScan.Enabled = Directory.Exists(seriesScanPath.Text);
+            if (!Directory.Exists(seriesScanPath.Text))
+            {
+                seriesScanPath.Items.Remove(seriesScanPath.SelectedItem);
+                seriesScanPath.SelectedIndex = 0;
+            }
         }
 
         private void movieScanPath_TextUpdate(object sender, EventArgs e)
         {
             btnMovieScan.Enabled = Directory.Exists(movieScanPath.Text);
+            if (!Directory.Exists(movieScanPath.Text))
+            {
+                movieScanPath.Items.Remove(movieScanPath.SelectedItem);
+                movieScanPath.SelectedIndex = 0;
+            }
         }
 
         private void addWatchFolder_Changed(object sender, EventArgs e)
         {
             addWatchFolder.Enabled = (Directory.Exists(addWatchPath.Text) && (addWatchType.SelectedIndex > -1));
         }
+
+        private void contextWatchFolder_Opening(object sender, CancelEventArgs e)
+        {
+            if (watchedFolders.SelectedItems.Count > 0)
+            {
+                WatchedFolderEntry selectedFolder = (WatchedFolderEntry)watchedFolders.SelectedItem;
+                runWatcherToolStripMenuItem.Enabled = !selectedFolder.threadRunning;
+                stopWatcherToolStripMenuItem.Enabled = selectedFolder.threadRunning;
+                deleteSelectedWatcherToolStripMenuItem.Enabled = true;
+            }
+            else
+            {
+                runWatcherToolStripMenuItem.Enabled = false;
+                stopWatcherToolStripMenuItem.Enabled = false;
+                deleteSelectedWatcherToolStripMenuItem.Enabled = false;
+            }
+        }
+
+        private void runWatcherToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            WatchedFolderEntry selectedFolder = (WatchedFolderEntry)watchedFolders.SelectedItem;
+            if (!selectedFolder.threadRunning)
+            {
+                selectedFolder.runThread();
+            }
+        }
+
+        private void stopWatcherToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            WatchedFolderEntry selectedFolder = (WatchedFolderEntry)watchedFolders.SelectedItem;
+            selectedFolder.stopThread();
+        }
+
+        private void deleteSelectedWatcherToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            WatchedFolderEntry selectedFolder = (WatchedFolderEntry)watchedFolders.SelectedItem;
+            selectedFolder.stopThread();
+            watchedFolders.Items.Remove(watchedFolders.SelectedItem);
+        }
+
+        private void tvSelAll_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < scanSeriesList.Items.Count; i++)
+            {
+                scanSeriesList.Items[i].Checked = true;
+            }
+        }
+
+        private void tvSelNone_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < scanSeriesList.Items.Count; i++)
+            {
+                scanSeriesList.Items[i].Checked = false;
+            }
+        }
+
+        private void tvRenameEpisodes_Click(object sender, EventArgs e)
+        {
+            renameSelectedSeries();
+        }
+
+        private void movieSelAll_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < scanMovieList.Items.Count; i++)
+            {
+                scanMovieList.Items[i].Checked = true;
+            }
+        }
+
+        private void movieSelNone_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < scanMovieList.Items.Count; i++)
+            {
+                scanMovieList.Items[i].Checked = false;
+            }
+        }
+
+        private void movieRename_Click(object sender, EventArgs e)
+        {
+            renameSelectedMovies();
+        }
+
+        private void btnSeriesBrowse_Click(object sender, EventArgs e)
+        {
+            if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+            {
+                seriesScanPath.Text = folderBrowserDialog.SelectedPath;
+            }
+        }
+
+        private void btnPathMovies_Click(object sender, EventArgs e)
+        {
+            if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+            {
+                movieScanPath.Text = folderBrowserDialog.SelectedPath;
+            }
+        }
+
+
     }
 }

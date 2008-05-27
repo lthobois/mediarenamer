@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("MediaRenamer")]
 [assembly: AssemblyDescription("rename your media files")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Imagine Interactive")]
+[assembly: AssemblyCompany("Benjamin Schirmer")]
 [assembly: AssemblyProduct("MediaRenamer")]
 [assembly: AssemblyCopyright("Copyright © Benjamin Schirmer 2007")]
 [assembly: AssemblyTrademark("")]

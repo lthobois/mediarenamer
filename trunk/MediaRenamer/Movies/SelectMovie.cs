@@ -131,7 +131,10 @@ namespace MovieRenamer
 
 		private void showList_DoubleClick(object sender, System.EventArgs e)
 		{
-			DialogResult = DialogResult.OK;
+            if (movieList.SelectedItems.Count > 0)
+            {
+                DialogResult = DialogResult.OK;
+            }
 		}
 
 		private void btnSkip_Click(object sender, System.EventArgs e)

@@ -16,13 +16,9 @@ namespace MediaRenamer.Common
 	{
 		public static void Add(string text)
 		{
-            #if _APPLICATION
-			mainForm form = (mainForm.instance as mainForm);
-            if (form != null)
-            {
-                form.insertLog(text);
-            }
-            #endif
+            //Form frm = mainForm.instance;
+            //MessageBox.Show(frm.Name);
+            //mainForm frm = (mainForm.instance as mainForm);
 		}
 	}
 }

@@ -157,6 +157,7 @@ namespace MediaRenamer.Common
         {
             Settings settings = Settings.getInstance();
             String filename = (String)settings.getValue(key);
+            if (filename == null) return new Object[0];
             Object[] arr = null ;
             if (filename.StartsWith("##"))
             {

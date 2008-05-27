@@ -1,14 +1,20 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{DA4841C8-2C02-4044-95DD-1C8A71FA4F8A}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MediaRenamer</RootNamespace>
     <AssemblyName>MediaRenamer</AssemblyName>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <ApplicationRevision>0</ApplicationRevision>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -38,9 +44,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\EregiReplace.cs" />
     <Compile Include="Common\EventHandlers.cs" />
     <Compile Include="Common\FileSystemWatcher.cs" />
     <Compile Include="Common\i18n.cs" />
+    <Compile Include="Common\InputDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Common\InputDialog.Designer.cs">
+      <DependentUpon>InputDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Common\Log.cs" />
     <Compile Include="Common\Settings.cs" />
     <Compile Include="mainForm.cs">
@@ -107,10 +120,14 @@
     <None Include="Resources\EPW-Logo_168.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\movie.png" />
-    <EmbeddedResource Include="Resources\television.png" />
+    <EmbeddedResource Include="Resources\movies.png" />
+    <EmbeddedResource Include="Resources\series.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Common\InputDialog.resx">
+      <DependentUpon>InputDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\thread_running.png" />
     <EmbeddedResource Include="Resources\thread_stopped.png" />
   </ItemGroup>
