@@ -56,11 +56,11 @@ de.installSource=Source Code installieren
 en.installSource=install Source Code
 
 [Files]
-Source: IS-Setup\regsvrnet\bin\Release\regsvrnet.exe; DestDir: {app}; Flags: ignoreversion
+;Source: IS-Setup\regsvrnet\bin\Release\regsvrnet.exe; DestDir: {app}; Flags: ignoreversion
 
 
 Source: IS-Setup\Language\*.ini; DestDir: {app}\Language
-Source: IS-Setup\MediaRenamer.tar.gz; DestDir: {app}; Components: source
+;Source: IS-Setup\MediaRenamer.tar.gz; DestDir: {app}; Components: source
 Source: IS-Setup\Files\MovieRenamer\format.dat; DestDir: {userappdata}\MovieRenamer; Flags: onlyifdoesntexist
 Source: IS-Setup\Files\TVShowRenamer\format.dat; DestDir: {userappdata}\TVShowRenamer; Flags: onlyifdoesntexist
 Source: MediaRenamer\bin\Release\MediaRenamer.exe; DestDir: {app}
@@ -74,15 +74,15 @@ Name: source; Description: Source Code; Types: custom
 [Run]
 ; Unregister if already registered (for Update Installation)
 ;Filename: {app}\regsvrnet.exe; Parameters: "remove ""{app}\TVShowRenamer.dll"""; WorkingDir: {app}; StatusMsg: {cm:Register}; Flags: runhidden
-Filename: {app}\regsvrnet.exe; Parameters: "removeasm ""{app}\TVShowRenamer.dll"""; WorkingDir: {app}; StatusMsg: {cm:Register}; Flags: runhidden
+;Filename: {app}\regsvrnet.exe; Parameters: "removeasm ""{app}\TVShowRenamer.dll"""; WorkingDir: {app}; StatusMsg: {cm:Register}; Flags: runhidden
 ; Register new Plugin
 ;Filename: {app}\regsvrnet.exe; Parameters: "install ""{app}\TVShowRenamer.dll"""; WorkingDir: {app}; StatusMsg: {cm:Register}; Flags: runhidden
-Filename: {app}\regsvrnet.exe; Parameters: "installasm ""{app}\TVShowRenamer.dll"""; WorkingDir: {app}; StatusMsg: {cm:Register}; Flags: runhidden
+;Filename: {app}\regsvrnet.exe; Parameters: "installasm ""{app}\TVShowRenamer.dll"""; WorkingDir: {app}; StatusMsg: {cm:Register}; Flags: runhidden
 
 [UninstallRun]
 ; Unregister if already registered (for Update Installation)
 ;Filename: {app}\regsvrnet.exe; Parameters: "remove ""{app}\TVShowRenamer.dll"""; WorkingDir: {app}; StatusMsg: {cm:Register}; Flags: runhidden
-Filename: {app}\regsvrnet.exe; Parameters: "removeasm ""{app}\TVShowRenamer.dll"""; WorkingDir: {app}; StatusMsg: {cm:Register}; Flags: runhidden
+;Filename: {app}\regsvrnet.exe; Parameters: "removeasm ""{app}\TVShowRenamer.dll"""; WorkingDir: {app}; StatusMsg: {cm:Register}; Flags: runhidden
 
 [UninstallDelete]
 Name: {userappdata}\TVShowRenamer; Type: filesandordirs
