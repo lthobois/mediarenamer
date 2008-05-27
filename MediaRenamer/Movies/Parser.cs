@@ -23,9 +23,7 @@ namespace MovieRenamer
 		private String[] words = { "XVID", "widescreen", "AC3", "SVCD", "VCD",
 									 "DVDRIP", "DVDSCR", "DVD",
 									 "HDTV", "PDTV", "VTV", "EFNET",
-									 "EDTV", "DIVX", "PROPER", "tvrip",
-									 "Director`s", "Directors", "Director", 
-									 "Cut", "5.1" };
+									 "EDTV", "DIVX", "PROPER", "tvrip" };
 
 		public Parser(String path)
 		{
@@ -130,6 +128,21 @@ namespace MovieRenamer
 				{
 					name = name.Substring(0, name.IndexOf(@"\"));
 				}
+
+                String[] getDisk = { "cd([0-9]+)", "cd ([0-9]+)", "part ([0-9]+)", "part([0-9]+)", "disk([0-9]+)" };
+                foreach (String pat in getDisk)
+                {
+                    reg = new Regex(pat, RegexOptions.IgnoreCase);
+                    m = null;
+                    m = reg.Match(name);
+                    if (m.Success)
+                    {
+                        movie.disk = Int32.Parse(m.Groups[1].Captures[0].Value);
+                        name = name.Replace(m.Groups[0].Captures[0].Value, "");
+                        break;
+                    }
+                }
+
 				if (Directory.Exists(file))
 				{
 					name = eregi_replace("-([a-zA-Z0-9!]*)", "", name);
@@ -143,15 +156,25 @@ namespace MovieRenamer
 						name = name.Replace(fi.Extension, "");
 					}
 				}
-				
-				reg = new Regex("([0-9]{4})");
-				mcol = null;
+
+                reg = new Regex("([0-9]{4})");
+                mcol = null;
                 mcol = reg.Matches(name);
-				if (mcol.Count > 0)
-				{
+                if (mcol.Count > 0)
+                {
                     m = mcol[mcol.Count - 1];
-					movie.year = Int32.Parse( m.Groups[1].Captures[0].Value );
-				}
+                    movie.year = Int32.Parse(m.Groups[1].Captures[0].Value);
+                }
+
+                if (name.IndexOf("[") > 0) name = name.Substring(0, name.IndexOf("["));
+                if (name.IndexOf("[") > 0) name = name.Substring(0, name.IndexOf("["));
+                if (name.IndexOf("(") > 0) name = name.Substring(0, name.IndexOf("("));
+                if (name.IndexOf(")") > 0) name = name.Substring(0, name.IndexOf(")"));
+
+                name = name.Replace("[", " ");
+                name = name.Replace("]", " ");
+                name = name.Replace("(", " ");
+                name = name.Replace(")", " ");
 
 				reg = new Regex("([0-9]{1})\\.([0-9]{1})");
 				m = null;
@@ -168,26 +191,18 @@ namespace MovieRenamer
 				name = name.Replace("|", ".");
 				//name = name.Replace(",", " ");
 				name = name.Replace("_", " ");
-				name = name.Replace("- ", " ");			
-				
-				String[] getDisk = {"cd([0-9]+)", "cd ([0-9]+)", "part ([0-9]+)", "part([0-9]+)", "disk([0-9]+)"};
-				foreach (String pat in getDisk)
-				{
-					reg = new Regex(pat, RegexOptions.IgnoreCase);
-					m = null;
-					m = reg.Match(name);
-					if (m.Success)
-					{
-						movie.disk = Int32.Parse( m.Groups[1].Captures[0].Value );
-						name = name.Replace(m.Groups[0].Captures[0].Value, "");
-						break;
-					}
-				}
-				
+				name = name.Replace("- ", " ");
+
+                int wordstart = name.Length;
 				foreach (String word in words)
 				{
-					name = eregi_replace(word, "", name);
+                    int wpos = name.ToLower().IndexOf(word.ToLower());
+                    if (wpos != -1 && wpos < wordstart)
+                    {
+                        wordstart = wpos;
+                    }
 				}
+                name = name.Substring(0, wordstart);
 				
 				String getLan = name.ToLower();
 				if (
@@ -215,8 +230,6 @@ namespace MovieRenamer
 				//name = eregi_replace("([0-9]{4})", " ", name);
 				name = eregi_replace("([0-9]{1,})of([0-9]{1,})", " ", name);
 				name = eregi_replace("www.([a-zA-Z0-9]+).([a-zA-Z]{2,3})", " ", name);
-				name = name.Replace("[", " ");
-				name = name.Replace("]", " ");
 				
 				/*
 				for (int i=name.Length-2; i>0; i--)
@@ -229,7 +242,6 @@ namespace MovieRenamer
 				}
 				*/
 
-				/*
 				if (movie.year > 0)
 				{
 					if (name.LastIndexOf(movie.year.ToString()) > 0)
@@ -237,7 +249,6 @@ namespace MovieRenamer
 						name = name.Substring(0, name.LastIndexOf(movie.year.ToString())-1 );
 					}
 				}
-				*/
       
 				while (name.IndexOf("  ") > 0)
 				{

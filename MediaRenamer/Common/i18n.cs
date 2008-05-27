@@ -92,6 +92,9 @@ namespace MediaRenamer.Common
             if (result == defaultValue)
             {
                 //Log.Add(String.Format("Key {0} is not in backup language File", keyName));
+                TextWriter tw = new StreamWriter( lngBackup, true );
+                tw.WriteLine(keyName + "=");
+                tw.Close();
                 result = keyName;
             }
 

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
+using System.IO;
 
 namespace MediaRenamer.Common
 {
@@ -94,6 +95,8 @@ namespace MediaRenamer.Common
         public void runThread()
         {
             if (isRunning) return;
+
+            if (!Directory.Exists(path)) return;
 
             fileSystemWatcherSize = new FileSystemWatcher();
             fileSystemWatcherSize.WatchFolderPath = path;

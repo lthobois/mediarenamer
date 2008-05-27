@@ -20,7 +20,7 @@ namespace MovieRenamer
 	public class OnlineParser
 	{
 		private String cache = @"data\{0}.html";
-		private String moveEnding = ", A, An, The, Le";
+		private String movePrefix = ", A, An, The, Le, Die, Der, Das";
 
 		public OnlineParser()
 		{
@@ -136,7 +136,7 @@ namespace MovieRenamer
 				if (pos > 0)
 				{
 					String ending = movie.title.Substring(pos);
-					if (moveEnding.IndexOf(ending) != -1)
+					if (movePrefix.IndexOf(ending) != -1)
 					{
 						movie.title = movie.title.Substring(pos+1)+" "+movie.title.Substring(0, pos);
 					}
@@ -161,49 +161,111 @@ namespace MovieRenamer
 			Regex reg = new Regex(pat);
 			MatchCollection mcol = null;
 			mcol = reg.Matches(data);
+            String[] movieNames = new String[0];
+            bool foundMatch = false;
+            int counter = 0;
 			if (mcol.Count == 1)
 			{
 				setMovieTitle(ref movie, mcol[0].Groups[2].Captures[0].Value);
+                Array.Resize<String>(ref movieNames, movieNames.Length + 1);
+                movieNames[movieNames.Length - 1] = mcol[0].Groups[2].Captures[0].Value;
+                if (movie.compareTitles(movieName))
+                {
+                    foundMatch = true;
+                }
+                if (!foundMatch)
+                {
+                    String[] alternates = findAlternatives(data, mcol[0].Groups[0].Captures[0].Value);
+                    foreach (String alt in alternates)
+                    {
+                        setMovieTitle(ref movie, alt);
+                        if (movie.compareTitles(movieName))
+                        {
+                            foundMatch = true;
+                            break;
+                        }
+                        Array.Resize<String>(ref movieNames, movieNames.Length + 1);
+                        movieNames[movieNames.Length - 1] = alt;
+                    }
+                }
 			}
 			else if (mcol.Count > 1)
 			{
-				bool foundMatch = false;
-				int counter = 0;
 				foreach (Match m in mcol)
 				{
 					if (m.Groups[2].Captures[0].Value.IndexOf("(VG)") > 0) continue;
 					counter++;
-					setMovieTitle(ref movie, m.Groups[2].Captures[0].Value);
 
+					setMovieTitle(ref movie, m.Groups[2].Captures[0].Value);
 					if (movie.compareTitles(movieName))
 					{
 						foundMatch = true;
 						break;
 					}
+                    Array.Resize<String>(ref movieNames, movieNames.Length + 1);
+                    movieNames[movieNames.Length - 1] = m.Groups[2].Captures[0].Value;
+
+                    String[] alternates = findAlternatives(data, m.Groups[0].Captures[0].Value);
+                    foreach (String alt in alternates)
+                    {
+                        setMovieTitle(ref movie, alt);
+                        if (movie.compareTitles(movieName))
+                        {
+                            foundMatch = true;
+                            break;
+                        }
+                        Array.Resize<String>(ref movieNames, movieNames.Length+1);
+                        movieNames[movieNames.Length - 1] = alt;
+                    }
+                    if (foundMatch) break;
 				}
 				if (counter == 1) foundMatch = true;
-				if (!foundMatch)
-				{
-					Form movieDlg = new SelectMovie();
-					movieDlg.Text = i18n.t( "moviedlg_title", movieName);
-					
-					foreach (Match m in mcol)
-					{
-						String mName = m.Groups[2].Captures[0].Value.ToString();
-						if (mName.IndexOf("(VG)") == -1)
-						{
-							(movieDlg as SelectMovie).addMovie( m.Groups[2].Captures[0].Value.ToString() );
-							counter++;
-						}
-					}
-					
-					if (movieDlg.ShowDialog() == DialogResult.OK)
-					{
-						setMovieTitle(ref movie, (movieDlg as SelectMovie).selectedMovie);
-					}
-					movieDlg.Dispose();
-				}
-			}
+            }
+            if (!foundMatch)
+            {
+                if (movieNames.Length == 0) return;
+                if (movieNames.Length == 1)
+                {
+                    setMovieTitle(ref movie, movieNames[0]);
+                    return;
+                }
+                Form movieDlg = new SelectMovie();
+                movieDlg.Text = i18n.t("moviedlg_title", movieName);
+
+                foreach (String mName in movieNames)
+                {
+                    if (mName.IndexOf("(VG)") == -1)
+                    {
+                        (movieDlg as SelectMovie).addMovie(mName);
+                        counter++;
+                    }
+                }
+
+                if (movieDlg.ShowDialog() == DialogResult.OK)
+                {
+                    setMovieTitle(ref movie, (movieDlg as SelectMovie).selectedMovie);
+                }
+                movieDlg.Dispose();
+            }
+			
 		}
+
+        private string[] findAlternatives(String data, String p)
+        {
+            String[] result = new String[0];
+            String aka = data.Substring(data.IndexOf(p));
+            aka = aka.Substring(0, aka.IndexOf("</LI>"));
+            string split = "...aka";
+            while (aka.IndexOf(split) > 0)
+            {
+                String akName = aka.Substring(aka.IndexOf(split)+split.Length);
+                akName = akName.Substring(0, akName.IndexOf(")")+1);
+                aka = aka.Replace(split+akName, "");
+                akName = akName.Trim();
+                Array.Resize<String>(ref result, result.Length + 1);
+                result[result.Length - 1] = akName;
+            }
+            return result;
+        }
 	}
 }

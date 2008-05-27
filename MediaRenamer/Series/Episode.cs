@@ -212,12 +212,12 @@ namespace TVShowRenamer
 			if (_title.Length > 0)
 			{
 				renameFormat = renameFormat.Replace("<title>", _title);
-				renameFormat = Parser.eregi_replace("<title:([^>]*)>", "\\1", renameFormat);
+				renameFormat = Eregi.replace("<title:([^>]*)>", "\\1", renameFormat);
 			}
 			else
 			{
 				renameFormat = renameFormat.Replace("<title>", "");
-				renameFormat = Parser.eregi_replace("<title:([^>]*)>", "", renameFormat);
+                renameFormat = Eregi.replace("<title:([^>]*)>", "", renameFormat);
 			}
             FileInfo fi = new FileInfo(filename);
             renameFormat += fi.Extension;

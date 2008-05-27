@@ -53,6 +53,19 @@ namespace TVShowRenamer
 				if (forward != null)
 				{
 					key.Close();
+                    if (ep.series.Equals(ep.altSeries))
+                    {
+                        InputDialog input = new InputDialog("Please enter the correct series name:", "Series not found", ep.series);
+                        if (input.ShowDialog() == DialogResult.OK)
+                        {
+                            Registry.CurrentUser.DeleteSubKey(@"Software\MediaRenamer\Series\" + input.value);
+                            ep.altSeries = input.value;
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
 					ep.series = ep.altSeries;
 					return getSeriesData(ref ep);
 				}
@@ -114,13 +127,16 @@ namespace TVShowRenamer
 					cli.DownloadFile(String.Format(queryUrl, ep.series, ep.season), searchCache);
 
 					xml.Load( searchCache );
+
+                    Form showDlg = null;
+                    XmlNodeList nodes = null;
 					// Shows found on episodeworld.com
 					if ( (xml.DocumentElement.ChildNodes.Count > 0) &&
 						(xml.DocumentElement.Name == "search") )
 					{
-						Form showDlg = new SelectShow();
+						showDlg = new SelectShow();
 						showDlg.Text = i18n.t( "showdlg_title", ep.series);
-						XmlNodeList nodes = xml.GetElementsByTagName("found");
+                        nodes = xml.GetElementsByTagName("found");
 						foreach ( XmlNode node in nodes)
 						{
 							showClass sc = new showClass();
@@ -130,69 +146,96 @@ namespace TVShowRenamer
 							sc.showSeason = ep.season;
 							(showDlg as SelectShow).addShow( sc );
 						}
-						if (ep.series != ep.altSeries)
-						{
-							cli.DownloadFile(String.Format(queryUrl, ep.altSeries, ep.season), searchCache);
-							nodes = xml.GetElementsByTagName("found");
-							foreach ( XmlNode node in nodes)
-							{
-								showClass sc = new showClass();
-								sc.showID = node.Attributes["id"].Value;
-								sc.showName = node.Attributes["name"].Value;
-								sc.showYear = Int32.Parse(node.Attributes["year"].Value);
-								sc.showSeason = ep.season;
-								(showDlg as SelectShow).addShow( sc );
-							}
-						}
-
-						if (showDlg.ShowDialog() == DialogResult.OK)
-						{
-							cli.DownloadFile(
-								String.Format(detailUrl, 
-								(showDlg as SelectShow).selectedShow.showID, 
-								ep.season, 
-								(showDlg as SelectShow).selectedShow.showYear, 
-								showLang)
-								, seriesCache);
-							xml.Load( seriesCache );
-						}
-						else
-						{
-							return null;
-						}
 					}
-					else if ( xml.DocumentElement.Name == "series")
-					{
-						// Found series directly.
-						FileInfo fi = new FileInfo(searchCache);
-						fi.MoveTo(seriesCache);
-						xml.Load( seriesCache );
-					}
-					else
-					{
-						// No series with the name found. Possibly file is not in a series folder. 
-						// Try alternative Series name based on filename.
+                    else if (xml.DocumentElement.Name == "series")
+                    {
+                        // Found series directly.
+                        FileInfo fi = new FileInfo(searchCache);
+                        fi.MoveTo(seriesCache);
+                        xml.Load(seriesCache);
+                    }
 
-						if (ep.series == ep.altSeries)
-						{
-							// Already tried alternative series. Nothing to find.
-							Log.Add( i18n.t("oparse_notfound", ep.series) );
-							xml = null;
-						}
-						else
-						{
-							key = Registry.CurrentUser.OpenSubKey(@"Software\MediaRenamer\Series", true);
-							RegistryKey skey = key.CreateSubKey(ep.series);
-							skey.SetValue("", ".forward");
-							skey.Close();
-							key.Close();
-							// Try alternative series name
-							ep.series = ep.altSeries;
-							xml = getSeriesData(ref ep);
-						}
+                    // Show wasn't found (showDlg created)
+                    // Search for altSeries name
+                    if (ep.series != ep.altSeries)
+                    {
+                        if (showDlg == null)
+                        {
+                            showDlg = new SelectShow();
+                            showDlg.Text = i18n.t("showdlg_title", ep.series);
+                        }
+                        cli.DownloadFile(String.Format(queryUrl, ep.altSeries, ep.season), searchCache);
+                        xml.Load(searchCache);
+
+                        if ((xml.DocumentElement.ChildNodes.Count > 0) &&
+                               (xml.DocumentElement.Name == "search"))
+                        {
+                            showDlg.Text = i18n.t("showdlg_title", ep.series);
+                            nodes = xml.GetElementsByTagName("found");
+                            foreach (XmlNode node in nodes)
+                            {
+                                showClass sc = new showClass();
+                                sc.showID = node.Attributes["id"].Value;
+                                sc.showName = node.Attributes["name"].Value;
+                                sc.showYear = Int32.Parse(node.Attributes["year"].Value);
+                                sc.showSeason = ep.season;
+                                (showDlg as SelectShow).addShow(sc);
+                            }
+                        }
+                        else if (xml.DocumentElement.Name == "series")
+                        {
+                            // Found series directly.
+                            FileInfo fi = new FileInfo(searchCache);
+                            fi.MoveTo(seriesCache);
+                            xml.Load(seriesCache);
+                        }
+                        else
+                        {
+                            // No series with the name found. Possibly file is not in a series folder. 
+                            // Try alternative Series name based on filename.
+
+                            if (ep.series == ep.altSeries)
+                            {
+                                // Already tried alternative series. Nothing to find.
+                                Log.Add(i18n.t("oparse_notfound", ep.series));
+                                xml = null;
+                            }
+                            else
+                            {
+                                key = Registry.CurrentUser.OpenSubKey(@"Software\MediaRenamer\Series", true);
+                                RegistryKey skey = key.CreateSubKey(ep.series);
+                                skey.SetValue("", ".forward");
+                                skey.Close();
+                                key.Close();
+                                // Try alternative series name
+                                ep.series = ep.altSeries;
+                                xml = getSeriesData(ref ep);
+                            }
+                        }
+                    }
+                    if (showDlg != null)
+                    {
+                        if ( (showDlg as SelectShow).selectedShow != null)
+                        {
+                            if (showDlg.ShowDialog() == DialogResult.OK)
+                            {
+                                cli.DownloadFile(
+                                    String.Format(detailUrl,
+                                    (showDlg as SelectShow).selectedShow.showID,
+                                    ep.season,
+                                    (showDlg as SelectShow).selectedShow.showYear,
+                                    showLang)
+                                    , seriesCache);
+                                xml.Load(seriesCache);
+                            }
+                            else
+                            {
+                                return null;
+                            }
+                        }
 					}						
 				}
-			}
+            }
 
 			if (cli != null) 
 				cli.Dispose();
@@ -249,10 +292,23 @@ namespace TVShowRenamer
 						{
 							if ( (node.Attributes["season"].Value == ep.season.ToString()) &&
 								 (node.Attributes["episode"].Value == ep.episode.ToString()) &&
-								 (node.Attributes["language"].Value == ep.language.ToString())
+								 (node.Attributes["language"].Value == ep.language.ToString()) &&
+                                 (node.Attributes["special"].Value == "false")
 								)
 							{
 								ep.title = node.Attributes["title"].Value;
+                                if (ep.episodes.Length > 1)
+                                {
+                                    if (ep.title.EndsWith(")"))
+                                    {
+                                        ep.title = ep.title.Substring(0, ep.title.LastIndexOf("("));
+                                    }
+                                }
+                                ep.title = ep.title.Replace(".i.", "");
+                                if (ep.title.IndexOf("aka") > 0)
+                                {
+                                    ep.title = Eregi.replace("\\(aka([^)]*)\\)", "", ep.title);
+                                }
 								break;
 							}
 						}
