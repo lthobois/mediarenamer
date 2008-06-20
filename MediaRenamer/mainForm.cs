@@ -372,7 +372,16 @@ namespace MediaRenamer
         {
             ListViewItem node = scanSeriesList.Items.Add(ep.series);
             node.SubItems.Add(ep.season.ToString());
-            node.SubItems.Add(ep.episode.ToString());
+            String episodes = "";
+            for (int i = 0; i < ep.episodes.Length; i++)
+            {
+                episodes += ep.episodes[i].ToString();
+                if (i < (ep.episodes.Length - 1))
+                {
+                    episodes += ", ";
+                }
+            }
+            node.SubItems.Add(episodes);
             node.SubItems.Add(ep.title);
             FileInfo fi = new FileInfo(ep.filename);
             node.SubItems.Add(fi.Name);

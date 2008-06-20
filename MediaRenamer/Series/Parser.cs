@@ -24,6 +24,7 @@ namespace TVShowRenamer
 		// This are the regular Expressions to find season and episode number
 		private static String[] regEx = {	
 									@"([0-9]+)x([0-9]+)-([0-9]+)",
+                                    @"s([0-9]+)e([0-9]+)-e([0-9]+)",
 									@"s([0-9]+)e([0-9]+)e([0-9]+)",
 									@"s([0-9]+)e([0-9]+)",
                                     @"s([0-9]+)ep([0-9]+)",
@@ -34,7 +35,7 @@ namespace TVShowRenamer
 
 		// Valid extensions
 		public static String[] extension = { ".avi", ".mkv", ".mpg", ".mpeg", ".mov", ".wmv",
-										 ".rpm", ".ogm", ".srt", ".sub", ".mp4" };
+										 ".rpm", ".ogm", ".srt", ".sub", ".mp4", ".divx" };
 
 		public Parser(String path)
 		{
