@@ -176,7 +176,7 @@ namespace TVShowRenamer
 		{
 			String renameFormat = "<series> - <season>x<episode2> - <title>";
             String savedFormat = Settings.GetValueAsString(SettingKeys.SeriesFormat);
-            if (savedFormat != String.Empty)
+            if (savedFormat != null)
                 renameFormat = savedFormat;
 
 			String[] eps1 = new String[_episodes.Length];

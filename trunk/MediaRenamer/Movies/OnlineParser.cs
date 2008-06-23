@@ -24,7 +24,7 @@ namespace MovieRenamer
 
 		public OnlineParser()
 		{
-			String cacheDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)+@"\MovieRenamer\data\";
+            String cacheDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\" + Application.ProductName + @"\movies\";
 			if (!Directory.Exists(cacheDir)) Directory.CreateDirectory(cacheDir);
 			cache = cacheDir+"{0}.html";
 		}
@@ -93,7 +93,8 @@ namespace MovieRenamer
 			
 			if (!File.Exists(String.Format(movieCache, movieName)))
 			{
-				Log.Add( i18n.t("oparse_search", movieName) );
+				//Log.Add( i18n.t("oparse_search", movieName) );
+                Log.Add(String.Format("Searching online for {0}", movieName));
 				String movieEnc = movieName;
 				movieEnc = movieEnc.Replace("-", "+");
 				movieEnc = movieEnc.Replace(" ", "+");
@@ -230,7 +231,8 @@ namespace MovieRenamer
                     return;
                 }
                 Form movieDlg = new SelectMovie();
-                movieDlg.Text = i18n.t("moviedlg_title", movieName);
+                //movieDlg.Text = i18n.t("moviedlg_title", movieName);
+                movieDlg.Text = String.Format("Select movie for {0}", movieName);
 
                 foreach (String mName in movieNames)
                 {
