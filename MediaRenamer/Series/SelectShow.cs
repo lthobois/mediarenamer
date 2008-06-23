@@ -154,8 +154,8 @@ namespace TVShowRenamer
 				selectedShow = showList.Items[0] as showClass;
 				showList.SelectedIndex = 0;
 			}
-			btnOk.Text = i18n.t("btn_ok");
-			btnSkip.Text = i18n.t("btn_skip");
+			//btnOk.Text = i18n.t("btn_ok");
+			//btnSkip.Text = i18n.t("btn_skip");
 		}
 
 		private void showList_SelectedIndexChanged(object sender, System.EventArgs e)

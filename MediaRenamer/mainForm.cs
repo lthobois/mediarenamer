@@ -166,12 +166,14 @@ namespace MediaRenamer
         {
             if (!Directory.Exists(addWatchPath.Text))
             {
-                MessageBox.Show(i18n.t("folder_missing"));
+                //MessageBox.Show(i18n.t("folder_missing"));
+                MessageBox.Show("The folder you entered does not exist!");
                 return;
             }
             if (addWatchType.SelectedIndex == -1)
             {
-                MessageBox.Show(i18n.t("folder_notype"));
+                //MessageBox.Show(i18n.t("folder_notype"));
+                MessageBox.Show("Please select a type for this folder!");
             }
             WatchedFolderEntry watchedFolder = new WatchedFolderEntry();
             watchedFolder.watchPath = addWatchPath.Text;
@@ -229,7 +231,8 @@ namespace MediaRenamer
                 }
                 else
                 {
-                    lastChanged = i18n.t("watched_never");
+                    //lastChanged = i18n.t("watched_never");
+                    lastChanged = "No Changes";
                 }
                 e.Graphics.DrawString(lastChanged, e.Font, b, e.Bounds.X + 20, e.Bounds.Y + 17);
 
@@ -333,11 +336,13 @@ namespace MediaRenamer
         {
             if (scanMovieProgressbar.Maximum == 0)
             {
-                Log.Add(i18n.t("scan_count", max));
+                //Log.Add(i18n.t("scan_count", max));
+                Log.Add(String.Format("{0} files found.", max));
             }
             if (pos == 0 && max == 0)
             {
-                Log.Add(i18n.t("scan_complete"));
+                //Log.Add(i18n.t("scan_complete"));
+                Log.Add("Scan successfully completed!");
             }
             scanMovieProgressbar.Maximum = max;
             scanMovieProgressbar.Value = pos;
@@ -393,11 +398,13 @@ namespace MediaRenamer
         {
             if (scanSeriesProgressbar.Maximum == 0)
             {
-                Log.Add(i18n.t("scan_count", max));
+                //Log.Add(i18n.t("scan_count", max));
+                Log.Add(String.Format("{0} files found.", max));
             }
             if (pos == 0 && max == 0)
             {
-                Log.Add(i18n.t("scan_complete"));
+                //Log.Add(i18n.t("scan_complete"));
+                Log.Add("Scan successfully completed!");
             }
             scanSeriesProgressbar.Maximum = max;
             scanSeriesProgressbar.Value = pos;
@@ -420,12 +427,14 @@ namespace MediaRenamer
             if (tabControl.SelectedTab == tabSeries)
             {
                 contextOptionRename.Enabled = (scanSeriesList.CheckedItems.Count > 0);
-                contextOptionRename.Text = i18n.t("context_rename_series");
+                //contextOptionRename.Text = i18n.t("context_rename_series");
+                contextOptionRename.Text = "Rename selected Episodes";
             }
             if (tabControl.SelectedTab == tabMovies)
             {
                 contextOptionRename.Enabled = (scanMovieList.CheckedItems.Count > 0);
-                contextOptionRename.Text = i18n.t("context_rename_movies");
+                //contextOptionRename.Text = i18n.t("context_rename_movies");
+                contextOptionRename.Text = "Rename selected Movies";
             }
 
         }
@@ -530,21 +539,32 @@ namespace MediaRenamer
 
         private void seriesScanPath_TextUpdate(object sender, EventArgs e)
         {
+            if (!seriesScanPath.Text.EndsWith(@"\"))
+                seriesScanPath.Text += @"\";
             btnSeriesScan.Enabled = Directory.Exists(seriesScanPath.Text);
             if (!Directory.Exists(seriesScanPath.Text))
             {
                 seriesScanPath.Items.Remove(seriesScanPath.SelectedItem);
-                seriesScanPath.SelectedIndex = 0;
+                if (seriesScanPath.Items.Count > 0)
+                {
+                    seriesScanPath.SelectedIndex = 0;
+                }                
             }
         }
 
         private void movieScanPath_TextUpdate(object sender, EventArgs e)
         {
+            if (!movieScanPath.Text.EndsWith(@"\"))
+                movieScanPath.Text += @"\";
+
             btnMovieScan.Enabled = Directory.Exists(movieScanPath.Text);
             if (!Directory.Exists(movieScanPath.Text))
             {
                 movieScanPath.Items.Remove(movieScanPath.SelectedItem);
-                movieScanPath.SelectedIndex = 0;
+                if (movieScanPath.Items.Count > 0)
+                {
+                    movieScanPath.SelectedIndex = 0;
+                }
             }
         }
 

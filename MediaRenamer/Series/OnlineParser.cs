@@ -28,7 +28,7 @@ namespace TVShowRenamer
 		private String cache = @"data\{0}_{1}.dat";
 		public OnlineParser()
 		{
-			String cacheDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)+@"\TVShowRenamer\data\";
+			String cacheDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)+@"\"+Application.ProductName+@"\series\";
 			if (!Directory.Exists(cacheDir)) Directory.CreateDirectory(cacheDir);
 			cache = cacheDir+"{0}_{1}.dat";
 		}
@@ -135,7 +135,8 @@ namespace TVShowRenamer
 						(xml.DocumentElement.Name == "search") )
 					{
 						showDlg = new SelectShow();
-						showDlg.Text = i18n.t( "showdlg_title", ep.series);
+						//showDlg.Text = i18n.t( "showdlg_title", ep.series);
+                        showDlg.Text = String.Format("Select series for {0}", ep.series);
                         nodes = xml.GetElementsByTagName("found");
 						foreach ( XmlNode node in nodes)
 						{
@@ -162,7 +163,8 @@ namespace TVShowRenamer
                         if (showDlg == null)
                         {
                             showDlg = new SelectShow();
-                            showDlg.Text = i18n.t("showdlg_title", ep.series);
+                            //showDlg.Text = i18n.t("showdlg_title", ep.series);
+                            showDlg.Text = String.Format("Select series for {0}", ep.series);
                         }
                         cli.DownloadFile(String.Format(queryUrl, ep.altSeries, ep.season), searchCache);
                         xml.Load(searchCache);
@@ -170,7 +172,8 @@ namespace TVShowRenamer
                         if ((xml.DocumentElement.ChildNodes.Count > 0) &&
                                (xml.DocumentElement.Name == "search"))
                         {
-                            showDlg.Text = i18n.t("showdlg_title", ep.series);
+                            //showDlg.Text = i18n.t("showdlg_title", ep.series);
+                            showDlg.Text = String.Format("Select series for {0}", ep.series);
                             nodes = xml.GetElementsByTagName("found");
                             foreach (XmlNode node in nodes)
                             {
@@ -197,7 +200,8 @@ namespace TVShowRenamer
                             if (ep.series == ep.altSeries)
                             {
                                 // Already tried alternative series. Nothing to find.
-                                Log.Add(i18n.t("oparse_notfound", ep.series));
+                                //Log.Add(i18n.t("oparse_notfound", ep.series));
+                                Log.Add(String.Format("Did not find match for {0}", ep.series));
                                 xml = null;
                             }
                             else

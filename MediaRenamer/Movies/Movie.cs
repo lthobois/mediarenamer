@@ -160,7 +160,7 @@ namespace MovieRenamer
 		{
             String renameFormat = "<moviename> (<year><disk:,CD><disk><lang:,><lang>)";
             String savedFormat = Settings.GetValueAsString(SettingKeys.MovieFormat);
-            if (savedFormat != String.Empty)
+            if (savedFormat != null)
                 renameFormat = savedFormat;
 
 

@@ -120,8 +120,8 @@ namespace MovieRenamer
 
 		private void SelectMovie_Load(object sender, System.EventArgs e)
 		{
-			btnOk.Text = i18n.t("btn_ok");
-			btnSkip.Text = i18n.t("btn_skip");
+            //btnOk.Text = i18n.t("btn_ok");
+			//btnSkip.Text = i18n.t("btn_skip");
 		}
 
 		private void showList_SelectedIndexChanged(object sender, System.EventArgs e)

@@ -55,7 +55,7 @@ namespace MediaRenamer.Common
 			if (lngFile == null)
 			{
 				// Log.Add("Loading file for translation");
-                String baseFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\" + Application.ProductName + @"\";
+                String baseFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\" + Application.ProductName + @"\Language\";
                 if (!Directory.Exists(baseFolder))
                 {
                     Directory.CreateDirectory(baseFolder);
@@ -63,13 +63,13 @@ namespace MediaRenamer.Common
 
 				String lang;
 				lang = Settings.GetValueAsString(SettingKeys.UILanguage);
-                lngFile = baseFolder + @"Language\" + lang + ".ini";
-                lngBackup = baseFolder + @"Language\en.ini";
+                lngFile = baseFolder + lang + ".ini";
+                lngBackup = baseFolder + @"en.ini";
 				if (!File.Exists(lngFile))
 				{
 					lang = "en";
 				}
-                lngFile = baseFolder + @"Language\" + lang + ".ini";
+                lngFile = baseFolder + lang + ".ini";
 			}
 
 			StringBuilder buffer = new StringBuilder (1024);
