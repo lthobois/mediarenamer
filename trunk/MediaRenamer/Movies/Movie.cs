@@ -152,7 +152,14 @@ namespace MovieRenamer
             if (needRenaming())
             {
                 FileInfo fi = new FileInfo(filename);
-                fi.MoveTo(fi.DirectoryName+@"\"+modifiedName());
+                if (!File.Exists(fi.DirectoryName + @"\" + modifiedName()))
+                {
+                    fi.MoveTo(fi.DirectoryName + @"\" + modifiedName());
+                }
+                else
+                {
+                    MessageBox.Show("A file with the same name already exists. \nYou cannot rename the file " + fi.Name, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 

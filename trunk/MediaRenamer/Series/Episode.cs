@@ -9,6 +9,7 @@ using System.IO;
 using System.Threading;
 using MediaRenamer;
 using MediaRenamer.Common;
+using System.Windows.Forms;
 
 namespace TVShowRenamer
 {
@@ -229,13 +230,13 @@ namespace TVShowRenamer
             if (needRenaming())
             {
                 FileInfo fi = new FileInfo(filename);
-                try
+                if (!File.Exists(fi.DirectoryName + @"\" + modifiedName()))
                 {
                     fi.MoveTo(fi.DirectoryName + @"\" + modifiedName());
                 }
-                catch
+                else
                 {
-                    //Log.Add("Could not rename: " + fi.Name);
+                    MessageBox.Show("A file with the same name already exists. \nYou cannot rename the file " + fi.Name, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
