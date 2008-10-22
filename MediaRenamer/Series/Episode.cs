@@ -230,9 +230,11 @@ namespace TVShowRenamer
             if (needRenaming())
             {
                 FileInfo fi = new FileInfo(filename);
-                if (!File.Exists(fi.DirectoryName + @"\" + modifiedName()))
+                String modifiedFilename = fi.DirectoryName + @"\" + modifiedName();
+                if (!File.Exists(modifiedFilename) ||
+                    modifiedFilename.ToLower() == filename.ToLower())
                 {
-                    fi.MoveTo(fi.DirectoryName + @"\" + modifiedName());
+                    fi.MoveTo(modifiedFilename);
                 }
                 else
                 {

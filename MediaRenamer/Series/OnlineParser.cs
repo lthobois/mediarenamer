@@ -219,9 +219,9 @@ namespace TVShowRenamer
                     }
                     if (showDlg != null)
                     {
-                        if ( (showDlg as SelectShow).selectedShow != null)
+                        if (showDlg.ShowDialog() == DialogResult.OK)
                         {
-                            if (showDlg.ShowDialog() == DialogResult.OK)
+                            if ((showDlg as SelectShow).selectedShow != null)
                             {
                                 cli.DownloadFile(
                                     String.Format(detailUrl,
