@@ -67,19 +67,6 @@
             this.btnMovieScan = new System.Windows.Forms.Button();
             this.moviePathLabel = new System.Windows.Forms.Label();
             this.movieScanPath = new System.Windows.Forms.ComboBox();
-            this.tabWatch = new System.Windows.Forms.TabPage();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label_watchType = new System.Windows.Forms.Label();
-            this.label_watchPath = new System.Windows.Forms.Label();
-            this.addWatchType = new System.Windows.Forms.ComboBox();
-            this.addWatchFolder = new System.Windows.Forms.Button();
-            this.addWatchPath = new System.Windows.Forms.TextBox();
-            this.watchedFolders = new System.Windows.Forms.ListBox();
-            this.contextWatchFolder = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.runWatcherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.stopWatcherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.deleteSelectedWatcherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabOptions = new System.Windows.Forms.TabPage();
             this.optionGroupOthers = new System.Windows.Forms.GroupBox();
             this.label_langUI = new System.Windows.Forms.Label();
@@ -96,13 +83,28 @@
             this.labelTVSource = new System.Windows.Forms.Label();
             this.option_seriesFormat = new System.Windows.Forms.TextBox();
             this.labelTVOutput = new System.Windows.Forms.Label();
+            this.tabWatch = new System.Windows.Forms.TabPage();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label_watchType = new System.Windows.Forms.Label();
+            this.label_watchPath = new System.Windows.Forms.Label();
+            this.addWatchType = new System.Windows.Forms.ComboBox();
+            this.addWatchFolder = new System.Windows.Forms.Button();
+            this.addWatchPath = new System.Windows.Forms.TextBox();
+            this.watchedFolders = new System.Windows.Forms.ListBox();
+            this.contextWatchFolder = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.runWatcherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stopWatcherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.deleteSelectedWatcherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.sysTrayMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.sysTrayOpen = new System.Windows.Forms.ToolStripMenuItem();
+            this.displayDropTargetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.sysTrayExit = new System.Windows.Forms.ToolStripMenuItem();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.optionDropTarget = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.tabSeries.SuspendLayout();
@@ -110,14 +112,14 @@
             this.groupSeries.SuspendLayout();
             this.tabMovies.SuspendLayout();
             this.groupMovies.SuspendLayout();
-            this.tabWatch.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            this.contextWatchFolder.SuspendLayout();
             this.tabOptions.SuspendLayout();
             this.optionGroupOthers.SuspendLayout();
             this.optionGroupMovies.SuspendLayout();
             this.optionGroupSeries.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.tabWatch.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.contextWatchFolder.SuspendLayout();
             this.sysTrayMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -149,7 +151,6 @@
             // 
             this.tabControl.Controls.Add(this.tabSeries);
             this.tabControl.Controls.Add(this.tabMovies);
-            this.tabControl.Controls.Add(this.tabWatch);
             this.tabControl.Controls.Add(this.tabOptions);
             this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl.Location = new System.Drawing.Point(144, 0);
@@ -507,141 +508,6 @@
             this.movieScanPath.SelectedIndexChanged += new System.EventHandler(this.movieScanPath_TextUpdate);
             this.movieScanPath.TextUpdate += new System.EventHandler(this.movieScanPath_TextUpdate);
             // 
-            // tabWatch
-            // 
-            this.tabWatch.Controls.Add(this.groupBox1);
-            this.tabWatch.Controls.Add(this.watchedFolders);
-            this.tabWatch.Location = new System.Drawing.Point(4, 22);
-            this.tabWatch.Name = "tabWatch";
-            this.tabWatch.Padding = new System.Windows.Forms.Padding(3);
-            this.tabWatch.Size = new System.Drawing.Size(562, 403);
-            this.tabWatch.TabIndex = 2;
-            this.tabWatch.Text = "Watched Folders";
-            this.tabWatch.UseVisualStyleBackColor = true;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.label_watchType);
-            this.groupBox1.Controls.Add(this.label_watchPath);
-            this.groupBox1.Controls.Add(this.addWatchType);
-            this.groupBox1.Controls.Add(this.addWatchFolder);
-            this.groupBox1.Controls.Add(this.addWatchPath);
-            this.groupBox1.Location = new System.Drawing.Point(7, 7);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(549, 71);
-            this.groupBox1.TabIndex = 6;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Add a watched folder";
-            // 
-            // label_watchType
-            // 
-            this.label_watchType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label_watchType.AutoSize = true;
-            this.label_watchType.Location = new System.Drawing.Point(325, 22);
-            this.label_watchType.Name = "label_watchType";
-            this.label_watchType.Size = new System.Drawing.Size(56, 13);
-            this.label_watchType.TabIndex = 10;
-            this.label_watchType.Text = "Foldertype";
-            // 
-            // label_watchPath
-            // 
-            this.label_watchPath.AutoSize = true;
-            this.label_watchPath.Location = new System.Drawing.Point(6, 22);
-            this.label_watchPath.Name = "label_watchPath";
-            this.label_watchPath.Size = new System.Drawing.Size(139, 13);
-            this.label_watchPath.TabIndex = 9;
-            this.label_watchPath.Text = "Folder to watch for changes";
-            // 
-            // addWatchType
-            // 
-            this.addWatchType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.addWatchType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.addWatchType.FormattingEnabled = true;
-            this.addWatchType.Location = new System.Drawing.Point(328, 38);
-            this.addWatchType.Name = "addWatchType";
-            this.addWatchType.Size = new System.Drawing.Size(134, 21);
-            this.addWatchType.TabIndex = 7;
-            this.addWatchType.SelectedValueChanged += new System.EventHandler(this.addWatchFolder_Changed);
-            this.addWatchType.TextChanged += new System.EventHandler(this.addWatchFolder_Changed);
-            // 
-            // addWatchFolder
-            // 
-            this.addWatchFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.addWatchFolder.Enabled = false;
-            this.addWatchFolder.Location = new System.Drawing.Point(466, 36);
-            this.addWatchFolder.Name = "addWatchFolder";
-            this.addWatchFolder.Size = new System.Drawing.Size(75, 23);
-            this.addWatchFolder.TabIndex = 8;
-            this.addWatchFolder.Text = "Add Folder";
-            this.addWatchFolder.UseVisualStyleBackColor = true;
-            this.addWatchFolder.Click += new System.EventHandler(this.watchAddTest_Click);
-            // 
-            // addWatchPath
-            // 
-            this.addWatchPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.addWatchPath.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.addWatchPath.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystemDirectories;
-            this.addWatchPath.Location = new System.Drawing.Point(9, 38);
-            this.addWatchPath.Name = "addWatchPath";
-            this.addWatchPath.Size = new System.Drawing.Size(313, 20);
-            this.addWatchPath.TabIndex = 6;
-            this.addWatchPath.TextChanged += new System.EventHandler(this.addWatchFolder_Changed);
-            // 
-            // watchedFolders
-            // 
-            this.watchedFolders.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.watchedFolders.ContextMenuStrip = this.contextWatchFolder;
-            this.watchedFolders.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.watchedFolders.FormattingEnabled = true;
-            this.watchedFolders.ItemHeight = 36;
-            this.watchedFolders.Location = new System.Drawing.Point(7, 84);
-            this.watchedFolders.Name = "watchedFolders";
-            this.watchedFolders.Size = new System.Drawing.Size(549, 292);
-            this.watchedFolders.TabIndex = 3;
-            this.watchedFolders.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.watchedFolders_DrawItem);
-            // 
-            // contextWatchFolder
-            // 
-            this.contextWatchFolder.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.runWatcherToolStripMenuItem,
-            this.stopWatcherToolStripMenuItem,
-            this.toolStripSeparator2,
-            this.deleteSelectedWatcherToolStripMenuItem});
-            this.contextWatchFolder.Name = "contextWatchFolder";
-            this.contextWatchFolder.Size = new System.Drawing.Size(200, 76);
-            this.contextWatchFolder.Opening += new System.ComponentModel.CancelEventHandler(this.contextWatchFolder_Opening);
-            // 
-            // runWatcherToolStripMenuItem
-            // 
-            this.runWatcherToolStripMenuItem.Name = "runWatcherToolStripMenuItem";
-            this.runWatcherToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
-            this.runWatcherToolStripMenuItem.Text = "run Watcher";
-            this.runWatcherToolStripMenuItem.Click += new System.EventHandler(this.runWatcherToolStripMenuItem_Click);
-            // 
-            // stopWatcherToolStripMenuItem
-            // 
-            this.stopWatcherToolStripMenuItem.Name = "stopWatcherToolStripMenuItem";
-            this.stopWatcherToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
-            this.stopWatcherToolStripMenuItem.Text = "stop Watcher";
-            this.stopWatcherToolStripMenuItem.Click += new System.EventHandler(this.stopWatcherToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(196, 6);
-            // 
-            // deleteSelectedWatcherToolStripMenuItem
-            // 
-            this.deleteSelectedWatcherToolStripMenuItem.Name = "deleteSelectedWatcherToolStripMenuItem";
-            this.deleteSelectedWatcherToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
-            this.deleteSelectedWatcherToolStripMenuItem.Text = "delete selected Watcher";
-            this.deleteSelectedWatcherToolStripMenuItem.Click += new System.EventHandler(this.deleteSelectedWatcherToolStripMenuItem_Click);
-            // 
             // tabOptions
             // 
             this.tabOptions.AutoScroll = true;
@@ -657,20 +523,21 @@
             // 
             // optionGroupOthers
             // 
+            this.optionGroupOthers.Controls.Add(this.optionDropTarget);
             this.optionGroupOthers.Controls.Add(this.label_langUI);
             this.optionGroupOthers.Controls.Add(this.option_langUI);
             this.optionGroupOthers.Controls.Add(this.optionSysTray);
             this.optionGroupOthers.Controls.Add(this.optionWindowsStart);
             this.optionGroupOthers.Location = new System.Drawing.Point(4, 201);
             this.optionGroupOthers.Name = "optionGroupOthers";
-            this.optionGroupOthers.Size = new System.Drawing.Size(505, 100);
+            this.optionGroupOthers.Size = new System.Drawing.Size(505, 128);
             this.optionGroupOthers.TabIndex = 3;
             this.optionGroupOthers.TabStop = false;
             this.optionGroupOthers.Text = "General Options";
             // 
             // label_langUI
             // 
-            this.label_langUI.Location = new System.Drawing.Point(5, 64);
+            this.label_langUI.Location = new System.Drawing.Point(5, 86);
             this.label_langUI.Name = "label_langUI";
             this.label_langUI.Size = new System.Drawing.Size(130, 23);
             this.label_langUI.TabIndex = 16;
@@ -681,7 +548,7 @@
             // 
             this.option_langUI.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.option_langUI.FormattingEnabled = true;
-            this.option_langUI.Location = new System.Drawing.Point(141, 66);
+            this.option_langUI.Location = new System.Drawing.Point(141, 88);
             this.option_langUI.Name = "option_langUI";
             this.option_langUI.Size = new System.Drawing.Size(229, 21);
             this.option_langUI.TabIndex = 2;
@@ -689,7 +556,7 @@
             // optionSysTray
             // 
             this.optionSysTray.AutoSize = true;
-            this.optionSysTray.Location = new System.Drawing.Point(30, 43);
+            this.optionSysTray.Location = new System.Drawing.Point(30, 65);
             this.optionSysTray.Name = "optionSysTray";
             this.optionSysTray.Size = new System.Drawing.Size(219, 17);
             this.optionSysTray.TabIndex = 1;
@@ -829,6 +696,141 @@
             this.labelTVOutput.Text = "Output Format:";
             this.labelTVOutput.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // tabWatch
+            // 
+            this.tabWatch.Controls.Add(this.groupBox1);
+            this.tabWatch.Controls.Add(this.watchedFolders);
+            this.tabWatch.Location = new System.Drawing.Point(4, 22);
+            this.tabWatch.Name = "tabWatch";
+            this.tabWatch.Padding = new System.Windows.Forms.Padding(3);
+            this.tabWatch.Size = new System.Drawing.Size(562, 403);
+            this.tabWatch.TabIndex = 2;
+            this.tabWatch.Text = "Watched Folders";
+            this.tabWatch.UseVisualStyleBackColor = true;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.label_watchType);
+            this.groupBox1.Controls.Add(this.label_watchPath);
+            this.groupBox1.Controls.Add(this.addWatchType);
+            this.groupBox1.Controls.Add(this.addWatchFolder);
+            this.groupBox1.Controls.Add(this.addWatchPath);
+            this.groupBox1.Location = new System.Drawing.Point(7, 7);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(549, 71);
+            this.groupBox1.TabIndex = 6;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Add a watched folder";
+            // 
+            // label_watchType
+            // 
+            this.label_watchType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label_watchType.AutoSize = true;
+            this.label_watchType.Location = new System.Drawing.Point(325, 22);
+            this.label_watchType.Name = "label_watchType";
+            this.label_watchType.Size = new System.Drawing.Size(56, 13);
+            this.label_watchType.TabIndex = 10;
+            this.label_watchType.Text = "Foldertype";
+            // 
+            // label_watchPath
+            // 
+            this.label_watchPath.AutoSize = true;
+            this.label_watchPath.Location = new System.Drawing.Point(6, 22);
+            this.label_watchPath.Name = "label_watchPath";
+            this.label_watchPath.Size = new System.Drawing.Size(139, 13);
+            this.label_watchPath.TabIndex = 9;
+            this.label_watchPath.Text = "Folder to watch for changes";
+            // 
+            // addWatchType
+            // 
+            this.addWatchType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.addWatchType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.addWatchType.FormattingEnabled = true;
+            this.addWatchType.Location = new System.Drawing.Point(328, 38);
+            this.addWatchType.Name = "addWatchType";
+            this.addWatchType.Size = new System.Drawing.Size(134, 21);
+            this.addWatchType.TabIndex = 7;
+            this.addWatchType.SelectedValueChanged += new System.EventHandler(this.addWatchFolder_Changed);
+            this.addWatchType.TextChanged += new System.EventHandler(this.addWatchFolder_Changed);
+            // 
+            // addWatchFolder
+            // 
+            this.addWatchFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.addWatchFolder.Enabled = false;
+            this.addWatchFolder.Location = new System.Drawing.Point(466, 36);
+            this.addWatchFolder.Name = "addWatchFolder";
+            this.addWatchFolder.Size = new System.Drawing.Size(75, 23);
+            this.addWatchFolder.TabIndex = 8;
+            this.addWatchFolder.Text = "Add Folder";
+            this.addWatchFolder.UseVisualStyleBackColor = true;
+            this.addWatchFolder.Click += new System.EventHandler(this.watchAddTest_Click);
+            // 
+            // addWatchPath
+            // 
+            this.addWatchPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.addWatchPath.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.addWatchPath.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystemDirectories;
+            this.addWatchPath.Location = new System.Drawing.Point(9, 38);
+            this.addWatchPath.Name = "addWatchPath";
+            this.addWatchPath.Size = new System.Drawing.Size(313, 20);
+            this.addWatchPath.TabIndex = 6;
+            this.addWatchPath.TextChanged += new System.EventHandler(this.addWatchFolder_Changed);
+            // 
+            // watchedFolders
+            // 
+            this.watchedFolders.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.watchedFolders.ContextMenuStrip = this.contextWatchFolder;
+            this.watchedFolders.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.watchedFolders.FormattingEnabled = true;
+            this.watchedFolders.ItemHeight = 36;
+            this.watchedFolders.Location = new System.Drawing.Point(7, 84);
+            this.watchedFolders.Name = "watchedFolders";
+            this.watchedFolders.Size = new System.Drawing.Size(549, 292);
+            this.watchedFolders.TabIndex = 3;
+            this.watchedFolders.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.watchedFolders_DrawItem);
+            // 
+            // contextWatchFolder
+            // 
+            this.contextWatchFolder.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.runWatcherToolStripMenuItem,
+            this.stopWatcherToolStripMenuItem,
+            this.toolStripSeparator2,
+            this.deleteSelectedWatcherToolStripMenuItem});
+            this.contextWatchFolder.Name = "contextWatchFolder";
+            this.contextWatchFolder.Size = new System.Drawing.Size(200, 76);
+            this.contextWatchFolder.Opening += new System.ComponentModel.CancelEventHandler(this.contextWatchFolder_Opening);
+            // 
+            // runWatcherToolStripMenuItem
+            // 
+            this.runWatcherToolStripMenuItem.Name = "runWatcherToolStripMenuItem";
+            this.runWatcherToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
+            this.runWatcherToolStripMenuItem.Text = "run Watcher";
+            this.runWatcherToolStripMenuItem.Click += new System.EventHandler(this.runWatcherToolStripMenuItem_Click);
+            // 
+            // stopWatcherToolStripMenuItem
+            // 
+            this.stopWatcherToolStripMenuItem.Name = "stopWatcherToolStripMenuItem";
+            this.stopWatcherToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
+            this.stopWatcherToolStripMenuItem.Text = "stop Watcher";
+            this.stopWatcherToolStripMenuItem.Click += new System.EventHandler(this.stopWatcherToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(196, 6);
+            // 
+            // deleteSelectedWatcherToolStripMenuItem
+            // 
+            this.deleteSelectedWatcherToolStripMenuItem.Name = "deleteSelectedWatcherToolStripMenuItem";
+            this.deleteSelectedWatcherToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
+            this.deleteSelectedWatcherToolStripMenuItem.Text = "delete selected Watcher";
+            this.deleteSelectedWatcherToolStripMenuItem.Click += new System.EventHandler(this.deleteSelectedWatcherToolStripMenuItem_Click);
+            // 
             // notifyIcon
             // 
             this.notifyIcon.ContextMenuStrip = this.sysTrayMenu;
@@ -840,30 +842,49 @@
             // 
             this.sysTrayMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.sysTrayOpen,
+            this.displayDropTargetToolStripMenuItem,
             this.toolStripSeparator1,
             this.sysTrayExit});
             this.sysTrayMenu.Name = "sysTrayMenu";
-            this.sysTrayMenu.Size = new System.Drawing.Size(171, 54);
+            this.sysTrayMenu.Size = new System.Drawing.Size(176, 76);
             // 
             // sysTrayOpen
             // 
             this.sysTrayOpen.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.sysTrayOpen.Name = "sysTrayOpen";
-            this.sysTrayOpen.Size = new System.Drawing.Size(170, 22);
+            this.sysTrayOpen.Size = new System.Drawing.Size(175, 22);
             this.sysTrayOpen.Text = "Show Application";
             this.sysTrayOpen.Click += new System.EventHandler(this.sysTrayOpen_Click);
+            // 
+            // displayDropTargetToolStripMenuItem
+            // 
+            this.displayDropTargetToolStripMenuItem.Name = "displayDropTargetToolStripMenuItem";
+            this.displayDropTargetToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.displayDropTargetToolStripMenuItem.Text = "Display DropTarget";
+            this.displayDropTargetToolStripMenuItem.Click += new System.EventHandler(this.displayDropTargetToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(167, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(172, 6);
             // 
             // sysTrayExit
             // 
             this.sysTrayExit.Name = "sysTrayExit";
-            this.sysTrayExit.Size = new System.Drawing.Size(170, 22);
+            this.sysTrayExit.Size = new System.Drawing.Size(175, 22);
             this.sysTrayExit.Text = "Exit";
             this.sysTrayExit.Click += new System.EventHandler(this.sysTrayExit_Click);
+            // 
+            // optionDropTarget
+            // 
+            this.optionDropTarget.AutoSize = true;
+            this.optionDropTarget.Location = new System.Drawing.Point(30, 42);
+            this.optionDropTarget.Name = "optionDropTarget";
+            this.optionDropTarget.Size = new System.Drawing.Size(173, 17);
+            this.optionDropTarget.TabIndex = 17;
+            this.optionDropTarget.Text = "Display dropTarget on Desktop";
+            this.optionDropTarget.UseVisualStyleBackColor = true;
+            this.optionDropTarget.CheckedChanged += new System.EventHandler(this.optionDropTarget_CheckedChanged);
             // 
             // mainForm
             // 
@@ -874,8 +895,10 @@
             this.Controls.Add(this.panel1);
             this.MinimumSize = new System.Drawing.Size(730, 465);
             this.Name = "mainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MediaRenamer";
             this.Load += new System.EventHandler(this.mainForm_Load);
+            this.SizeChanged += new System.EventHandler(this.mainForm_SizeChanged);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.mainForm_FormClosing);
             this.panel1.ResumeLayout(false);
             this.tabControl.ResumeLayout(false);
@@ -886,10 +909,6 @@
             this.tabMovies.ResumeLayout(false);
             this.groupMovies.ResumeLayout(false);
             this.groupMovies.PerformLayout();
-            this.tabWatch.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.contextWatchFolder.ResumeLayout(false);
             this.tabOptions.ResumeLayout(false);
             this.tabOptions.PerformLayout();
             this.optionGroupOthers.ResumeLayout(false);
@@ -899,6 +918,10 @@
             this.optionGroupSeries.ResumeLayout(false);
             this.optionGroupSeries.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.tabWatch.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.contextWatchFolder.ResumeLayout(false);
             this.sysTrayMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -979,6 +1002,8 @@
         private System.Windows.Forms.Button btnSeriesBrowse;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
         private System.Windows.Forms.Button btnPathMovies;
+        private System.Windows.Forms.ToolStripMenuItem displayDropTargetToolStripMenuItem;
+        private System.Windows.Forms.CheckBox optionDropTarget;
     }
 }
 

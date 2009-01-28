@@ -9,32 +9,51 @@ using System.Threading;
 using System.IO;
 using System.ServiceProcess;
 using MediaRenamer.Common;
+using Microsoft.Win32;
 
 namespace MediaRenamer
 {
     public partial class mainForm : Form
     {
         public static mainForm instance = null;
+        public static Form dialogOwner = null;
+        public RenameDrop dropform = new RenameDrop();
 
         public mainForm()
         {
             InitializeComponent();
             mainForm.instance = this;
+            mainForm.dialogOwner = this;
         }
 
         private void mainForm_Load(object sender, EventArgs e)
         {
+            RegistryKey key = Registry.CurrentUser.CreateSubKey(@"Software\MediaRenamer");
+            key.Close();
+
             Text = Application.ProductName + " v" + Application.ProductVersion;
 
             addWatchType.Items.Add(WatchFolderEntryType.MOVIES);
             addWatchType.Items.Add(WatchFolderEntryType.SERIES);
 
-
             notifyIcon.Visible = Settings.GetValueAsBool(SettingKeys.SysTrayIcon);
             optionSysTray.Checked = Settings.GetValueAsBool(SettingKeys.SysTrayIcon);
+            this.ShowInTaskbar = !Settings.GetValueAsBool(SettingKeys.SysTrayIcon);
 
-            option_movieFormat.Text = Settings.GetValueAsString(SettingKeys.MovieFormat);
-            option_seriesFormat.Text = Settings.GetValueAsString(SettingKeys.SeriesFormat);
+            displayDropTarget(Settings.GetValueAsBool(SettingKeys.DisplayDropTarget));
+            optionDropTarget.Checked = Settings.GetValueAsBool(SettingKeys.DisplayDropTarget);
+
+            String movieFmt = Settings.GetValueAsString(SettingKeys.MovieFormat);
+            if (movieFmt != String.Empty)
+            {
+                option_movieFormat.Text = movieFmt;
+            }
+
+            String seriesFmt = Settings.GetValueAsString(SettingKeys.SeriesFormat);
+            if (seriesFmt != String.Empty)
+            {
+                option_seriesFormat.Text = seriesFmt;
+            }
 
             Object[] items = null;
             items = Settings.GetValueAsArray(SettingKeys.MoviePaths);
@@ -69,8 +88,7 @@ namespace MediaRenamer
                 if (e.CloseReason == CloseReason.UserClosing)
                 {
                     e.Cancel = true;
-                    this.WindowState = FormWindowState.Minimized;
-                    this.ShowInTaskbar = false;
+                    this.Hide();
                 }
             }
             if (!e.Cancel)
@@ -511,20 +529,24 @@ namespace MediaRenamer
         {
             if (e.Button == MouseButtons.Left)
             {
-                this.WindowState = FormWindowState.Normal;
-                this.ShowInTaskbar = true;
+                this.Show();
             }
         }
 
         private void sysTrayOpen_Click(object sender, EventArgs e)
         {
-            this.WindowState = FormWindowState.Normal;
+            this.Show();
+
+            // Move window to foreground
+            this.TopMost = true;
+            this.TopMost = false;
         }
 
         private void optionSysTray_CheckedChanged(object sender, EventArgs e)
         {
             Settings.SetValue(SettingKeys.SysTrayIcon, optionSysTray.Checked);
             notifyIcon.Visible = optionSysTray.Checked;
+            this.ShowInTaskbar = !optionSysTray.Checked;
         }
 
         private void option_seriesFormat_Leave(object sender, EventArgs e)
@@ -668,6 +690,46 @@ namespace MediaRenamer
             {
                 movieScanPath.Text = folderBrowserDialog.SelectedPath;
             }
+        }
+
+        private void displayDropTargetToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            displayDropTarget(!dropform.Visible);
+        }
+
+        private void displayDropTarget(bool visible)
+        {
+            Int32 dropPadding = 20;
+            if (visible)
+            {
+                dropform.Show();
+                mainForm.dialogOwner = dropform;
+            }
+            else
+            {
+                dropform.Hide();
+                mainForm.dialogOwner = this;
+            }
+            dropform.Left = Screen.PrimaryScreen.WorkingArea.Width - dropform.Width - dropPadding;
+            dropform.Top = Screen.PrimaryScreen.WorkingArea.Height - dropform.Height - dropPadding;
+        }
+
+        private void mainForm_SizeChanged(object sender, EventArgs e)
+        {
+            if (Settings.GetValueAsBool(SettingKeys.SysTrayIcon))
+            {
+                if (this.WindowState == FormWindowState.Minimized)
+                {
+                    this.WindowState = FormWindowState.Normal;
+                    this.Hide();
+                }
+            }
+        }
+
+        private void optionDropTarget_CheckedChanged(object sender, EventArgs e)
+        {
+            Settings.SetValue(SettingKeys.DisplayDropTarget, optionDropTarget.Checked);
+            displayDropTarget(optionDropTarget.Checked);
         }
 
 

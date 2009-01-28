@@ -12,6 +12,7 @@ namespace MediaRenamer.Common
     public enum SettingKeys
     {
         SysTrayIcon,
+        DisplayDropTarget,
         WindowsStart,
         MovieFormat,
         SeriesFormat,
