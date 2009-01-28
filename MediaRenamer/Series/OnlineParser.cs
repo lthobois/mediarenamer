@@ -31,6 +31,9 @@ namespace TVShowRenamer
 			String cacheDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)+@"\"+Application.ProductName+@"\series\";
 			if (!Directory.Exists(cacheDir)) Directory.CreateDirectory(cacheDir);
 			cache = cacheDir+"{0}_{1}.dat";
+
+            RegistryKey key = Registry.CurrentUser.CreateSubKey(@"Software\MediaRenamer\Series");
+            key.Close();
 		}
 
 		private XmlDocument getSeriesData(ref Episode ep)
@@ -56,7 +59,7 @@ namespace TVShowRenamer
                     if (ep.series.Equals(ep.altSeries))
                     {
                         InputDialog input = new InputDialog("Please enter the correct series name:", "Series not found", ep.series);
-                        if (input.ShowDialog() == DialogResult.OK)
+                        if (input.ShowDialog(mainForm.dialogOwner) == DialogResult.OK)
                         {
                             Registry.CurrentUser.DeleteSubKey(@"Software\MediaRenamer\Series\" + input.value);
                             ep.altSeries = input.value;

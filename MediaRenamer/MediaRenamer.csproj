@@ -72,7 +72,7 @@
       <DependentUpon>mainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -101,6 +101,12 @@
     <Compile Include="Movies\SelectMovie.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="RenameDrop.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RenameDrop.Designer.cs">
+      <DependentUpon>RenameDrop.cs</DependentUpon>
+    </Compile>
     <Compile Include="Series\Episode.cs" />
     <Compile Include="Series\OnlineParser.cs" />
     <Compile Include="Series\Parser.cs" />
@@ -109,6 +115,7 @@
     </Compile>
     <Compile Include="Series\showClass.cs" />
     <Compile Include="Common\watchedFolderEntry.cs" />
+    <Compile Include="Common\VistaGlass.cs" />
     <Compile Include="XMLSerializer\BinaryContainer.cs" />
     <Compile Include="XMLSerializer\IXmlSerializationTag.cs" />
     <Compile Include="XMLSerializer\XmlDeserializer.cs" />
@@ -128,6 +135,10 @@
       <DependentUpon>InputDialog.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="RenameDrop.resx">
+      <DependentUpon>RenameDrop.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\thread_running.png" />
     <EmbeddedResource Include="Resources\thread_stopped.png" />
   </ItemGroup>
@@ -136,6 +147,7 @@
     <None Include="Resources\help.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\dropTarget.png" />
     <Content Include="Resources\SysTray.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

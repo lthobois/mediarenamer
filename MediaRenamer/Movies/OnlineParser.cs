@@ -243,7 +243,7 @@ namespace MovieRenamer
                     }
                 }
 
-                if (movieDlg.ShowDialog() == DialogResult.OK)
+                if (movieDlg.ShowDialog(mainForm.dialogOwner) == DialogResult.OK)
                 {
                     setMovieTitle(ref movie, (movieDlg as SelectMovie).selectedMovie);
                 }
