@@ -10,6 +10,7 @@ using System.IO;
 using System.ServiceProcess;
 using MediaRenamer.Common;
 using Microsoft.Win32;
+using System.Reflection;
 
 namespace MediaRenamer
 {
@@ -39,6 +40,7 @@ namespace MediaRenamer
             notifyIcon.Visible = Settings.GetValueAsBool(SettingKeys.SysTrayIcon);
             optionSysTray.Checked = Settings.GetValueAsBool(SettingKeys.SysTrayIcon);
             this.ShowInTaskbar = !Settings.GetValueAsBool(SettingKeys.SysTrayIcon);
+            this.Visible = !Settings.GetValueAsBool(SettingKeys.SysTrayIcon);
 
             displayDropTarget(Settings.GetValueAsBool(SettingKeys.DisplayDropTarget));
             optionDropTarget.Checked = Settings.GetValueAsBool(SettingKeys.DisplayDropTarget);
@@ -79,6 +81,16 @@ namespace MediaRenamer
             option_langUI.Items.Add(ui18nLang);
             option_langUI.SelectedItem = ui18nLang;
 
+            if (VistaGlass.IsGlassSupported())
+            {
+                VistaGlass.Margins marg = new VistaGlass.Margins();
+                //marg.Top = panelTop.Height;
+                //marg.Left = panelTop.Width;
+
+                //panelTop.BackColor = Color.Black;
+                VistaGlass.ExtendGlassFrame(this.Handle, ref marg);
+            }
+
         }
 
         private void mainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -94,42 +106,6 @@ namespace MediaRenamer
             if (!e.Cancel)
             {
                 saveWatchedFolders();
-            }
-        }
-
-        private void saveWatchedFolders()
-        {
-            Object[] folders = new Object[watchedFolders.Items.Count];
-            for (int i = 0; i < watchedFolders.Items.Count; i++)
-            {
-                folders[i] = watchedFolders.Items[i];
-            }
-            Settings.SetValue(SettingKeys.WatchedFolders, folders);
-        }
-
-        delegate void insertLogCallback(string text);
-        public void insertLog(string text)
-        {
-            // InvokeRequired required compares the thread ID of the
-            // calling thread to the thread ID of the creating thread.
-            // If these threads are different, it returns true.
-            if (infoLog.InvokeRequired)
-            {
-                insertLogCallback d = new insertLogCallback(insertLog);
-                this.Invoke(d, new object[] { text });
-            }
-            else
-            {
-                infoLog.Items.Insert(0, text);
-                infoLog.Update();
-            }
-        }
-
-        private void infoLog_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (infoLog.SelectedItem != null)
-            {
-                toolTip.SetToolTip(infoLog, infoLog.SelectedItem.ToString());
             }
         }
 
@@ -179,6 +155,16 @@ namespace MediaRenamer
         }
 
         #region WatchFolder Methods
+
+        private void saveWatchedFolders()
+        {
+            Object[] folders = new Object[watchedFolders.Items.Count];
+            for (int i = 0; i < watchedFolders.Items.Count; i++)
+            {
+                folders[i] = watchedFolders.Items[i];
+            }
+            Settings.SetValue(SettingKeys.WatchedFolders, folders);
+        }
 
         private void watchAddTest_Click(object sender, EventArgs e)
         {
@@ -732,6 +718,15 @@ namespace MediaRenamer
             displayDropTarget(optionDropTarget.Checked);
         }
 
-
+        private void btnMenu_Paint(object sender, PaintEventArgs e)
+        {
+            Graphics g = e.Graphics;
+            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.High;
+            Point[] points = new Point[3];
+            points[0] = new Point(e.ClipRectangle.Right - 12, e.ClipRectangle.Top + (e.ClipRectangle.Height / 2) - 1);
+            points[1] = new Point(e.ClipRectangle.Right - 7, e.ClipRectangle.Top + (e.ClipRectangle.Height / 2) - 1);
+            points[2] = new Point(e.ClipRectangle.Right - 10, e.ClipRectangle.Top + (e.ClipRectangle.Height / 2) + 2);
+            g.FillPolygon(Brushes.Black, points);
+        }
     }
 }
