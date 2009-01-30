@@ -10,7 +10,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using MediaRenamer.Common;
 
-namespace MovieRenamer
+namespace MediaRenamer.Movies
 {
 	/// <summary>
 	/// Zusammenfassung für Episode.
@@ -156,9 +156,29 @@ namespace MovieRenamer
             if (needRenaming())
             {
                 FileInfo fi = new FileInfo(filename);
-                if (!File.Exists(fi.DirectoryName + @"\" + modifiedName()))
+                String modifiedFilename = fi.DirectoryName + @"\" + modifiedName();
+                if (!File.Exists(modifiedFilename))
                 {
-                    fi.MoveTo(fi.DirectoryName + @"\" + modifiedName());
+                    fi.MoveTo(modifiedFilename);
+                    _filename = modifiedFilename;
+                }
+                else
+                {
+                    MessageBox.Show("A file with the same name already exists. \nYou cannot rename the file " + fi.Name, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        public void renameMovieAndMove(String targetFolder)
+        {
+            if (needRenaming())
+            {
+                FileInfo fi = new FileInfo(filename);
+                String modifiedFilename = targetFolder + @"\" + modifiedName();
+                if (!File.Exists(modifiedFilename))
+                {
+                    fi.MoveTo(modifiedFilename);
+                    _filename = modifiedFilename;
                 }
                 else
                 {
@@ -171,7 +191,7 @@ namespace MovieRenamer
 		{
             String renameFormat = "<moviename> (<year><disk:,CD><disk><lang:,><lang>)";
             String savedFormat = Settings.GetValueAsString(SettingKeys.MovieFormat);
-            if (savedFormat != String.Empty)
+            if (savedFormat != "" && savedFormat != String.Empty && savedFormat != null)
                 renameFormat = savedFormat;
 
 

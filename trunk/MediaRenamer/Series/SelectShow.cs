@@ -13,7 +13,7 @@ using System.Windows.Forms;
 using MediaRenamer;
 using MediaRenamer.Common;
 
-namespace TVShowRenamer
+namespace MediaRenamer.Series
 {
 	/// <summary>
 	/// Zusammenfassung für SelectShow.
@@ -24,6 +24,10 @@ namespace TVShowRenamer
 		private System.Windows.Forms.Button btnOk;
 		private System.Windows.Forms.ListBox showList;
 		private System.Windows.Forms.Button btnSkip;
+        private Label label1;
+        private Label label2;
+        private Label labelSeries;
+        private Label labelEpisode;
 		/// <summary>
 		/// Erforderliche Designervariable.
 		/// </summary>
@@ -63,58 +67,108 @@ namespace TVShowRenamer
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.btnOk = new System.Windows.Forms.Button();
-			this.showList = new System.Windows.Forms.ListBox();
-			this.btnSkip = new System.Windows.Forms.Button();
-			this.SuspendLayout();
-			// 
-			// btnOk
-			// 
-			this.btnOk.Location = new System.Drawing.Point(304, 176);
-			this.btnOk.Name = "btnOk";
-			this.btnOk.TabIndex = 0;
-			this.btnOk.Text = "OK";
-			this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
-			// 
-			// showList
-			// 
-			this.showList.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-			this.showList.Location = new System.Drawing.Point(8, 8);
-			this.showList.Name = "showList";
-			this.showList.Size = new System.Drawing.Size(368, 160);
-			this.showList.TabIndex = 1;
-			this.showList.DoubleClick += new System.EventHandler(this.showList_DoubleClick);
-			this.showList.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.showList_DrawItem);
-			this.showList.SelectedIndexChanged += new System.EventHandler(this.showList_SelectedIndexChanged);
-			// 
-			// btnSkip
-			// 
-			this.btnSkip.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.btnSkip.Location = new System.Drawing.Point(184, 176);
-			this.btnSkip.Name = "btnSkip";
-			this.btnSkip.Size = new System.Drawing.Size(112, 23);
-			this.btnSkip.TabIndex = 2;
-			this.btnSkip.Text = "Skip";
-			this.btnSkip.Click += new System.EventHandler(this.btnSkip_Click);
-			// 
-			// SelectShow
-			// 
-			this.AcceptButton = this.btnOk;
-			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-			this.CancelButton = this.btnSkip;
-			this.ClientSize = new System.Drawing.Size(384, 208);
-			this.Controls.Add(this.btnSkip);
-			this.Controls.Add(this.showList);
-			this.Controls.Add(this.btnOk);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-			this.Name = "SelectShow";
-			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-			this.Text = "Select the Show from the list";
-			this.Load += new System.EventHandler(this.SelectShow_Load);
-			this.ResumeLayout(false);
+            this.btnOk = new System.Windows.Forms.Button();
+            this.showList = new System.Windows.Forms.ListBox();
+            this.btnSkip = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.labelSeries = new System.Windows.Forms.Label();
+            this.labelEpisode = new System.Windows.Forms.Label();
+            this.SuspendLayout();
+            // 
+            // btnOk
+            // 
+            this.btnOk.Location = new System.Drawing.Point(299, 261);
+            this.btnOk.Name = "btnOk";
+            this.btnOk.Size = new System.Drawing.Size(75, 23);
+            this.btnOk.TabIndex = 0;
+            this.btnOk.Text = "OK";
+            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
+            // 
+            // showList
+            // 
+            this.showList.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.showList.Location = new System.Drawing.Point(8, 47);
+            this.showList.Name = "showList";
+            this.showList.Size = new System.Drawing.Size(366, 199);
+            this.showList.TabIndex = 1;
+            this.showList.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.showList_DrawItem);
+            this.showList.SelectedIndexChanged += new System.EventHandler(this.showList_SelectedIndexChanged);
+            this.showList.DoubleClick += new System.EventHandler(this.showList_DoubleClick);
+            // 
+            // btnSkip
+            // 
+            this.btnSkip.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnSkip.Location = new System.Drawing.Point(179, 261);
+            this.btnSkip.Name = "btnSkip";
+            this.btnSkip.Size = new System.Drawing.Size(112, 23);
+            this.btnSkip.TabIndex = 2;
+            this.btnSkip.Text = "Skip";
+            this.btnSkip.Click += new System.EventHandler(this.btnSkip_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(36, 13);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Series";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 30);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(45, 13);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Episode";
+            // 
+            // labelSeries
+            // 
+            this.labelSeries.AutoSize = true;
+            this.labelSeries.Location = new System.Drawing.Point(67, 9);
+            this.labelSeries.Name = "labelSeries";
+            this.labelSeries.Size = new System.Drawing.Size(0, 13);
+            this.labelSeries.TabIndex = 5;
+            // 
+            // labelEpisode
+            // 
+            this.labelEpisode.AutoSize = true;
+            this.labelEpisode.Location = new System.Drawing.Point(67, 30);
+            this.labelEpisode.Name = "labelEpisode";
+            this.labelEpisode.Size = new System.Drawing.Size(0, 13);
+            this.labelEpisode.TabIndex = 6;
+            // 
+            // SelectShow
+            // 
+            this.AcceptButton = this.btnOk;
+            this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
+            this.CancelButton = this.btnSkip;
+            this.ClientSize = new System.Drawing.Size(386, 296);
+            this.Controls.Add(this.labelEpisode);
+            this.Controls.Add(this.labelSeries);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.btnSkip);
+            this.Controls.Add(this.showList);
+            this.Controls.Add(this.btnOk);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Name = "SelectShow";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "Select the Show from the list";
+            this.Load += new System.EventHandler(this.SelectShow_Load);
+            this.ResumeLayout(false);
+            this.PerformLayout();
 
 		}
 		#endregion
+
+        public void setEpisodeData(Episode ep)
+        {
+            labelSeries.Text = ep.series;
+            labelEpisode.Text = ep.season + "x" + ep.episode + ": " + ep.title;
+        }
 
 		public void addShow(showClass sc)
 		{
@@ -122,7 +176,7 @@ namespace TVShowRenamer
 			for (int i=0; i<showList.Items.Count; i++)
 			{
 				showClass sci = (showList.Items[i] as showClass);
-				if (sci.showID == sc.showID) add = false;
+				if (sci.ID == sc.ID) add = false;
 				
 			}
 			if (add)
@@ -138,7 +192,7 @@ namespace TVShowRenamer
 				showClass sc = (showList.Items[e.Index] as showClass);
 				e.DrawBackground();
 				Brush b = Brushes.Black;
-				e.Graphics.DrawString( sc.showName+" ("+sc.showYear.ToString()+")", e.Font, b, e.Bounds);
+				e.Graphics.DrawString( sc.Name+" ("+sc.Year.ToString()+")", e.Font, b, e.Bounds);
 				e.DrawFocusRectangle();
 			}
 			catch (Exception E)
@@ -177,5 +231,5 @@ namespace TVShowRenamer
 		{
 			DialogResult = DialogResult.OK;
 		}
-	}
+    }
 }

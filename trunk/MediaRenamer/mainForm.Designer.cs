@@ -71,8 +71,11 @@
             this.label_langUI = new System.Windows.Forms.Label();
             this.option_langUI = new System.Windows.Forms.ComboBox();
             this.optionSysTray = new System.Windows.Forms.CheckBox();
-            this.optionWindowsStart = new System.Windows.Forms.CheckBox();
+            this.optionStartMinimized = new System.Windows.Forms.CheckBox();
             this.optionGroupMovies = new System.Windows.Forms.GroupBox();
+            this.btnMovePath = new System.Windows.Forms.Button();
+            this.option_movieTargetLocation = new System.Windows.Forms.TextBox();
+            this.option_moveMovies = new System.Windows.Forms.CheckBox();
             this.option_movieFormat = new System.Windows.Forms.TextBox();
             this.contextProposals = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.labelMovieOutpu = new System.Windows.Forms.Label();
@@ -90,7 +93,6 @@
             this.addWatchFolder = new System.Windows.Forms.Button();
             this.addWatchPath = new System.Windows.Forms.TextBox();
             this.watchedFolders = new System.Windows.Forms.ListBox();
-            this.contextWatchFolder = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.runWatcherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stopWatcherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -114,9 +116,6 @@
             this.optionGroupMovies.SuspendLayout();
             this.optionGroupSeries.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.tabWatch.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            this.contextWatchFolder.SuspendLayout();
             this.sysTrayMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -319,7 +318,8 @@
             this.seriesScanPath.Size = new System.Drawing.Size(561, 21);
             this.seriesScanPath.TabIndex = 0;
             this.seriesScanPath.SelectedIndexChanged += new System.EventHandler(this.seriesScanPath_TextUpdate);
-            this.seriesScanPath.TextUpdate += new System.EventHandler(this.seriesScanPath_TextUpdate);
+            this.seriesScanPath.Leave += new System.EventHandler(this.seriesScanPath_Leave);
+            this.seriesScanPath.TextChanged += new System.EventHandler(this.seriesScanPath_TextChanged);
             // 
             // tabMovies
             // 
@@ -331,7 +331,7 @@
             this.tabMovies.Location = new System.Drawing.Point(4, 22);
             this.tabMovies.Name = "tabMovies";
             this.tabMovies.Padding = new System.Windows.Forms.Padding(3);
-            this.tabMovies.Size = new System.Drawing.Size(595, 448);
+            this.tabMovies.Size = new System.Drawing.Size(706, 403);
             this.tabMovies.TabIndex = 1;
             this.tabMovies.Text = "Movies";
             this.tabMovies.UseVisualStyleBackColor = true;
@@ -339,7 +339,7 @@
             // movieRename
             // 
             this.movieRename.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.movieRename.Location = new System.Drawing.Point(449, 418);
+            this.movieRename.Location = new System.Drawing.Point(554, 372);
             this.movieRename.Name = "movieRename";
             this.movieRename.Size = new System.Drawing.Size(144, 23);
             this.movieRename.TabIndex = 9;
@@ -350,7 +350,7 @@
             // movieSelNone
             // 
             this.movieSelNone.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.movieSelNone.Location = new System.Drawing.Point(90, 417);
+            this.movieSelNone.Location = new System.Drawing.Point(87, 372);
             this.movieSelNone.Name = "movieSelNone";
             this.movieSelNone.Size = new System.Drawing.Size(75, 23);
             this.movieSelNone.TabIndex = 8;
@@ -361,7 +361,7 @@
             // movieSelAll
             // 
             this.movieSelAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.movieSelAll.Location = new System.Drawing.Point(9, 417);
+            this.movieSelAll.Location = new System.Drawing.Point(6, 372);
             this.movieSelAll.Name = "movieSelAll";
             this.movieSelAll.Size = new System.Drawing.Size(75, 23);
             this.movieSelAll.TabIndex = 7;
@@ -384,7 +384,7 @@
             this.scanMovieList.FullRowSelect = true;
             this.scanMovieList.Location = new System.Drawing.Point(7, 96);
             this.scanMovieList.Name = "scanMovieList";
-            this.scanMovieList.Size = new System.Drawing.Size(585, 315);
+            this.scanMovieList.Size = new System.Drawing.Size(691, 266);
             this.scanMovieList.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.scanMovieList.TabIndex = 2;
             this.scanMovieList.UseCompatibleStateImageBehavior = false;
@@ -421,7 +421,7 @@
             this.groupMovies.Controls.Add(this.movieScanPath);
             this.groupMovies.Location = new System.Drawing.Point(7, 7);
             this.groupMovies.Name = "groupMovies";
-            this.groupMovies.Size = new System.Drawing.Size(585, 82);
+            this.groupMovies.Size = new System.Drawing.Size(691, 82);
             this.groupMovies.TabIndex = 1;
             this.groupMovies.TabStop = false;
             this.groupMovies.Text = "Movie scan mode";
@@ -429,7 +429,7 @@
             // btnPathMovies
             // 
             this.btnPathMovies.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnPathMovies.Location = new System.Drawing.Point(471, 30);
+            this.btnPathMovies.Location = new System.Drawing.Point(577, 30);
             this.btnPathMovies.Name = "btnPathMovies";
             this.btnPathMovies.Size = new System.Drawing.Size(27, 23);
             this.btnPathMovies.TabIndex = 5;
@@ -444,14 +444,14 @@
             this.scanMovieProgressbar.Location = new System.Drawing.Point(10, 59);
             this.scanMovieProgressbar.Maximum = 0;
             this.scanMovieProgressbar.Name = "scanMovieProgressbar";
-            this.scanMovieProgressbar.Size = new System.Drawing.Size(569, 11);
+            this.scanMovieProgressbar.Size = new System.Drawing.Size(675, 11);
             this.scanMovieProgressbar.TabIndex = 4;
             // 
             // btnMovieScan
             // 
             this.btnMovieScan.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnMovieScan.Enabled = false;
-            this.btnMovieScan.Location = new System.Drawing.Point(504, 30);
+            this.btnMovieScan.Location = new System.Drawing.Point(610, 30);
             this.btnMovieScan.Name = "btnMovieScan";
             this.btnMovieScan.Size = new System.Drawing.Size(75, 23);
             this.btnMovieScan.TabIndex = 3;
@@ -477,10 +477,12 @@
             this.movieScanPath.FormattingEnabled = true;
             this.movieScanPath.Location = new System.Drawing.Point(10, 32);
             this.movieScanPath.Name = "movieScanPath";
-            this.movieScanPath.Size = new System.Drawing.Size(455, 21);
+            this.movieScanPath.Size = new System.Drawing.Size(561, 21);
             this.movieScanPath.TabIndex = 1;
             this.movieScanPath.SelectedIndexChanged += new System.EventHandler(this.movieScanPath_TextUpdate);
+            this.movieScanPath.Leave += new System.EventHandler(this.movieScanPath_Leave);
             this.movieScanPath.TextUpdate += new System.EventHandler(this.movieScanPath_TextUpdate);
+            this.movieScanPath.TextChanged += new System.EventHandler(this.movieScanPath_TextUpdate);
             // 
             // tabOptions
             // 
@@ -490,7 +492,8 @@
             this.tabOptions.Controls.Add(this.optionGroupSeries);
             this.tabOptions.Location = new System.Drawing.Point(4, 22);
             this.tabOptions.Name = "tabOptions";
-            this.tabOptions.Size = new System.Drawing.Size(595, 448);
+            this.tabOptions.Padding = new System.Windows.Forms.Padding(5);
+            this.tabOptions.Size = new System.Drawing.Size(706, 403);
             this.tabOptions.TabIndex = 3;
             this.tabOptions.Text = "Options";
             this.tabOptions.UseVisualStyleBackColor = true;
@@ -501,10 +504,11 @@
             this.optionGroupOthers.Controls.Add(this.label_langUI);
             this.optionGroupOthers.Controls.Add(this.option_langUI);
             this.optionGroupOthers.Controls.Add(this.optionSysTray);
-            this.optionGroupOthers.Controls.Add(this.optionWindowsStart);
-            this.optionGroupOthers.Location = new System.Drawing.Point(4, 201);
+            this.optionGroupOthers.Controls.Add(this.optionStartMinimized);
+            this.optionGroupOthers.Dock = System.Windows.Forms.DockStyle.Top;
+            this.optionGroupOthers.Location = new System.Drawing.Point(5, 217);
             this.optionGroupOthers.Name = "optionGroupOthers";
-            this.optionGroupOthers.Size = new System.Drawing.Size(505, 128);
+            this.optionGroupOthers.Size = new System.Drawing.Size(696, 128);
             this.optionGroupOthers.TabIndex = 3;
             this.optionGroupOthers.TabStop = false;
             this.optionGroupOthers.Text = "General Options";
@@ -549,28 +553,62 @@
             this.optionSysTray.UseVisualStyleBackColor = true;
             this.optionSysTray.CheckedChanged += new System.EventHandler(this.optionSysTray_CheckedChanged);
             // 
-            // optionWindowsStart
+            // optionStartMinimized
             // 
-            this.optionWindowsStart.AutoSize = true;
-            this.optionWindowsStart.Location = new System.Drawing.Point(30, 19);
-            this.optionWindowsStart.Name = "optionWindowsStart";
-            this.optionWindowsStart.Size = new System.Drawing.Size(198, 17);
-            this.optionWindowsStart.TabIndex = 0;
-            this.optionWindowsStart.Text = "Launch application on windows start";
-            this.optionWindowsStart.UseVisualStyleBackColor = true;
+            this.optionStartMinimized.AutoSize = true;
+            this.optionStartMinimized.Location = new System.Drawing.Point(30, 19);
+            this.optionStartMinimized.Name = "optionStartMinimized";
+            this.optionStartMinimized.Size = new System.Drawing.Size(150, 17);
+            this.optionStartMinimized.TabIndex = 0;
+            this.optionStartMinimized.Text = "Start application minimized";
+            this.optionStartMinimized.UseVisualStyleBackColor = true;
+            this.optionStartMinimized.CheckedChanged += new System.EventHandler(this.optionStartMinimized_CheckedChanged);
             // 
             // optionGroupMovies
             // 
             this.optionGroupMovies.AutoSize = true;
             this.optionGroupMovies.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.optionGroupMovies.Controls.Add(this.btnMovePath);
+            this.optionGroupMovies.Controls.Add(this.option_movieTargetLocation);
+            this.optionGroupMovies.Controls.Add(this.option_moveMovies);
             this.optionGroupMovies.Controls.Add(this.option_movieFormat);
             this.optionGroupMovies.Controls.Add(this.labelMovieOutpu);
-            this.optionGroupMovies.Location = new System.Drawing.Point(3, 137);
+            this.optionGroupMovies.Dock = System.Windows.Forms.DockStyle.Top;
+            this.optionGroupMovies.Location = new System.Drawing.Point(5, 133);
             this.optionGroupMovies.Name = "optionGroupMovies";
-            this.optionGroupMovies.Size = new System.Drawing.Size(506, 57);
+            this.optionGroupMovies.Size = new System.Drawing.Size(696, 84);
             this.optionGroupMovies.TabIndex = 2;
             this.optionGroupMovies.TabStop = false;
             this.optionGroupMovies.Text = "Movie Options";
+            // 
+            // btnMovePath
+            // 
+            this.btnMovePath.Location = new System.Drawing.Point(578, 42);
+            this.btnMovePath.Name = "btnMovePath";
+            this.btnMovePath.Size = new System.Drawing.Size(29, 23);
+            this.btnMovePath.TabIndex = 20;
+            this.btnMovePath.Text = "...";
+            this.btnMovePath.UseVisualStyleBackColor = true;
+            this.btnMovePath.Click += new System.EventHandler(this.btnMovePath_Click);
+            // 
+            // option_movieTargetLocation
+            // 
+            this.option_movieTargetLocation.Location = new System.Drawing.Point(300, 44);
+            this.option_movieTargetLocation.Name = "option_movieTargetLocation";
+            this.option_movieTargetLocation.Size = new System.Drawing.Size(272, 20);
+            this.option_movieTargetLocation.TabIndex = 19;
+            this.option_movieTargetLocation.TextChanged += new System.EventHandler(this.option_movieTargetLocation_TextChanged);
+            // 
+            // option_moveMovies
+            // 
+            this.option_moveMovies.AutoSize = true;
+            this.option_moveMovies.Location = new System.Drawing.Point(142, 46);
+            this.option_moveMovies.Name = "option_moveMovies";
+            this.option_moveMovies.Size = new System.Drawing.Size(152, 17);
+            this.option_moveMovies.TabIndex = 18;
+            this.option_moveMovies.Text = "Move Movies to the folder:";
+            this.option_moveMovies.UseVisualStyleBackColor = true;
+            this.option_moveMovies.CheckedChanged += new System.EventHandler(this.option_moveMovies_CheckedChanged);
             // 
             // option_movieFormat
             // 
@@ -581,7 +619,7 @@
             this.option_movieFormat.ContextMenuStrip = this.contextProposals;
             this.option_movieFormat.Location = new System.Drawing.Point(142, 18);
             this.option_movieFormat.Name = "option_movieFormat";
-            this.option_movieFormat.Size = new System.Drawing.Size(358, 20);
+            this.option_movieFormat.Size = new System.Drawing.Size(465, 20);
             this.option_movieFormat.TabIndex = 17;
             this.option_movieFormat.Text = "<moviename> (<year><disk:,CD><disk><lang:,><lang>)";
             this.option_movieFormat.Leave += new System.EventHandler(this.option_movieFormat_Leave);
@@ -606,15 +644,15 @@
             // optionGroupSeries
             // 
             this.optionGroupSeries.AutoSize = true;
-            this.optionGroupSeries.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.optionGroupSeries.Controls.Add(this.pictureBox1);
             this.optionGroupSeries.Controls.Add(this.option_tvSourceEPW);
             this.optionGroupSeries.Controls.Add(this.labelTVSource);
             this.optionGroupSeries.Controls.Add(this.option_seriesFormat);
             this.optionGroupSeries.Controls.Add(this.labelTVOutput);
-            this.optionGroupSeries.Location = new System.Drawing.Point(3, 3);
+            this.optionGroupSeries.Dock = System.Windows.Forms.DockStyle.Top;
+            this.optionGroupSeries.Location = new System.Drawing.Point(5, 5);
             this.optionGroupSeries.Name = "optionGroupSeries";
-            this.optionGroupSeries.Size = new System.Drawing.Size(506, 128);
+            this.optionGroupSeries.Size = new System.Drawing.Size(696, 128);
             this.optionGroupSeries.TabIndex = 1;
             this.optionGroupSeries.TabStop = false;
             this.optionGroupSeries.Text = "TV Series Options";
@@ -666,9 +704,9 @@
             this.option_seriesFormat.ContextMenuStrip = this.contextProposals;
             this.option_seriesFormat.Location = new System.Drawing.Point(142, 16);
             this.option_seriesFormat.Name = "option_seriesFormat";
-            this.option_seriesFormat.Size = new System.Drawing.Size(358, 20);
+            this.option_seriesFormat.Size = new System.Drawing.Size(465, 20);
             this.option_seriesFormat.TabIndex = 13;
-            this.option_seriesFormat.Text = "<series> - <season>x<episode><title: - ><title>";
+            this.option_seriesFormat.Text = "<series> - <season>x<episode2><title: - ><title>";
             this.option_seriesFormat.Leave += new System.EventHandler(this.option_seriesFormat_Leave);
             this.option_seriesFormat.MouseDown += new System.Windows.Forms.MouseEventHandler(this.option_seriesFormat_MouseDown);
             // 
@@ -683,138 +721,80 @@
             // 
             // tabWatch
             // 
-            this.tabWatch.Controls.Add(this.groupBox1);
-            this.tabWatch.Controls.Add(this.watchedFolders);
-            this.tabWatch.Location = new System.Drawing.Point(4, 22);
+            this.tabWatch.Location = new System.Drawing.Point(0, 0);
             this.tabWatch.Name = "tabWatch";
-            this.tabWatch.Padding = new System.Windows.Forms.Padding(3);
-            this.tabWatch.Size = new System.Drawing.Size(562, 403);
-            this.tabWatch.TabIndex = 2;
-            this.tabWatch.Text = "Watched Folders";
-            this.tabWatch.UseVisualStyleBackColor = true;
+            this.tabWatch.Size = new System.Drawing.Size(200, 100);
+            this.tabWatch.TabIndex = 0;
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.label_watchType);
-            this.groupBox1.Controls.Add(this.label_watchPath);
-            this.groupBox1.Controls.Add(this.addWatchType);
-            this.groupBox1.Controls.Add(this.addWatchFolder);
-            this.groupBox1.Controls.Add(this.addWatchPath);
-            this.groupBox1.Location = new System.Drawing.Point(7, 7);
+            this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(549, 71);
-            this.groupBox1.TabIndex = 6;
+            this.groupBox1.Size = new System.Drawing.Size(200, 100);
+            this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Add a watched folder";
             // 
             // label_watchType
             // 
-            this.label_watchType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label_watchType.AutoSize = true;
-            this.label_watchType.Location = new System.Drawing.Point(325, 22);
+            this.label_watchType.Location = new System.Drawing.Point(0, 0);
             this.label_watchType.Name = "label_watchType";
-            this.label_watchType.Size = new System.Drawing.Size(56, 13);
-            this.label_watchType.TabIndex = 10;
-            this.label_watchType.Text = "Foldertype";
+            this.label_watchType.Size = new System.Drawing.Size(100, 23);
+            this.label_watchType.TabIndex = 0;
             // 
             // label_watchPath
             // 
-            this.label_watchPath.AutoSize = true;
-            this.label_watchPath.Location = new System.Drawing.Point(6, 22);
+            this.label_watchPath.Location = new System.Drawing.Point(0, 0);
             this.label_watchPath.Name = "label_watchPath";
-            this.label_watchPath.Size = new System.Drawing.Size(139, 13);
-            this.label_watchPath.TabIndex = 9;
-            this.label_watchPath.Text = "Folder to watch for changes";
+            this.label_watchPath.Size = new System.Drawing.Size(100, 23);
+            this.label_watchPath.TabIndex = 0;
             // 
             // addWatchType
             // 
-            this.addWatchType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.addWatchType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.addWatchType.FormattingEnabled = true;
-            this.addWatchType.Location = new System.Drawing.Point(328, 38);
+            this.addWatchType.Location = new System.Drawing.Point(0, 0);
             this.addWatchType.Name = "addWatchType";
-            this.addWatchType.Size = new System.Drawing.Size(134, 21);
-            this.addWatchType.TabIndex = 7;
-            this.addWatchType.SelectedValueChanged += new System.EventHandler(this.addWatchFolder_Changed);
-            this.addWatchType.TextChanged += new System.EventHandler(this.addWatchFolder_Changed);
+            this.addWatchType.Size = new System.Drawing.Size(121, 21);
+            this.addWatchType.TabIndex = 0;
             // 
             // addWatchFolder
             // 
-            this.addWatchFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.addWatchFolder.Enabled = false;
-            this.addWatchFolder.Location = new System.Drawing.Point(466, 36);
+            this.addWatchFolder.Location = new System.Drawing.Point(0, 0);
             this.addWatchFolder.Name = "addWatchFolder";
             this.addWatchFolder.Size = new System.Drawing.Size(75, 23);
-            this.addWatchFolder.TabIndex = 8;
-            this.addWatchFolder.Text = "Add Folder";
-            this.addWatchFolder.UseVisualStyleBackColor = true;
-            this.addWatchFolder.Click += new System.EventHandler(this.watchAddTest_Click);
+            this.addWatchFolder.TabIndex = 0;
             // 
             // addWatchPath
             // 
-            this.addWatchPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.addWatchPath.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.addWatchPath.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystemDirectories;
-            this.addWatchPath.Location = new System.Drawing.Point(9, 38);
+            this.addWatchPath.Location = new System.Drawing.Point(0, 0);
             this.addWatchPath.Name = "addWatchPath";
-            this.addWatchPath.Size = new System.Drawing.Size(313, 20);
-            this.addWatchPath.TabIndex = 6;
-            this.addWatchPath.TextChanged += new System.EventHandler(this.addWatchFolder_Changed);
+            this.addWatchPath.Size = new System.Drawing.Size(100, 20);
+            this.addWatchPath.TabIndex = 0;
             // 
             // watchedFolders
             // 
-            this.watchedFolders.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.watchedFolders.ContextMenuStrip = this.contextWatchFolder;
-            this.watchedFolders.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.watchedFolders.FormattingEnabled = true;
-            this.watchedFolders.ItemHeight = 36;
-            this.watchedFolders.Location = new System.Drawing.Point(7, 84);
+            this.watchedFolders.Location = new System.Drawing.Point(0, 0);
             this.watchedFolders.Name = "watchedFolders";
-            this.watchedFolders.Size = new System.Drawing.Size(549, 292);
-            this.watchedFolders.TabIndex = 3;
-            this.watchedFolders.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.watchedFolders_DrawItem);
-            // 
-            // contextWatchFolder
-            // 
-            this.contextWatchFolder.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.runWatcherToolStripMenuItem,
-            this.stopWatcherToolStripMenuItem,
-            this.toolStripSeparator2,
-            this.deleteSelectedWatcherToolStripMenuItem});
-            this.contextWatchFolder.Name = "contextWatchFolder";
-            this.contextWatchFolder.Size = new System.Drawing.Size(200, 76);
-            this.contextWatchFolder.Opening += new System.ComponentModel.CancelEventHandler(this.contextWatchFolder_Opening);
+            this.watchedFolders.Size = new System.Drawing.Size(120, 95);
+            this.watchedFolders.TabIndex = 0;
             // 
             // runWatcherToolStripMenuItem
             // 
             this.runWatcherToolStripMenuItem.Name = "runWatcherToolStripMenuItem";
-            this.runWatcherToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
-            this.runWatcherToolStripMenuItem.Text = "run Watcher";
-            this.runWatcherToolStripMenuItem.Click += new System.EventHandler(this.runWatcherToolStripMenuItem_Click);
+            this.runWatcherToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
             // 
             // stopWatcherToolStripMenuItem
             // 
             this.stopWatcherToolStripMenuItem.Name = "stopWatcherToolStripMenuItem";
-            this.stopWatcherToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
-            this.stopWatcherToolStripMenuItem.Text = "stop Watcher";
-            this.stopWatcherToolStripMenuItem.Click += new System.EventHandler(this.stopWatcherToolStripMenuItem_Click);
+            this.stopWatcherToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(196, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 6);
             // 
             // deleteSelectedWatcherToolStripMenuItem
             // 
             this.deleteSelectedWatcherToolStripMenuItem.Name = "deleteSelectedWatcherToolStripMenuItem";
-            this.deleteSelectedWatcherToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
-            this.deleteSelectedWatcherToolStripMenuItem.Text = "delete selected Watcher";
-            this.deleteSelectedWatcherToolStripMenuItem.Click += new System.EventHandler(this.deleteSelectedWatcherToolStripMenuItem_Click);
+            this.deleteSelectedWatcherToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
             // 
             // notifyIcon
             // 
@@ -868,7 +848,6 @@
             this.Controls.Add(this.tabControl);
             this.MinimumSize = new System.Drawing.Size(730, 465);
             this.Name = "mainForm";
-            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MediaRenamer";
             this.Load += new System.EventHandler(this.mainForm_Load);
@@ -891,10 +870,6 @@
             this.optionGroupSeries.ResumeLayout(false);
             this.optionGroupSeries.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.tabWatch.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.contextWatchFolder.ResumeLayout(false);
             this.sysTrayMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -939,7 +914,7 @@
         private System.Windows.Forms.TextBox option_movieFormat;
         private System.Windows.Forms.Label labelMovieOutpu;
         private System.Windows.Forms.GroupBox optionGroupOthers;
-        private System.Windows.Forms.CheckBox optionWindowsStart;
+        private System.Windows.Forms.CheckBox optionStartMinimized;
         private System.Windows.Forms.CheckBox optionSysTray;
         private System.Windows.Forms.ContextMenuStrip sysTrayMenu;
         private System.Windows.Forms.ToolStripMenuItem sysTrayExit;
@@ -959,7 +934,6 @@
         private System.Windows.Forms.ColumnHeader headYear;
         private System.Windows.Forms.ColumnHeader headMoviefile;
         private System.Windows.Forms.ColumnHeader headNewfile;
-        private System.Windows.Forms.ContextMenuStrip contextWatchFolder;
         private System.Windows.Forms.ToolStripMenuItem runWatcherToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem stopWatcherToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
@@ -975,6 +949,9 @@
         private System.Windows.Forms.Button btnPathMovies;
         private System.Windows.Forms.ToolStripMenuItem displayDropTargetToolStripMenuItem;
         private System.Windows.Forms.CheckBox optionDropTarget;
+        private System.Windows.Forms.CheckBox option_moveMovies;
+        private System.Windows.Forms.Button btnMovePath;
+        private System.Windows.Forms.TextBox option_movieTargetLocation;
     }
 }
 

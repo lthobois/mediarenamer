@@ -12,7 +12,7 @@ using MediaRenamer.Common;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
 
-namespace TVShowRenamer
+namespace MediaRenamer.Series
 {
 	/// <summary>
 	/// Episode class
@@ -37,7 +37,8 @@ namespace TVShowRenamer
 									@"s([0-9]+)e([0-9]+)",
                                     @"s([0-9]+)ep([0-9]+)",
 									@"s([0-9]+) e([0-9]+)",
-									@"([0-9]+)x([0-9]+)"
+									@"([0-9]+)x([0-9]+)",
+                                    @" ([1-9]{1})([0-9]{2}) "
 								 };
 		private char[] badPathChars = {'/', '\\', ':', '*', '?', '"', '<', '>', '|'};
 
@@ -219,9 +220,9 @@ namespace TVShowRenamer
                 String[] regExp = Episode.regEx;
                 foreach (String pat in regExp)
                 {
-                    Regex reg = new Regex(pat);
+                    Regex reg = new Regex(pat, RegexOptions.IgnoreCase);
                     Match m = null;
-                    m = reg.Match(name.ToLower());
+                    m = reg.Match(name);
                     if (m.Success)
                     {
                         ep.season = Int32.Parse(m.Groups[1].Captures[0].Value);
@@ -233,27 +234,40 @@ namespace TVShowRenamer
                         }
                         ep.episodes = eps;
 
-                        series = name.Substring(0, name.ToLower().IndexOf(m.Value) - 1);
-                        //series = series.Replace(".", " ");
-                        series = Eregi.replace("([a-zA-Z]{1})([0-9]{1})", "\\1 \\2", series);
-                        series = Eregi.replace("([0-9]{1})([a-zA-Z]{1})", "\\1 \\2", series);
-                        series = Eregi.replace("([a-zA-Z]{2})\\.([a-zA-Z]{1})", "\\1 \\2", series);
-                        series = Eregi.replace("([a-zA-Z]{1})\\.([a-zA-Z]{2})", "\\1 \\2", series);
-                        series = series.Replace("_", " ");
-                        series = series.Replace("  ", " ");
-                        series = series.Replace(" - ", " ");
-                        series = series.Replace(" -", " ");
-                        series = series.Replace("[", "");
-                        series = series.Replace("]", "");
-                        series = series.Replace("(", "");
-                        series = series.Replace(")", "");
-                        series = series.Trim();
+                        if (name.IndexOf(m.Value) > 0)
+                        {
+                            series = name.Substring(0, name.IndexOf(m.Value) - 1);
+                            //series = series.Replace(".", " ");
+                            series = Eregi.replace("([a-zA-Z]{1})([0-9]{1})", "\\1 \\2", series);
+                            series = Eregi.replace("([0-9]{1})([a-zA-Z]{1})", "\\1 \\2", series);
+                            series = Eregi.replace("([a-zA-Z]{2})\\.([a-zA-Z]{1})", "\\1 \\2", series);
+                            series = Eregi.replace("([a-zA-Z]{1})\\.([a-zA-Z]{2})", "\\1 \\2", series);
+                            series = series.Replace("_", " ");
+                            series = series.Replace("  ", " ");
+                            series = series.Replace(" - ", " ");
+                            series = series.Replace(" -", " ");
+                            series = series.Replace("[", "");
+                            series = series.Replace("]", "");
+                            series = series.Replace("(", "");
+                            series = series.Replace(")", "");
+                            series = series.Trim();
+                        }
                         ep.altSeries = ep.series;
                         ep.series = series;
                         if (ep.series == "") ep.series = ep.altSeries;
 
-                        title = name.Substring(name.ToLower().IndexOf(m.Value) + m.Value.Length);
-                        title = title.Replace(" - ", "");
+                        if (name.IndexOf(m.Value) == 0)
+                        {
+                            title = name.Replace(m.Value, "");
+                        }
+                        else
+                        {
+                            title = name.Substring(name.IndexOf(m.Value) + m.Value.Length);
+                        }
+                        if (title.StartsWith(" - "))
+                        {
+                            title = title.Replace(" - ", "");
+                        }
                         title = title.Trim();
                         title = title.Substring(0, title.LastIndexOf("."));
                         ep.title = title;
@@ -337,7 +351,7 @@ namespace TVShowRenamer
 		{
 			String renameFormat = "<series> - <season>x<episode2> - <title>";
             String savedFormat = Settings.GetValueAsString(SettingKeys.SeriesFormat);
-            if (savedFormat != null)
+            if (savedFormat != "" && savedFormat != String.Empty && savedFormat != null)
                 renameFormat = savedFormat;
 
 			String[] eps1 = new String[_episodes.Length];
@@ -395,6 +409,26 @@ namespace TVShowRenamer
                     modifiedFilename.ToLower() == filename.ToLower())
                 {
                     fi.MoveTo(modifiedFilename);
+                    _filename = modifiedFilename;
+                }
+                else
+                {
+                    MessageBox.Show("A file with the same name already exists. \nYou cannot rename the file " + fi.Name, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        public void renameEpisodeAndMove(String targetFolder)
+        {
+            if (needRenaming())
+            {
+                FileInfo fi = new FileInfo(filename);
+                String modifiedFilename = targetFolder + @"\" + modifiedName();
+                if (!File.Exists(modifiedFilename) ||
+                    modifiedFilename.ToLower() == filename.ToLower())
+                {
+                    fi.MoveTo(modifiedFilename);
+                    _filename = modifiedFilename;
                 }
                 else
                 {
@@ -414,5 +448,5 @@ namespace TVShowRenamer
 			str += " ("+_filename+")";
 			return str;
 		}
-	}
+    }
 }

@@ -12,7 +12,7 @@ using System.Text.RegularExpressions;
 using MediaRenamer;
 using MediaRenamer.Common;
 
-namespace TVShowRenamer
+namespace MediaRenamer.Series
 {
 	/// <summary>
 	/// Parser Class for TVShows
@@ -72,6 +72,8 @@ namespace TVShowRenamer
 		/// <param name="folder">folder to scan</param>
 		private void scanFolder(String folder)
 		{
+            SeriesLocations locations = new SeriesLocations();
+
 			String[] elements;
 			// First, let's scan the files ...
 			elements = Directory.GetFiles(folder, "*.*", SearchOption.AllDirectories);
@@ -90,6 +92,7 @@ namespace TVShowRenamer
 					{
 						Episode ep = parseFile(elements[i]);
 						if (ep == null) continue;
+                        locations.addSeriesLocation(ep);
 						if (!ep.special && ep.needRenaming())
 						{
 							OnListEpisode( ep );
@@ -98,7 +101,8 @@ namespace TVShowRenamer
 				}
                 OnScanProgress(i, elements.Length - 1);
 			}
-            OnScanProgress(0, 0);
+            locations.saveLocations();
+            //OnScanProgress(0, 0);
 		}
 
         /// <summary>

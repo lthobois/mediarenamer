@@ -8,9 +8,12 @@ using System.Windows.Forms;
 using System.Threading;
 using System.IO;
 using System.ServiceProcess;
-using MediaRenamer.Common;
 using Microsoft.Win32;
 using System.Reflection;
+
+using MediaRenamer.Common;
+using MediaRenamer.Movies;
+using MediaRenamer.Series;
 
 namespace MediaRenamer
 {
@@ -23,6 +26,7 @@ namespace MediaRenamer
         public mainForm()
         {
             InitializeComponent();
+
             mainForm.instance = this;
             mainForm.dialogOwner = this;
         }
@@ -32,15 +36,28 @@ namespace MediaRenamer
             RegistryKey key = Registry.CurrentUser.CreateSubKey(@"Software\MediaRenamer");
             key.Close();
 
-            Text = Application.ProductName + " v" + Application.ProductVersion;
-
-            addWatchType.Items.Add(WatchFolderEntryType.MOVIES);
-            addWatchType.Items.Add(WatchFolderEntryType.SERIES);
+            this.Text = Application.ProductName + " v" + Application.ProductVersion;
 
             notifyIcon.Visible = Settings.GetValueAsBool(SettingKeys.SysTrayIcon);
             optionSysTray.Checked = Settings.GetValueAsBool(SettingKeys.SysTrayIcon);
             this.ShowInTaskbar = !Settings.GetValueAsBool(SettingKeys.SysTrayIcon);
-            this.Visible = !Settings.GetValueAsBool(SettingKeys.SysTrayIcon);
+
+            optionStartMinimized.Checked = Settings.GetValueAsBool(SettingKeys.StartMinimized);
+            if (Settings.GetValueAsBool(SettingKeys.StartMinimized))
+            {
+                if (Settings.GetValueAsBool(SettingKeys.SysTrayIcon))
+                {
+                    this.WindowState = FormWindowState.Minimized;
+                    this.Visible = !Settings.GetValueAsBool(SettingKeys.StartMinimized);
+                }
+                else
+                {
+                    this.WindowState = FormWindowState.Minimized;
+                }
+            }
+
+            option_moveMovies.Checked = Settings.GetValueAsBool(SettingKeys.MoveMovies);
+            option_movieTargetLocation.Text = Settings.GetValueAsString(SettingKeys.MovieLocation);
 
             displayDropTarget(Settings.GetValueAsBool(SettingKeys.DisplayDropTarget));
             optionDropTarget.Checked = Settings.GetValueAsBool(SettingKeys.DisplayDropTarget);
@@ -58,22 +75,15 @@ namespace MediaRenamer
             }
 
             Object[] items = null;
-            items = Settings.GetValueAsArray(SettingKeys.MoviePaths);
-            foreach (Object o in items)
+            items = Settings.GetValueAsObject<Object[]>(SettingKeys.MoviePaths);
+            if (items != null)
             {
-                movieScanPath.Items.Add(o);
+                movieScanPath.Items.AddRange(items);
             }
-            items = Settings.GetValueAsArray(SettingKeys.SeriesPaths);
-            foreach (Object o in items)
+            items = Settings.GetValueAsObject<Object[]>(SettingKeys.SeriesPaths);
+            if (items != null)
             {
-                seriesScanPath.Items.Add(o);
-            }
-
-            items = Settings.GetValueAsArray(SettingKeys.WatchedFolders);
-            foreach (Object o in items)
-            {
-                WatchedFolderEntry wfe = (WatchedFolderEntry)o;
-                watchedFolders.Items.Add(wfe);
+                seriesScanPath.Items.AddRange(items);
             }
 
             String uiLang = Settings.GetValueAsString(SettingKeys.UILanguage);
@@ -102,10 +112,6 @@ namespace MediaRenamer
                     e.Cancel = true;
                     this.Hide();
                 }
-            }
-            if (!e.Cancel)
-            {
-                saveWatchedFolders();
             }
         }
 
@@ -154,138 +160,6 @@ namespace MediaRenamer
             option_tvSourceEPW.Select();
         }
 
-        #region WatchFolder Methods
-
-        private void saveWatchedFolders()
-        {
-            Object[] folders = new Object[watchedFolders.Items.Count];
-            for (int i = 0; i < watchedFolders.Items.Count; i++)
-            {
-                folders[i] = watchedFolders.Items[i];
-            }
-            Settings.SetValue(SettingKeys.WatchedFolders, folders);
-        }
-
-        private void watchAddTest_Click(object sender, EventArgs e)
-        {
-            if (!Directory.Exists(addWatchPath.Text))
-            {
-                //MessageBox.Show(i18n.t("folder_missing"));
-                MessageBox.Show("The folder you entered does not exist!");
-                return;
-            }
-            if (addWatchType.SelectedIndex == -1)
-            {
-                //MessageBox.Show(i18n.t("folder_notype"));
-                MessageBox.Show("Please select a type for this folder!");
-            }
-            WatchedFolderEntry watchedFolder = new WatchedFolderEntry();
-            watchedFolder.watchPath = addWatchPath.Text;
-            watchedFolder.watchType = (WatchFolderEntryType)addWatchType.SelectedItem;
-            watchedFolder.lastChanged = DateTime.MinValue;
-            watchedFolder.runThread();
-
-            watchedFolders.Items.Add(watchedFolder);
-
-            addWatchPath.Clear();
-            addWatchType.SelectedIndex = -1;
-
-            saveWatchedFolders();
-        }
-
-        private void watchedFolders_DrawItem(object sender, DrawItemEventArgs e)
-        {
-            if (e.Index < 0 || e.Index > watchedFolders.Items.Count)
-                return;
-            try
-            {
-                Stream s = null;
-
-                // retrieve information for watched folder
-                WatchedFolderEntry watchedFolder = (watchedFolders.Items[e.Index] as WatchedFolderEntry);
-                e.DrawBackground();
-                Brush b = new SolidBrush(e.ForeColor);
-                // get type of watched folder
-                String iconName = "movies";
-                switch (watchedFolder.watchType)
-                {
-                    case WatchFolderEntryType.MOVIES:
-                        iconName = "movies";
-                        break;
-                    case WatchFolderEntryType.SERIES:
-                        iconName = "series";
-                        break;
-                }
-
-                // draw type icon
-                s = this.GetType().Assembly.GetManifestResourceStream("MediaRenamer.Resources." + iconName + ".png");
-                Bitmap folderIcon = new Bitmap(s);
-                s.Close();
-                e.Graphics.DrawImage(folderIcon, e.Bounds.X + 2, e.Bounds.Y + 2, 16, 16);
-                folderIcon.Dispose();
-
-                // draw path of folder
-                e.Graphics.DrawString(watchedFolder.watchPath, e.Font, b, e.Bounds.X + 20, e.Bounds.Y + 2);
-
-                // draw last change date
-                String lastChanged = "";
-                if (watchedFolder.lastChanged != DateTime.MinValue)
-                {
-                    lastChanged = watchedFolder.lastChanged.ToString();
-                }
-                else
-                {
-                    //lastChanged = i18n.t("watched_never");
-                    lastChanged = "No Changes";
-                }
-                e.Graphics.DrawString(lastChanged, e.Font, b, e.Bounds.X + 20, e.Bounds.Y + 17);
-
-                // draw thread icon
-                String threadGraphic = "";
-                if (watchedFolder.threadRunning)
-                {
-                    threadGraphic = "thread_running";
-                }
-                else
-                {
-                    threadGraphic = "thread_stopped";
-                }
-                s = this.GetType().Assembly.GetManifestResourceStream("MediaRenamer.Resources." + threadGraphic + ".png");
-                Bitmap threadIcon = new Bitmap(s);
-                s.Close();
-                e.Graphics.DrawImage(threadIcon, e.Bounds.Width - 18, e.Bounds.Y + 2, 16, 16);
-                threadIcon.Dispose();
-
-                e.DrawFocusRectangle();
-            }
-            catch (Exception E)
-            {
-                Log.Add("Drawing Error:" + E.Message);
-            }
-        }
-
-        private void watchThreadRun_Click(object sender, EventArgs e)
-        {
-            if (watchedFolders.SelectedItems.Count > 0)
-            {
-                WatchedFolderEntry selectedFolder = (WatchedFolderEntry)watchedFolders.SelectedItem;
-                selectedFolder.runThread();
-                watchedFolders.SelectedItems.Clear();
-            }
-        }
-
-        private void watchThreadStop_Click(object sender, EventArgs e)
-        {
-            if (watchedFolders.SelectedItems.Count > 0)
-            {
-                WatchedFolderEntry selectedFolder = (WatchedFolderEntry)watchedFolders.SelectedItem;
-                selectedFolder.stopThread();
-                watchedFolders.SelectedItems.Clear();
-            }
-        }
-
-        #endregion
-
         private bool validPath(String path)
         {
             if (path == String.Empty)
@@ -309,7 +183,7 @@ namespace MediaRenamer
             scanMovieList.Items.Clear();
             Cursor = Cursors.WaitCursor;
 
-            MovieRenamer.Parser mparse = new MovieRenamer.Parser(movieScanPath.Text);
+            MediaRenamer.Movies.Parser mparse = new MediaRenamer.Movies.Parser(movieScanPath.Text);
             mparse.ScanProgress += new ScanProgressHandler(movie_ScanProgress);
             mparse.ListMovie += new ListMovieHandler(movie_ListMovie);
             mparse.startScan();
@@ -322,11 +196,13 @@ namespace MediaRenamer
             if (movieScanPath.Items.IndexOf(p) == -1)
             {
                 movieScanPath.Items.Insert(0, p);
-                Settings.SetValue(SettingKeys.MoviePaths, movieScanPath.Items);
+                Object[] items = new Object[movieScanPath.Items.Count];
+                movieScanPath.Items.CopyTo(items, 0);
+                Settings.SetValue(SettingKeys.MoviePaths, items);
             }
         }
 
-        void movie_ListMovie(MovieRenamer.Movie m)
+        void movie_ListMovie(Movie m)
         {
             ListViewItem node = scanMovieList.Items.Add(m.title);
             node.SubItems.Add(m.year.ToString());
@@ -360,7 +236,7 @@ namespace MediaRenamer
             scanSeriesList.Items.Clear();
             Cursor = Cursors.WaitCursor;
 
-            TVShowRenamer.Parser tparse = new TVShowRenamer.Parser(seriesScanPath.Text);
+            MediaRenamer.Series.Parser tparse = new MediaRenamer.Series.Parser(seriesScanPath.Text);
             tparse.ScanProgress += new ScanProgressHandler(series_ScanProgress);
             tparse.ListEpisode += new ListEpisodeHandler(series_ListEpisode);
             tparse.startScan();
@@ -373,11 +249,14 @@ namespace MediaRenamer
             if (seriesScanPath.Items.IndexOf(p) == -1)
             {
                 seriesScanPath.Items.Insert(0, p);
-                Settings.SetValue(SettingKeys.SeriesPaths, seriesScanPath.Items);
+
+                Object[] items = new Object[seriesScanPath.Items.Count];
+                seriesScanPath.Items.CopyTo(items, 0);
+                Settings.SetValue(SettingKeys.SeriesPaths, items);
             }
         }
 
-        void series_ListEpisode(TVShowRenamer.Episode ep)
+        void series_ListEpisode(Episode ep)
         {
             ListViewItem node = scanSeriesList.Items.Add(ep.series);
             node.SubItems.Add(ep.season.ToString());
@@ -447,10 +326,10 @@ namespace MediaRenamer
         {
             if (scanMovieList.CheckedItems.Count > 0)
             {
-                MovieRenamer.Movie m;
+                Movie m;
                 for (int i = scanMovieList.CheckedItems.Count - 1; i >= 0; i--)
                 {
-                    m = (MovieRenamer.Movie)scanMovieList.CheckedItems[i].Tag;
+                    m = (Movie)scanMovieList.CheckedItems[i].Tag;
                     m.renameMovie();
                     scanMovieList.CheckedItems[i].Remove();
                 }
@@ -461,10 +340,10 @@ namespace MediaRenamer
         {
             if (scanSeriesList.CheckedItems.Count > 0)
             {
-                TVShowRenamer.Episode ep;
+                Episode ep;
                 for (int i = scanSeriesList.CheckedItems.Count - 1; i >= 0; i--)
                 {
-                    ep = (TVShowRenamer.Episode)scanSeriesList.CheckedItems[i].Tag;
+                    ep = (Episode)scanSeriesList.CheckedItems[i].Tag;
                     ep.renameEpisode();
                     scanSeriesList.CheckedItems[i].Remove();
                 }
@@ -547,77 +426,12 @@ namespace MediaRenamer
 
         private void seriesScanPath_TextUpdate(object sender, EventArgs e)
         {
-            if (!seriesScanPath.Text.EndsWith(@"\"))
-                seriesScanPath.Text += @"\";
-            btnSeriesScan.Enabled = Directory.Exists(seriesScanPath.Text);
-            if (!Directory.Exists(seriesScanPath.Text))
-            {
-                seriesScanPath.Items.Remove(seriesScanPath.SelectedItem);
-                if (seriesScanPath.Items.Count > 0)
-                {
-                    seriesScanPath.SelectedIndex = 0;
-                }                
-            }
+            btnMovieScan.Enabled = Directory.Exists(seriesScanPath.Text);
         }
 
         private void movieScanPath_TextUpdate(object sender, EventArgs e)
         {
-            if (!movieScanPath.Text.EndsWith(@"\"))
-                movieScanPath.Text += @"\";
-
-            btnMovieScan.Enabled = Directory.Exists(movieScanPath.Text);
-            if (!Directory.Exists(movieScanPath.Text))
-            {
-                movieScanPath.Items.Remove(movieScanPath.SelectedItem);
-                if (movieScanPath.Items.Count > 0)
-                {
-                    movieScanPath.SelectedIndex = 0;
-                }
-            }
-        }
-
-        private void addWatchFolder_Changed(object sender, EventArgs e)
-        {
-            addWatchFolder.Enabled = (Directory.Exists(addWatchPath.Text) && (addWatchType.SelectedIndex > -1));
-        }
-
-        private void contextWatchFolder_Opening(object sender, CancelEventArgs e)
-        {
-            if (watchedFolders.SelectedItems.Count > 0)
-            {
-                WatchedFolderEntry selectedFolder = (WatchedFolderEntry)watchedFolders.SelectedItem;
-                runWatcherToolStripMenuItem.Enabled = !selectedFolder.threadRunning;
-                stopWatcherToolStripMenuItem.Enabled = selectedFolder.threadRunning;
-                deleteSelectedWatcherToolStripMenuItem.Enabled = true;
-            }
-            else
-            {
-                runWatcherToolStripMenuItem.Enabled = false;
-                stopWatcherToolStripMenuItem.Enabled = false;
-                deleteSelectedWatcherToolStripMenuItem.Enabled = false;
-            }
-        }
-
-        private void runWatcherToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            WatchedFolderEntry selectedFolder = (WatchedFolderEntry)watchedFolders.SelectedItem;
-            if (!selectedFolder.threadRunning)
-            {
-                selectedFolder.runThread();
-            }
-        }
-
-        private void stopWatcherToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            WatchedFolderEntry selectedFolder = (WatchedFolderEntry)watchedFolders.SelectedItem;
-            selectedFolder.stopThread();
-        }
-
-        private void deleteSelectedWatcherToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            WatchedFolderEntry selectedFolder = (WatchedFolderEntry)watchedFolders.SelectedItem;
-            selectedFolder.stopThread();
-            watchedFolders.Items.Remove(watchedFolders.SelectedItem);
+            btnSeriesScan.Enabled = Directory.Exists(movieScanPath.Text);
         }
 
         private void tvSelAll_Click(object sender, EventArgs e)
@@ -666,7 +480,11 @@ namespace MediaRenamer
         {
             if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
             {
-                seriesScanPath.Text = folderBrowserDialog.SelectedPath;
+                String path = folderBrowserDialog.SelectedPath;
+                if (!path.EndsWith(@"\")) {
+                    path += @"\";
+                }
+                seriesScanPath.Text = path;
             }
         }
 
@@ -674,7 +492,12 @@ namespace MediaRenamer
         {
             if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
             {
-                movieScanPath.Text = folderBrowserDialog.SelectedPath;
+                String path = folderBrowserDialog.SelectedPath;
+                if (!path.EndsWith(@"\"))
+                {
+                    path += @"\";
+                }
+                movieScanPath.Text = path;
             }
         }
 
@@ -727,6 +550,68 @@ namespace MediaRenamer
             points[1] = new Point(e.ClipRectangle.Right - 7, e.ClipRectangle.Top + (e.ClipRectangle.Height / 2) - 1);
             points[2] = new Point(e.ClipRectangle.Right - 10, e.ClipRectangle.Top + (e.ClipRectangle.Height / 2) + 2);
             g.FillPolygon(Brushes.Black, points);
+        }
+
+        private void btnMovePath_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog browse = new FolderBrowserDialog();
+            browse.Description = "Select folder where renamed movies should be moved to:";
+            if (browse.ShowDialog() == DialogResult.OK)
+            {
+                option_movieTargetLocation.Text = browse.SelectedPath;
+                Settings.SetValue(SettingKeys.MovieLocation, option_movieTargetLocation.Text);
+            }
+        }
+
+        private void optionStartMinimized_CheckedChanged(object sender, EventArgs e)
+        {
+            Settings.SetValue(SettingKeys.StartMinimized, optionStartMinimized.Checked);
+        }
+
+        private void option_moveMovies_CheckedChanged(object sender, EventArgs e)
+        {
+            Settings.SetValue(SettingKeys.MoveMovies, option_moveMovies.Checked);
+        }
+
+        private void option_movieTargetLocation_TextChanged(object sender, EventArgs e)
+        {
+            Settings.SetValue(SettingKeys.MovieLocation, option_movieTargetLocation.Text);
+        }
+
+        private void seriesScanPath_Leave(object sender, EventArgs e)
+        {
+            if (!seriesScanPath.Text.EndsWith(@"\"))
+                seriesScanPath.Text += @"\";
+            btnSeriesScan.Enabled = Directory.Exists(seriesScanPath.Text);
+            if (!Directory.Exists(seriesScanPath.Text))
+            {
+                seriesScanPath.Items.Remove(seriesScanPath.SelectedItem);
+                if (seriesScanPath.Items.Count > 0)
+                {
+                    seriesScanPath.SelectedIndex = 0;
+                }
+            }
+        }
+
+        private void movieScanPath_Leave(object sender, EventArgs e)
+        {
+            if (!movieScanPath.Text.EndsWith(@"\"))
+                movieScanPath.Text += @"\";
+
+            btnMovieScan.Enabled = Directory.Exists(movieScanPath.Text);
+            if (!Directory.Exists(movieScanPath.Text))
+            {
+                movieScanPath.Items.Remove(movieScanPath.SelectedItem);
+                if (movieScanPath.Items.Count > 0)
+                {
+                    movieScanPath.SelectedIndex = 0;
+                }
+            }
+        }
+
+        private void seriesScanPath_TextChanged(object sender, EventArgs e)
+        {
+            btnSeriesScan.Enabled = Directory.Exists(seriesScanPath.Text);
         }
     }
 }

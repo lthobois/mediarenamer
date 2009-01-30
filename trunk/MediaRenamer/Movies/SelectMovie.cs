@@ -12,7 +12,7 @@ using System.Windows.Forms;
 using MediaRenamer;
 using MediaRenamer.Common;
 
-namespace MovieRenamer
+namespace MediaRenamer.Movies
 {
 	/// <summary>
 	/// Zusammenfassung für SelectMovie.

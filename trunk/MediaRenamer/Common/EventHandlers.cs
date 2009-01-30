@@ -4,8 +4,8 @@
 //  Author:			Benjamin Schirmer (www.codename-matrix.de)
 // *******************************************************************************
 
-using MovieRenamer;
-using TVShowRenamer;
+using MediaRenamer.Movies;
+using MediaRenamer.Series;
 
 namespace MediaRenamer.Common
 {

@@ -4,6 +4,9 @@ using System.Text;
 using System.Threading;
 using System.IO;
 
+using MediaRenamer.Movies;
+using MediaRenamer.Series;
+
 namespace MediaRenamer.Common
 {
     enum WatchFolderEntryType { SERIES, MOVIES };
@@ -134,24 +137,24 @@ namespace MediaRenamer.Common
             switch (type)
             {
                 case WatchFolderEntryType.MOVIES:
-                    MovieRenamer.Parser mparse = new MovieRenamer.Parser(path);
+                    MediaRenamer.Movies.Parser mparse = new MediaRenamer.Movies.Parser(path);
                     mparse.ListMovie += new ListMovieHandler(watchedFolder_newMovie);
                     mparse.startScan();
                     break;
                 case WatchFolderEntryType.SERIES:
-                    TVShowRenamer.Parser tparse = new TVShowRenamer.Parser(path);
+                    MediaRenamer.Series.Parser tparse = new MediaRenamer.Series.Parser(path);
                     tparse.ListEpisode += new ListEpisodeHandler(watchedFolder_newEpisode);
                     tparse.startScan();
                     break;
             }
         }
 
-        void watchedFolder_newEpisode(TVShowRenamer.Episode ep)
+        void watchedFolder_newEpisode(Episode ep)
         {
             ep.renameEpisode();
         }
 
-        void watchedFolder_newMovie(MovieRenamer.Movie m)
+        void watchedFolder_newMovie(Movie m)
         {
             m.renameMovie();
         }

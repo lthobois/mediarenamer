@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using System.Xml;
 using System.IO;
 using System.Collections;
-using Yaowi.Common.Serialization;
+using JsonExSerializer;
 
 namespace MediaRenamer.Common
 {
@@ -18,9 +18,12 @@ namespace MediaRenamer.Common
         SeriesFormat,
         MoviePaths,
         SeriesPaths,
-        WatchedFolders,
+        SeriesLocations,
         UILanguage,
-        ServicePort
+        StartMinimized,
+        MovieLocation,
+        MoveMovies,
+        SeriesData
                 
     }
     public class SettingKeyNotAvailableEception : Exception
@@ -52,35 +55,19 @@ namespace MediaRenamer.Common
             {
                 Directory.CreateDirectory(baseFolder);
             }
-            settingsFile = baseFolder + "settings.xml";
+            settingsFile = baseFolder + "settings.json";
             settingsData = new Hashtable();
             if (File.Exists(settingsFile))
             {
-                XmlDocument settingsXml = new XmlDocument();
-                settingsXml.Load(settingsFile);
-                XmlNode root = settingsXml.DocumentElement;
-
-                SettingKeys key;
-                String value;
-                foreach (XmlNode node in root.ChildNodes)
-                {
-                    try
-                    {
-                        key = ParseEnum<SettingKeys>(node.Attributes["name"].Value);
-                    }
-                    catch (SettingKeyNotAvailableEception)
-                    {
-                        continue;
-                    }
-                    value = node.InnerText;
-                    settingsData.Add(key, value);
-                }
+                string jsonText = File.ReadAllText(settingsFile);
+                Serializer serializer = new Serializer(typeof(Hashtable));
+                settingsData = (Hashtable)serializer.Deserialize(jsonText);
             }
         }
 
         ~Settings()
         {
-            saveSettingsXML();
+            saveSettings();
             settingsData.Clear();
         }
 
@@ -102,27 +89,17 @@ namespace MediaRenamer.Common
             }
         }
 
-        private void saveSettingsXML()
+        private void saveSettings()
         {
-            XmlDocument settingsXml = new XmlDocument();
-            // settingsXml.Name = "settings";
-            XmlElement root = settingsXml.CreateElement("root");
-            foreach (object key in settingsData.Keys)
-            {
-                XmlElement element = settingsXml.CreateElement("set");
-                XmlAttribute attr = settingsXml.CreateAttribute("name");
-                attr.Value = key.ToString();
-                element.Attributes.Append(attr);
-                element.InnerText = (String)getValue((SettingKeys)key);
-                root.AppendChild(element);
-            }
-            settingsXml.AppendChild(root);
             if (!File.Exists(settingsFile))
             {
                 FileStream strm = File.Create(settingsFile);
                 strm.Close();
             }
-            settingsXml.Save(settingsFile);
+
+            Serializer serializer = new Serializer(typeof(Hashtable));
+            string jsonText = serializer.Serialize(this.settingsData);
+            File.WriteAllText(settingsFile, jsonText);
         }
 
 
@@ -138,9 +115,10 @@ namespace MediaRenamer.Common
         private object getValue(SettingKeys key)
         {
             Settings settings = Settings.getInstance();
-            if (settings.settingsData.ContainsKey(key))
+            String keyName = key.ToString();
+            if (settings.settingsData.ContainsKey(keyName))
             {
-                return settings.settingsData[key];
+                return settings.settingsData[keyName];
             }
             else
             {
@@ -154,29 +132,34 @@ namespace MediaRenamer.Common
             return settings.getValue(key);
         }
 
-        public static Object[] GetValueAsArray(SettingKeys key)
+        public static T GetValueAsObject<T>(SettingKeys key)
         {
             Settings settings = Settings.getInstance();
             String filename = (String)settings.getValue(key);
-            if (filename == null) return new Object[0];
-            Object[] arr = null ;
-            if (filename.StartsWith("##"))
+            if (filename != null && filename.StartsWith("##"))
             {
                 filename = filename.Replace("##", settings.baseFolder);
                 FileInfo fi = new FileInfo(filename);
-                if (fi.Extension.ToLower() == ".xml")
+                if (fi.Extension.ToLower() == ".json" && File.Exists(filename))
                 {
-                    XmlDeserializer xd = new XmlDeserializer();
-                    arr = (Object[])xd.Deserialize(fi.FullName);
+                    string jsonText = File.ReadAllText(filename);
+                    Serializer serializer = new Serializer(typeof(T));
+                    return (T)serializer.Deserialize(jsonText);
                 }
             }
-            return arr;
+            Object e = null;
+            return (T)(e);
         }
 
         public static String GetValueAsString(SettingKeys key)
         {
             Settings settings = Settings.getInstance();
-            return (String)settings.getValue(key);
+            String str = (String)settings.getValue(key);
+            if (str == null)
+            {
+                str = String.Empty;
+            }
+            return str;            
         }
 
         public static bool GetValueAsBool(SettingKeys key)
@@ -195,52 +178,43 @@ namespace MediaRenamer.Common
 
         private void setValue(SettingKeys key, object value)
         {
+            String keyName = key.ToString();
             if (value is bool)
             {
                 value = ((bool)value) ? "1" : "0";
             }
-            if (value is int)
+            else if (value is int)
             {
                 value = value.ToString();
             }
-            if (value is ComboBox.ObjectCollection)
+            else if (value is string)
             {
-                String serializeFile = baseFolder + key.ToString() + ".xml";
-                ComboBox.ObjectCollection data = (ComboBox.ObjectCollection)value;
-                Object[] arr = new Object[data.Count];
-                for (int i = 0; i < data.Count; i++)
-                {
-                    arr[i] = data[i];
-                }
-                XmlSerializer xs = new XmlSerializer();
-                xs.Serialize(arr, serializeFile);
-                value = "##" + key.ToString() + ".xml";
             }
-            if (value is Object[])
+            else if (value is Object)
             {
-                String serializeFile = baseFolder + key.ToString() + ".xml";
-                XmlSerializer xs = new XmlSerializer();
-                xs.Serialize(value, serializeFile);
-                value = "##" + key.ToString() + ".xml";
+                String serializeFile = baseFolder + keyName + ".json";
+                Serializer serializer = new Serializer(value.GetType());
+                string jsonText = serializer.Serialize(value);
+                File.WriteAllText(serializeFile, jsonText);
+                value = "##" + keyName + ".json";
             }
 
-            
-            if (!settingsData.ContainsKey(key))
+
+            if (!settingsData.ContainsKey(keyName))
             {
-                settingsData.Add(key, (String)value);
+                settingsData.Add(keyName, (String)value);
             }
             else
             {
-                settingsData[key] = (String)value;
+                settingsData[keyName] = (String)value;
             }
 
-            saveSettingsXML();
+            saveSettings();
         }
 
         public static void SetValue(SettingKeys key, object value)
         {
             Settings settings = Settings.getInstance();
-
             settings.setValue(key, value);
         }
 
