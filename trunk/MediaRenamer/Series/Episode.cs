@@ -409,7 +409,6 @@ namespace MediaRenamer.Series
                     modifiedFilename.ToLower() == filename.ToLower())
                 {
                     fi.MoveTo(modifiedFilename);
-                    _filename = modifiedFilename;
                 }
                 else
                 {

@@ -580,7 +580,7 @@ namespace MediaRenamer
 
         private void seriesScanPath_Leave(object sender, EventArgs e)
         {
-            if (!seriesScanPath.Text.EndsWith(@"\"))
+            if (seriesScanPath.Text.Length > 0 && !seriesScanPath.Text.EndsWith(@"\"))
                 seriesScanPath.Text += @"\";
             btnSeriesScan.Enabled = Directory.Exists(seriesScanPath.Text);
             if (!Directory.Exists(seriesScanPath.Text))
@@ -595,7 +595,7 @@ namespace MediaRenamer
 
         private void movieScanPath_Leave(object sender, EventArgs e)
         {
-            if (!movieScanPath.Text.EndsWith(@"\"))
+            if (movieScanPath.Text.Length > 0 && !movieScanPath.Text.EndsWith(@"\"))
                 movieScanPath.Text += @"\";
 
             btnMovieScan.Enabled = Directory.Exists(movieScanPath.Text);

@@ -165,7 +165,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="ClassDiagram1.cd" />
     <None Include="MediaRenamer_TemporaryKey.pfx" />
     <None Include="Properties\app.manifest" />
     <None Include="Resources\help.png" />
