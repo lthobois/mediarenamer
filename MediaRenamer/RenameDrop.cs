@@ -6,8 +6,8 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using MediaRenamer.Common;
-using TVShowRenamer;
-using MovieRenamer;
+using MediaRenamer.Movies;
+using MediaRenamer.Series;
 using System.Reflection;
 using System.IO;
 
@@ -70,7 +70,17 @@ namespace MediaRenamer
                     Episode ep = Episode.parseFile(fi.FullName);
                     if (ep.needRenaming())
                     {
-                        ep.renameEpisode();
+                        SeriesLocations locations = new SeriesLocations();
+                        String path = locations.getEpisodePath(ep);
+                        if (Directory.Exists(path))
+                        {
+                            ep.renameEpisodeAndMove(path);
+                            locations.addSeriesLocation(ep);
+                        }
+                        else
+                        {
+                            ep.renameEpisode();
+                        }
                     }
                 }
                 else
@@ -78,7 +88,15 @@ namespace MediaRenamer
                     Movie movie = Movie.parseFile(fi.FullName, fi.DirectoryName + @"\");
                     if (movie.needRenaming())
                     {
-                        movie.renameMovie();
+                        if (Settings.GetValueAsBool(SettingKeys.MoveMovies))
+                        {
+                            String path = Settings.GetValueAsString(SettingKeys.MovieLocation);
+                            movie.renameMovieAndMove(path);
+                        }
+                        else
+                        {
+                            movie.renameMovie();
+                        }
                     }
                 }
             }

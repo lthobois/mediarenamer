@@ -7,17 +7,17 @@
 
 using System;
 
-namespace TVShowRenamer
+namespace MediaRenamer.Series
 {
 	/// <summary>
 	/// Zusammenfassung für showClass.
 	/// </summary>
 	public class showClass
 	{
-		public String showID = "";
-		public String showName = "";
-		public int showYear = 0;
-		public int showSeason = 0;
-		public String showLang = "";
+		public String ID = "";
+		public String Name = "";
+		public int Year = 0;
+		public int Season = 0;
+		public String Lang = "";
 	}
 }

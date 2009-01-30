@@ -11,7 +11,7 @@ using System.Text.RegularExpressions;
 using MediaRenamer;
 using MediaRenamer.Common;
 
-namespace MovieRenamer
+namespace MediaRenamer.Movies
 {
 	/// <summary>
 	/// Zusammenfassung für MovieParser.

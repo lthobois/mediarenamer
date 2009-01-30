@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // Attribute gesteuert. Ändern Sie diese Attributwerte, um die Informationen zu ändern,
 // die mit einer Assembly verknüpft sind.
 [assembly: AssemblyTitle("MediaRenamer")]
-[assembly: AssemblyDescription("rename your media files")]
+[assembly: AssemblyDescription("Easily rename all your video files")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Benjamin Schirmer")]
 [assembly: AssemblyProduct("MediaRenamer")]
-[assembly: AssemblyCopyright("Copyright © Benjamin Schirmer 2007")]
+[assembly: AssemblyCopyright("Copyright © Benjamin Schirmer 2007-2009")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
