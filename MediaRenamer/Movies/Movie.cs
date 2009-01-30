@@ -160,7 +160,6 @@ namespace MediaRenamer.Movies
                 if (!File.Exists(modifiedFilename))
                 {
                     fi.MoveTo(modifiedFilename);
-                    _filename = modifiedFilename;
                 }
                 else
                 {
