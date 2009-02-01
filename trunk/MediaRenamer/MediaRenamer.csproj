@@ -134,7 +134,9 @@
       <DependentUpon>RenameDrop.cs</DependentUpon>
     </Compile>
     <Compile Include="Series\Episode.cs" />
-    <Compile Include="Series\OnlineParser.cs" />
+    <Compile Include="Series\OnlineParserTVDB.cs" />
+    <Compile Include="Series\OnlineParserEPW.cs" />
+    <Compile Include="Series\OnlineParserBase.cs" />
     <Compile Include="Series\Parser.cs" />
     <Compile Include="Series\SelectShow.cs">
       <SubType>Form</SubType>
@@ -172,6 +174,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\dropTarget.png" />
     <Content Include="JsonSerializer\JsonExSerializer.dll" />
+    <Content Include="JsonExSerializer.license.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\SysTray.ico" />
   </ItemGroup>
   <ItemGroup>

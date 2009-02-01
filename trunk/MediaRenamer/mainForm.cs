@@ -1,3 +1,18 @@
+/**
+ * Copyright 2009 Benjamin Schirmer
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -36,7 +51,8 @@ namespace MediaRenamer
             RegistryKey key = Registry.CurrentUser.CreateSubKey(@"Software\MediaRenamer");
             key.Close();
 
-            this.Text = Application.ProductName + " v" + Application.ProductVersion;
+            System.Version v = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+            this.Text = Application.ProductName + " v" + v.ToString();
 
             notifyIcon.Visible = Settings.GetValueAsBool(SettingKeys.SysTrayIcon);
             optionSysTray.Checked = Settings.GetValueAsBool(SettingKeys.SysTrayIcon);
@@ -85,6 +101,17 @@ namespace MediaRenamer
             {
                 seriesScanPath.Items.AddRange(items);
             }
+
+            String parserName = Settings.GetValueAsString(SettingKeys.SeriesParser);
+            if (parserName == String.Empty)
+            {
+                parserName = OnlineParserEPW.parserName;
+                Settings.SetValue(SettingKeys.SeriesParser, OnlineParserEPW.parserName);
+            }
+            optionSeriesParser.Items.Add(OnlineParserEPW.parserName);
+            optionSeriesParser.Items.Add(OnlineParserTVDB.parserName);
+            optionSeriesParser.SelectedItem = parserName;
+            
 
             String uiLang = Settings.GetValueAsString(SettingKeys.UILanguage);
             i18nLang ui18nLang = new i18nLang("en", "english");
@@ -157,7 +184,7 @@ namespace MediaRenamer
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            option_tvSourceEPW.Select();
+            
         }
 
         private bool validPath(String path)
@@ -224,6 +251,7 @@ namespace MediaRenamer
                 //Log.Add(i18n.t("scan_complete"));
                 Log.Add("Scan successfully completed!");
             }
+
             scanMovieProgressbar.Maximum = max;
             scanMovieProgressbar.Value = pos;
         }
@@ -233,8 +261,9 @@ namespace MediaRenamer
             if (!validPath(seriesScanPath.Text)) return;
             storeSeriesPath(seriesScanPath.Text);
 
-            scanSeriesList.Items.Clear();
             Cursor = Cursors.WaitCursor;
+
+            scanSeriesList.Items.Clear();
 
             MediaRenamer.Series.Parser tparse = new MediaRenamer.Series.Parser(seriesScanPath.Text);
             tparse.ScanProgress += new ScanProgressHandler(series_ScanProgress);
@@ -281,12 +310,10 @@ namespace MediaRenamer
         {
             if (scanSeriesProgressbar.Maximum == 0)
             {
-                //Log.Add(i18n.t("scan_count", max));
                 Log.Add(String.Format("{0} files found.", max));
             }
             if (pos == 0 && max == 0)
             {
-                //Log.Add(i18n.t("scan_complete"));
                 Log.Add("Scan successfully completed!");
             }
             scanSeriesProgressbar.Maximum = max;
@@ -310,16 +337,13 @@ namespace MediaRenamer
             if (tabControl.SelectedTab == tabSeries)
             {
                 contextOptionRename.Enabled = (scanSeriesList.CheckedItems.Count > 0);
-                //contextOptionRename.Text = i18n.t("context_rename_series");
                 contextOptionRename.Text = "Rename selected Episodes";
             }
             if (tabControl.SelectedTab == tabMovies)
             {
                 contextOptionRename.Enabled = (scanMovieList.CheckedItems.Count > 0);
-                //contextOptionRename.Text = i18n.t("context_rename_movies");
                 contextOptionRename.Text = "Rename selected Movies";
             }
-
         }
 
         private void renameSelectedMovies()
@@ -612,6 +636,58 @@ namespace MediaRenamer
         private void seriesScanPath_TextChanged(object sender, EventArgs e)
         {
             btnSeriesScan.Enabled = Directory.Exists(seriesScanPath.Text);
+        }
+
+        private DateTime DateCompiled()
+        {
+            // Assumes that in AssemblyInfo.cs,
+            // the version is specified as 1.0.* or the like,
+            // with only 2 numbers specified;
+            // the next two are generated from the date.
+            // This routine decodes them.
+            System.Version v = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+
+            // v.Build is days since Jan. 1, 2000
+            // v.Revision*2 is seconds since local midnight
+            // (NEVER daylight saving time)
+
+            DateTime t = new DateTime(
+                v.Build * TimeSpan.TicksPerDay +
+                v.Revision * TimeSpan.TicksPerSecond * 2
+                ).AddYears(1999).AddDays(-1);
+
+            return t;
+        }
+
+        private void btnAppAbout_Click(object sender, EventArgs e)
+        {
+            System.Version v = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+            DateTime dt = DateCompiled();
+
+            String str = "";
+            str += Application.ProductName + " " + v.ToString() + "\n";
+            str += "Compiled on " + dt.ToShortDateString() + "\n";
+            str += "Project webpage: http://code.google.com/p/mediarenamer/\n";
+            str += "Source Code licensed under Apache 2.0\n";
+            str += "\n";
+            str += "Data provided by:\n";
+            str += "* EpisodeWorld.com\n";
+            str += "* IMDB.com\n";
+            str += "\n";
+            str += "Third party code used:\n";
+            str += "* JsonExSerializer for C# (http://code.google.com/p/jsonexserializer/)\n";
+
+            MessageBox.Show(this, str, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void scanSeriesList_DrawItem(object sender, DrawListViewItemEventArgs e)
+        {
+
+        }
+
+        private void optionSeriesParser_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Settings.SetValue(SettingKeys.SeriesParser, optionSeriesParser.SelectedItem.ToString());
         }
     }
 }

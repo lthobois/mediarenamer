@@ -1,10 +1,18 @@
-// *******************************************************************************
-//  Title:			SelectShow.cs
-//  Description:	Dialog to select the best matching series if there are several
-//					matches on episodeworld.com
-//  Author:			Benjamin Schirmer (www.codename-matrix.de)
-// *******************************************************************************
-
+/**
+ * Copyright 2009 Benjamin Schirmer
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 using System;
 using System.Drawing;
 using System.Collections;
@@ -12,6 +20,8 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using MediaRenamer;
 using MediaRenamer.Common;
+using System.IO;
+using System.Collections.Generic;
 
 namespace MediaRenamer.Series
 {
@@ -23,11 +33,9 @@ namespace MediaRenamer.Series
 		public showClass selectedShow = null;
 		private System.Windows.Forms.Button btnOk;
 		private System.Windows.Forms.ListBox showList;
-		private System.Windows.Forms.Button btnSkip;
-        private Label label1;
-        private Label label2;
-        private Label labelSeries;
+        private System.Windows.Forms.Button btnSkip;
         private Label labelEpisode;
+        private Label labelFile;
 		/// <summary>
 		/// Erforderliche Designervariable.
 		/// </summary>
@@ -70,10 +78,8 @@ namespace MediaRenamer.Series
             this.btnOk = new System.Windows.Forms.Button();
             this.showList = new System.Windows.Forms.ListBox();
             this.btnSkip = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.labelSeries = new System.Windows.Forms.Label();
             this.labelEpisode = new System.Windows.Forms.Label();
+            this.labelFile = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnOk
@@ -106,39 +112,23 @@ namespace MediaRenamer.Series
             this.btnSkip.Text = "Skip";
             this.btnSkip.Click += new System.EventHandler(this.btnSkip_Click);
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(36, 13);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Series";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 30);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(45, 13);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "Episode";
-            // 
-            // labelSeries
-            // 
-            this.labelSeries.AutoSize = true;
-            this.labelSeries.Location = new System.Drawing.Point(67, 9);
-            this.labelSeries.Name = "labelSeries";
-            this.labelSeries.Size = new System.Drawing.Size(0, 13);
-            this.labelSeries.TabIndex = 5;
-            // 
             // labelEpisode
             // 
             this.labelEpisode.AutoSize = true;
-            this.labelEpisode.Location = new System.Drawing.Point(67, 30);
+            this.labelEpisode.Location = new System.Drawing.Point(12, 9);
             this.labelEpisode.Name = "labelEpisode";
-            this.labelEpisode.Size = new System.Drawing.Size(0, 13);
+            this.labelEpisode.Size = new System.Drawing.Size(48, 13);
             this.labelEpisode.TabIndex = 6;
+            this.labelEpisode.Text = "Episode:";
+            // 
+            // labelFile
+            // 
+            this.labelFile.AutoSize = true;
+            this.labelFile.Location = new System.Drawing.Point(12, 28);
+            this.labelFile.Name = "labelFile";
+            this.labelFile.Size = new System.Drawing.Size(26, 13);
+            this.labelFile.TabIndex = 7;
+            this.labelFile.Text = "File:";
             // 
             // SelectShow
             // 
@@ -146,10 +136,8 @@ namespace MediaRenamer.Series
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
             this.CancelButton = this.btnSkip;
             this.ClientSize = new System.Drawing.Size(386, 296);
+            this.Controls.Add(this.labelFile);
             this.Controls.Add(this.labelEpisode);
-            this.Controls.Add(this.labelSeries);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.btnSkip);
             this.Controls.Add(this.showList);
             this.Controls.Add(this.btnOk);
@@ -166,21 +154,17 @@ namespace MediaRenamer.Series
 
         public void setEpisodeData(Episode ep)
         {
-            labelSeries.Text = ep.series;
-            labelEpisode.Text = ep.season + "x" + ep.episode + ": " + ep.title;
+            labelEpisode.Text = "Season " + ep.season + " Episode " + ep.episode + ": " + ep.title;
+            FileInfo fi = new FileInfo(ep.filename);
+            labelFile.Text = fi.Directory.Parent.Name + @"\" + fi.Directory.Name + @"\" + fi.Name;
         }
 
-		public void addShow(showClass sc)
+		public void addShows(List<showClass> shows)
 		{
-			bool add=true;
-			for (int i=0; i<showList.Items.Count; i++)
-			{
-				showClass sci = (showList.Items[i] as showClass);
-				if (sci.ID == sc.ID) add = false;
-				
-			}
-			if (add)
-				showList.Items.Add( sc );
+            foreach (showClass show in shows)
+            {
+                showList.Items.Add(show);
+            }
 		}
 
 		private void showList_DrawItem(object sender, System.Windows.Forms.DrawItemEventArgs e)
@@ -192,7 +176,16 @@ namespace MediaRenamer.Series
 				showClass sc = (showList.Items[e.Index] as showClass);
 				e.DrawBackground();
 				Brush b = Brushes.Black;
-				e.Graphics.DrawString( sc.Name+" ("+sc.Year.ToString()+")", e.Font, b, e.Bounds);
+                String title = "";
+                if (sc.Lang == "")
+                {
+                    title = sc.Name + " (" + sc.Year.ToString() + ")";
+                }
+                else
+                {
+                    title = sc.Name + " (" + sc.Year.ToString() + "," + sc.Lang + ")";
+                }
+                e.Graphics.DrawString(title, e.Font, b, e.Bounds);
 				e.DrawFocusRectangle();
 			}
 			catch (Exception E)
@@ -208,8 +201,6 @@ namespace MediaRenamer.Series
 				selectedShow = showList.Items[0] as showClass;
 				showList.SelectedIndex = 0;
 			}
-			//btnOk.Text = i18n.t("btn_ok");
-			//btnSkip.Text = i18n.t("btn_skip");
 		}
 
 		private void showList_SelectedIndexChanged(object sender, System.EventArgs e)
