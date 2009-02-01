@@ -38,7 +38,7 @@
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(287, 54);
+            this.btnCancel.Location = new System.Drawing.Point(287, 81);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 0;
@@ -49,7 +49,7 @@
             // 
             this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOk.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOk.Location = new System.Drawing.Point(206, 54);
+            this.btnOk.Location = new System.Drawing.Point(206, 81);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
             this.btnOk.TabIndex = 1;
@@ -61,17 +61,16 @@
             // 
             this.answerBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.answerBox.Location = new System.Drawing.Point(12, 29);
+            this.answerBox.Location = new System.Drawing.Point(12, 55);
             this.answerBox.Name = "answerBox";
-            this.answerBox.Size = new System.Drawing.Size(349, 20);
+            this.answerBox.Size = new System.Drawing.Size(350, 20);
             this.answerBox.TabIndex = 2;
             // 
             // question
             // 
-            this.question.AutoSize = true;
             this.question.Location = new System.Drawing.Point(13, 13);
             this.question.Name = "question";
-            this.question.Size = new System.Drawing.Size(35, 13);
+            this.question.Size = new System.Drawing.Size(349, 39);
             this.question.TabIndex = 3;
             this.question.Text = "label1";
             // 
@@ -79,13 +78,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(374, 84);
+            this.ClientSize = new System.Drawing.Size(374, 111);
             this.Controls.Add(this.question);
             this.Controls.Add(this.answerBox);
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.btnCancel);
             this.MinimumSize = new System.Drawing.Size(250, 120);
             this.Name = "InputDialog";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "InputDialog";
             this.ResumeLayout(false);
             this.PerformLayout();

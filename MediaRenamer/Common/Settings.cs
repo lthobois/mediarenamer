@@ -1,3 +1,18 @@
+/**
+ * Copyright 2009 Benjamin Schirmer
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -23,7 +38,8 @@ namespace MediaRenamer.Common
         StartMinimized,
         MovieLocation,
         MoveMovies,
-        SeriesData
+        SeriesData,
+        SeriesParser
                 
     }
     public class SettingKeyNotAvailableEception : Exception
@@ -112,10 +128,9 @@ namespace MediaRenamer.Common
             return Settings.instance;
         }
 
-        private object getValue(SettingKeys key)
+        private object getValue(String keyName)
         {
             Settings settings = Settings.getInstance();
-            String keyName = key.ToString();
             if (settings.settingsData.ContainsKey(keyName))
             {
                 return settings.settingsData[keyName];
@@ -126,16 +141,27 @@ namespace MediaRenamer.Common
             }
         }
 
+        public static object GetValue(String keyName)
+        {
+            Settings settings = Settings.getInstance();
+            return settings.getValue(keyName);
+        }
+
         public static object GetValue(SettingKeys key)
         {
             Settings settings = Settings.getInstance();
-            return settings.getValue(key);
+            return settings.getValue(key.ToString());
         }
 
         public static T GetValueAsObject<T>(SettingKeys key)
         {
+            return GetValueAsObject<T>(key.ToString());
+        }
+
+        public static T GetValueAsObject<T>(String keyName)
+        {
             Settings settings = Settings.getInstance();
-            String filename = (String)settings.getValue(key);
+            String filename = (String)settings.getValue(keyName);
             if (filename != null && filename.StartsWith("##"))
             {
                 filename = filename.Replace("##", settings.baseFolder);
@@ -153,8 +179,13 @@ namespace MediaRenamer.Common
 
         public static String GetValueAsString(SettingKeys key)
         {
+            return GetValueAsString(key.ToString());
+        }
+
+        public static String GetValueAsString(String keyName)
+        {
             Settings settings = Settings.getInstance();
-            String str = (String)settings.getValue(key);
+            String str = (String)settings.getValue(keyName);
             if (str == null)
             {
                 str = String.Empty;
@@ -164,21 +195,30 @@ namespace MediaRenamer.Common
 
         public static bool GetValueAsBool(SettingKeys key)
         {
+            return GetValueAsBool(key.ToString());
+        }
+
+        public static bool GetValueAsBool(String keyName)
+        {
             Settings settings = Settings.getInstance();
-            String val = (String)settings.getValue(key);
+            String val = (String)settings.getValue(keyName);
             return (val == "1") ? true : false;
         }
 
         public static int GetValueAsInt(SettingKeys key)
         {
+            return GetValueAsInt(key.ToString());
+        }
+
+        public static int GetValueAsInt(String keyName)
+        {
             Settings settings = Settings.getInstance();
-            int val = int.Parse( (String)settings.getValue(key));
+            int val = int.Parse((String)settings.getValue(keyName));
             return val;
         }
 
-        private void setValue(SettingKeys key, object value)
+        private void setValue(String keyName, object value)
         {
-            String keyName = key.ToString();
             if (value is bool)
             {
                 value = ((bool)value) ? "1" : "0";
@@ -214,8 +254,13 @@ namespace MediaRenamer.Common
 
         public static void SetValue(SettingKeys key, object value)
         {
+            SetValue(key.ToString(), value);
+        }
+
+        public static void SetValue(String keyName, object value)
+        {
             Settings settings = Settings.getInstance();
-            settings.setValue(key, value);
+            settings.setValue(keyName, value);
         }
 
     }

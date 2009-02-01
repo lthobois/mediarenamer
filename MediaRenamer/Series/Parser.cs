@@ -1,10 +1,18 @@
-// *******************************************************************************
-//  Title:			Parser.cs
-//  Description:	Parses through the folder structure to find episodes and 
-//					queries them using the OnlineParser
-//  Author:			Benjamin Schirmer (www.codename-matrix.de)
-// *******************************************************************************
-
+/**
+ * Copyright 2009 Benjamin Schirmer
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 using System;
 using System.IO;
 using System.Windows.Forms;
@@ -42,12 +50,12 @@ namespace MediaRenamer.Series
         }
 
         public event ListEpisodeHandler ListEpisode;
-        protected virtual void OnListEpisode(Episode m)
+        protected virtual void OnListEpisode(Episode ep)
         {
             ListEpisodeHandler handler = ListEpisode;
             if (handler != null)
             {
-                handler(m);
+                handler(ep);
             }
         }
 
@@ -90,30 +98,22 @@ namespace MediaRenamer.Series
 					}
 					else
 					{
-						Episode ep = parseFile(elements[i]);
+                        Episode ep = Episode.parseFile(elements[i]);
 						if (ep == null) continue;
-                        locations.addSeriesLocation(ep);
-						if (!ep.special && ep.needRenaming())
-						{
-							OnListEpisode( ep );
-						}
+                        if (!ep.special && ep.needRenaming())
+                        {
+                            OnListEpisode(ep);
+                        }
+                        else
+                        {
+                            locations.addSeriesLocation(ep);
+                        }
 					}
 				}
                 OnScanProgress(i, elements.Length - 1);
 			}
             locations.saveLocations();
             //OnScanProgress(0, 0);
-		}
-
-        /// <summary>
-        /// Parses a filename for episode information
-        /// </summary>
-        /// <param name="file">complete filename</param>
-        /// <returns>filled Episode class</returns>
-		public Episode parseFile(String file)
-		{
-            Episode ep = Episode.parseFile(file);
-			return ep;
 		}
 
     	/// <summary>

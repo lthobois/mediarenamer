@@ -81,7 +81,6 @@
             this.labelMovieOutpu = new System.Windows.Forms.Label();
             this.optionGroupSeries = new System.Windows.Forms.GroupBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.option_tvSourceEPW = new System.Windows.Forms.RadioButton();
             this.labelTVSource = new System.Windows.Forms.Label();
             this.option_seriesFormat = new System.Windows.Forms.TextBox();
             this.labelTVOutput = new System.Windows.Forms.Label();
@@ -105,6 +104,8 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.sysTrayExit = new System.Windows.Forms.ToolStripMenuItem();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.btnAppAbout = new System.Windows.Forms.Button();
+            this.optionSeriesParser = new System.Windows.Forms.ComboBox();
             this.tabControl.SuspendLayout();
             this.tabSeries.SuspendLayout();
             this.contextRename.SuspendLayout();
@@ -150,7 +151,7 @@
             // tvRenameEpisodes
             // 
             this.tvRenameEpisodes.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.tvRenameEpisodes.Location = new System.Drawing.Point(553, 373);
+            this.tvRenameEpisodes.Location = new System.Drawing.Point(554, 372);
             this.tvRenameEpisodes.Name = "tvRenameEpisodes";
             this.tvRenameEpisodes.Size = new System.Drawing.Size(144, 23);
             this.tvRenameEpisodes.TabIndex = 6;
@@ -221,7 +222,7 @@
             // headTitle
             // 
             this.headTitle.Text = "Title";
-            this.headTitle.Width = 130;
+            this.headTitle.Width = 220;
             // 
             // headFilename
             // 
@@ -506,7 +507,7 @@
             this.optionGroupOthers.Controls.Add(this.optionSysTray);
             this.optionGroupOthers.Controls.Add(this.optionStartMinimized);
             this.optionGroupOthers.Dock = System.Windows.Forms.DockStyle.Top;
-            this.optionGroupOthers.Location = new System.Drawing.Point(5, 217);
+            this.optionGroupOthers.Location = new System.Drawing.Point(5, 221);
             this.optionGroupOthers.Name = "optionGroupOthers";
             this.optionGroupOthers.Size = new System.Drawing.Size(696, 128);
             this.optionGroupOthers.TabIndex = 3;
@@ -574,7 +575,7 @@
             this.optionGroupMovies.Controls.Add(this.option_movieFormat);
             this.optionGroupMovies.Controls.Add(this.labelMovieOutpu);
             this.optionGroupMovies.Dock = System.Windows.Forms.DockStyle.Top;
-            this.optionGroupMovies.Location = new System.Drawing.Point(5, 133);
+            this.optionGroupMovies.Location = new System.Drawing.Point(5, 137);
             this.optionGroupMovies.Name = "optionGroupMovies";
             this.optionGroupMovies.Size = new System.Drawing.Size(696, 84);
             this.optionGroupMovies.TabIndex = 2;
@@ -644,15 +645,15 @@
             // optionGroupSeries
             // 
             this.optionGroupSeries.AutoSize = true;
+            this.optionGroupSeries.Controls.Add(this.optionSeriesParser);
             this.optionGroupSeries.Controls.Add(this.pictureBox1);
-            this.optionGroupSeries.Controls.Add(this.option_tvSourceEPW);
             this.optionGroupSeries.Controls.Add(this.labelTVSource);
             this.optionGroupSeries.Controls.Add(this.option_seriesFormat);
             this.optionGroupSeries.Controls.Add(this.labelTVOutput);
             this.optionGroupSeries.Dock = System.Windows.Forms.DockStyle.Top;
             this.optionGroupSeries.Location = new System.Drawing.Point(5, 5);
             this.optionGroupSeries.Name = "optionGroupSeries";
-            this.optionGroupSeries.Size = new System.Drawing.Size(696, 128);
+            this.optionGroupSeries.Size = new System.Drawing.Size(696, 132);
             this.optionGroupSeries.TabIndex = 1;
             this.optionGroupSeries.TabStop = false;
             this.optionGroupSeries.Text = "TV Series Options";
@@ -661,25 +662,13 @@
             // 
             this.pictureBox1.Image = global::MediaRenamer.Properties.Resources.EPW_Logo_168;
             this.pictureBox1.InitialImage = global::MediaRenamer.Properties.Resources.EPW_Logo_168;
-            this.pictureBox1.Location = new System.Drawing.Point(142, 66);
+            this.pictureBox1.Location = new System.Drawing.Point(143, 70);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(168, 43);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBox1.TabIndex = 16;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
-            // 
-            // option_tvSourceEPW
-            // 
-            this.option_tvSourceEPW.AutoSize = true;
-            this.option_tvSourceEPW.Checked = true;
-            this.option_tvSourceEPW.Location = new System.Drawing.Point(142, 43);
-            this.option_tvSourceEPW.Name = "option_tvSourceEPW";
-            this.option_tvSourceEPW.Size = new System.Drawing.Size(137, 17);
-            this.option_tvSourceEPW.TabIndex = 15;
-            this.option_tvSourceEPW.TabStop = true;
-            this.option_tvSourceEPW.Text = "www.episodeworld.com";
-            this.option_tvSourceEPW.UseVisualStyleBackColor = true;
             // 
             // labelTVSource
             // 
@@ -840,11 +829,33 @@
             this.sysTrayExit.Text = "Exit";
             this.sysTrayExit.Click += new System.EventHandler(this.sysTrayExit_Click);
             // 
+            // btnAppAbout
+            // 
+            this.btnAppAbout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAppAbout.Location = new System.Drawing.Point(666, 0);
+            this.btnAppAbout.Name = "btnAppAbout";
+            this.btnAppAbout.Size = new System.Drawing.Size(47, 20);
+            this.btnAppAbout.TabIndex = 4;
+            this.btnAppAbout.Text = "About";
+            this.btnAppAbout.UseVisualStyleBackColor = true;
+            this.btnAppAbout.Click += new System.EventHandler(this.btnAppAbout_Click);
+            // 
+            // optionSeriesParser
+            // 
+            this.optionSeriesParser.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.optionSeriesParser.FormattingEnabled = true;
+            this.optionSeriesParser.Location = new System.Drawing.Point(143, 43);
+            this.optionSeriesParser.Name = "optionSeriesParser";
+            this.optionSeriesParser.Size = new System.Drawing.Size(227, 21);
+            this.optionSeriesParser.TabIndex = 17;
+            this.optionSeriesParser.SelectedIndexChanged += new System.EventHandler(this.optionSeriesParser_SelectedIndexChanged);
+            // 
             // mainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(714, 429);
+            this.Controls.Add(this.btnAppAbout);
             this.Controls.Add(this.tabControl);
             this.MinimumSize = new System.Drawing.Size(730, 465);
             this.Name = "mainForm";
@@ -888,7 +899,6 @@
         private System.Windows.Forms.Label labelTVOutput;
         private System.Windows.Forms.ContextMenuStrip contextProposals;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.RadioButton option_tvSourceEPW;
         private System.Windows.Forms.Label labelTVSource;
         private System.Windows.Forms.NotifyIcon notifyIcon;
         private System.Windows.Forms.ListBox watchedFolders;
@@ -952,6 +962,8 @@
         private System.Windows.Forms.CheckBox option_moveMovies;
         private System.Windows.Forms.Button btnMovePath;
         private System.Windows.Forms.TextBox option_movieTargetLocation;
+        private System.Windows.Forms.Button btnAppAbout;
+        private System.Windows.Forms.ComboBox optionSeriesParser;
     }
 }
 

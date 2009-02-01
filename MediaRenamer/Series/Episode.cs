@@ -1,9 +1,18 @@
-// *******************************************************************************
-//  Title:			Episode.cs
-//  Description:	Episode Class
-//  Author:			Benjamin Schirmer (www.codename-matrix.de)
-// *******************************************************************************
-
+/**
+ * Copyright 2009 Benjamin Schirmer
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 using System;
 using System.IO;
 using System.Threading;
@@ -31,14 +40,15 @@ namespace MediaRenamer.Series
 
         // This are the regular Expressions to find season and episode number
         public static String[] regEx = {	
-									@"([0-9]+)x([0-9]+)-([0-9]+)",
-                                    @"s([0-9]+)e([0-9]+)-e([0-9]+)",
-									@"s([0-9]+)e([0-9]+)e([0-9]+)",
-									@"s([0-9]+)e([0-9]+)",
-                                    @"s([0-9]+)ep([0-9]+)",
-									@"s([0-9]+) e([0-9]+)",
-									@"([0-9]+)x([0-9]+)",
-                                    @" ([1-9]{1})([0-9]{2}) "
+									@"(?<season>[0-9]+)x(?<episode>[0-9]+)-(?<episode2>[0-9]+)",
+                                    @"s(?<season>[0-9]+)e(?<episode>[0-9]+)-e(?<episode2>[0-9]+)",
+									@"s(?<season>[0-9]+)e(?<episode>[0-9]+)e(?<episode2>[0-9]+)",
+									@"s(?<season>[0-9]+)e(?<episode>[0-9]+)",
+                                    @"s(?<season>[0-9]+)ep(?<episode>[0-9]+)",
+									@"s(?<season>[0-9]+) e(?<episode>[0-9]+)",
+									@"(?<season>[0-9]+)x(?<episode>[0-9]+)",
+                                    @" (?<season>[1-9]{1})(?<episode>[0-9]{2}) ",
+                                    @" (?<season>[1-9]{1})(?<episode>[0-9]{2})\+([1-9]{1})(?<episode2>[0-9]{2}) "
 								 };
 		private char[] badPathChars = {'/', '\\', ':', '*', '?', '"', '<', '>', '|'};
 
@@ -225,23 +235,31 @@ namespace MediaRenamer.Series
                     m = reg.Match(name);
                     if (m.Success)
                     {
-                        ep.season = Int32.Parse(m.Groups[1].Captures[0].Value);
-                        ep.episode = Int32.Parse(m.Groups[2].Captures[0].Value);
-                        int[] eps = new int[m.Groups.Count - 2];
-                        for (int i = 0; i < eps.Length; i++)
+                        ep.season = Int32.Parse(m.Result("${season}"));
+                        ep.episode = Int32.Parse(m.Result("${episode}"));
+                        String episode2str = m.Result("${episode2}");
+                        int episode2 = -1;
+                        Int32.TryParse(episode2str, out episode2);
+                        if (episode2 != 0)
                         {
-                            eps[i] = Int32.Parse(m.Groups[i + 2].Captures[0].Value);
+                            ep.episodes = new int[2];
+                            ep.episodes[0] = ep.episode;
+                            ep.episodes[1] = episode2;
                         }
-                        ep.episodes = eps;
+                        else
+                        {
+                            ep.episodes = new int[1];
+                            ep.episodes[0] = ep.episode;
+                        }
 
                         if (name.IndexOf(m.Value) > 0)
                         {
                             series = name.Substring(0, name.IndexOf(m.Value) - 1);
-                            //series = series.Replace(".", " ");
-                            series = Eregi.replace("([a-zA-Z]{1})([0-9]{1})", "\\1 \\2", series);
-                            series = Eregi.replace("([0-9]{1})([a-zA-Z]{1})", "\\1 \\2", series);
-                            series = Eregi.replace("([a-zA-Z]{2})\\.([a-zA-Z]{1})", "\\1 \\2", series);
-                            series = Eregi.replace("([a-zA-Z]{1})\\.([a-zA-Z]{2})", "\\1 \\2", series);
+
+                            //series = Eregi.replace("([a-zA-Z]{1})([0-9]{1})", "\\1 \\2", series);
+                            //series = Eregi.replace("([0-9]{1})([a-zA-Z]{1})", "\\1 \\2", series);
+                            //series = Eregi.replace("([a-zA-Z]{2})\\.([a-zA-Z]{1})", "\\1 \\2", series);
+                            //series = Eregi.replace("([a-zA-Z]{1})\\.([a-zA-Z]{2})", "\\1 \\2", series);
                             series = series.Replace("_", " ");
                             series = series.Replace("  ", " ");
                             series = series.Replace(" - ", " ");
@@ -266,15 +284,24 @@ namespace MediaRenamer.Series
                         }
                         if (title.StartsWith(" - "))
                         {
-                            title = title.Replace(" - ", "");
+                            title = title.Substring(3);
                         }
                         title = title.Trim();
                         title = title.Substring(0, title.LastIndexOf("."));
                         ep.title = title;
 
                         // find title using online parser
-                        OnlineParser oParse = new OnlineParser();
-                        oParse.getEpisodeData(ref ep);
+                        OnlineParserBase parser = null;
+                        String selectedParser = Settings.GetValueAsString(SettingKeys.SeriesParser);
+                        if (selectedParser == OnlineParserTVDB.parserName)
+                        {
+                            parser = new OnlineParserTVDB();
+                        }
+                        else if (selectedParser == OnlineParserEPW.parserName)
+                        {
+                            parser = new OnlineParserEPW();
+                        }
+                        parser.getEpisodeData(ref ep);
 
                         matched = true;
 
