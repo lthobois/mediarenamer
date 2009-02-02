@@ -256,10 +256,10 @@ namespace MediaRenamer.Series
                         {
                             series = name.Substring(0, name.IndexOf(m.Value) - 1);
 
-                            //series = Eregi.replace("([a-zA-Z]{1})([0-9]{1})", "\\1 \\2", series);
-                            //series = Eregi.replace("([0-9]{1})([a-zA-Z]{1})", "\\1 \\2", series);
-                            //series = Eregi.replace("([a-zA-Z]{2})\\.([a-zA-Z]{1})", "\\1 \\2", series);
-                            //series = Eregi.replace("([a-zA-Z]{1})\\.([a-zA-Z]{2})", "\\1 \\2", series);
+                            series = Eregi.replace("([a-zA-Z]{1})([0-9]{1})", "\\1 \\2", series);
+                            series = Eregi.replace("([0-9]{1})([a-zA-Z]{1})", "\\1 \\2", series);
+                            series = Eregi.replace("([a-zA-Z]{2})\\.([a-zA-Z]{1})", "\\1 \\2", series);
+                            series = Eregi.replace("([a-zA-Z]{1})\\.([a-zA-Z]{2})", "\\1 \\2", series);
                             series = series.Replace("_", " ");
                             series = series.Replace("  ", " ");
                             series = series.Replace(" - ", " ");

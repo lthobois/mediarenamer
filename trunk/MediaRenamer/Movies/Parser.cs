@@ -55,6 +55,16 @@ namespace MediaRenamer.Movies
             }
         }
 
+        public event ScanDone ScanDone;
+        protected virtual void OnScanDone()
+        {
+            ScanDone handler = ScanDone;
+            if (handler != null)
+            {
+                handler.Invoke();
+            }
+        }
+
 		private bool isVideo(String name)
 		{
 			name = name.ToLower();
@@ -92,7 +102,7 @@ namespace MediaRenamer.Movies
 				}
                 OnScanProgress(i, elements.Length-1);
 			}
-            OnScanProgress(0, 0);
+            OnScanDone();
 		}
 
 		public void startScan()
