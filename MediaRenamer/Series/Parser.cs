@@ -45,7 +45,7 @@ namespace MediaRenamer.Series
             ScanProgressHandler handler = ScanProgress;
             if (handler != null)
             {
-                handler(pos, max);
+                handler.Invoke(pos, max);
             }
         }
 
@@ -55,7 +55,17 @@ namespace MediaRenamer.Series
             ListEpisodeHandler handler = ListEpisode;
             if (handler != null)
             {
-                handler(ep);
+                handler.Invoke(ep);
+            }
+        }
+
+        public event ScanDone ScanDone;
+        protected virtual void OnScanDone()
+        {
+            ScanDone handler = ScanDone;
+            if (handler != null)
+            {
+                handler.Invoke();
             }
         }
 
@@ -113,7 +123,7 @@ namespace MediaRenamer.Series
                 OnScanProgress(i, elements.Length - 1);
 			}
             locations.saveLocations();
-            //OnScanProgress(0, 0);
+            OnScanDone();
 		}
 
     	/// <summary>

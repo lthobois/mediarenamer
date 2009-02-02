@@ -55,6 +55,7 @@
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Ionic.Utils.Zip, Version=1.6.3.18, Culture=neutral, PublicKeyToken=c551e179877da246, processorArchitecture=MSIL" />
     <Reference Include="JsonExSerializer, Version=3.0.25.205, Culture=neutral, PublicKeyToken=6be1316762335bd4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>JsonSerializer\JsonExSerializer.dll</HintPath>
@@ -173,11 +174,22 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\dropTarget.png" />
-    <Content Include="JsonSerializer\JsonExSerializer.dll" />
+    <Content Include="Apache2.0.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JsonExSerializer.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="JsonExSerializer.license.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\SysTray.ico" />
+    <Content Include="Ionic.Utils.Zip.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Ionic.Utils.Zip.license.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">

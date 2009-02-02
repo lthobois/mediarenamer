@@ -38,6 +38,9 @@ namespace MediaRenamer
         public static Form dialogOwner = null;
         public RenameDrop dropform = new RenameDrop();
 
+        Thread parseSeriesThread;
+        Thread parseMoviesThread;
+
         public mainForm()
         {
             InitializeComponent();
@@ -140,6 +143,18 @@ namespace MediaRenamer
                     this.Hide();
                 }
             }
+
+            if (!e.Cancel)
+            {
+                if (parseSeriesThread != null)
+                {
+                    parseSeriesThread.Abort();
+                }
+                if (parseMoviesThread != null)
+                {
+                    parseMoviesThread.Abort();
+                }
+            }
         }
 
         private void contextProposals_Opening(object sender, CancelEventArgs e)
@@ -182,11 +197,6 @@ namespace MediaRenamer
             }
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-            
-        }
-
         private bool validPath(String path)
         {
             if (path == String.Empty)
@@ -204,18 +214,44 @@ namespace MediaRenamer
 
         private void btnMovieScan_Click(object sender, EventArgs e)
         {
-            if (!validPath(movieScanPath.Text)) return;
-            storeMoviePath(movieScanPath.Text);
+            if (parseMoviesThread != null && parseMoviesThread.IsAlive)
+            {
+                parseMoviesThread.Abort();
+                movie_ScanDone();
+                return;
+            }
 
+            if (!validPath(movieScanPath.Text)) return;
+
+            btnMovieScan.Text = "Stop Scan";
+
+            movieScanPath.Enabled = false;
+            btnMoviesBrowse.Enabled = false;
+            optionGroupMovies.Enabled = false;
+
+            storeMoviePath(movieScanPath.Text);
             scanMovieList.Items.Clear();
-            Cursor = Cursors.WaitCursor;
 
             MediaRenamer.Movies.Parser mparse = new MediaRenamer.Movies.Parser(movieScanPath.Text);
             mparse.ScanProgress += new ScanProgressHandler(movie_ScanProgress);
             mparse.ListMovie += new ListMovieHandler(movie_ListMovie);
-            mparse.startScan();
+            mparse.ScanDone += new ScanDone(movie_ScanDone);
 
-            Cursor = Cursors.Default;
+            parseMoviesThread = new Thread(new ThreadStart(mparse.startScan));
+            parseMoviesThread.Start();
+        }
+
+        void movie_ScanDone()
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new ScanDone(movie_ScanDone), null);
+                return;
+            }
+            btnMovieScan.Text = "Start Scan";
+            movieScanPath.Enabled = true;
+            btnMoviesBrowse.Enabled = true;
+            optionGroupMovies.Enabled = true;
         }
 
         private void storeMoviePath(string p)
@@ -231,16 +267,28 @@ namespace MediaRenamer
 
         void movie_ListMovie(Movie m)
         {
-            ListViewItem node = scanMovieList.Items.Add(m.title);
+            if (InvokeRequired)
+            {
+                Invoke(new ListMovieHandler(movie_ListMovie), m);
+                return;
+            }
+            ListViewItem node = new ListViewItem(m.title);
             node.SubItems.Add(m.year.ToString());
             FileInfo fi = new FileInfo(m.filename);
             node.SubItems.Add(fi.Name);
             node.SubItems.Add(m.modifiedName());
             node.Tag = m;
+
+            scanMovieList.Items.Add(node);
         }
 
         void movie_ScanProgress(int pos, int max)
         {
+            if (InvokeRequired)
+            {
+                Invoke(new ScanProgressHandler(movie_ScanProgress), pos, max);
+                return;
+            }
             if (scanMovieProgressbar.Maximum == 0)
             {
                 //Log.Add(i18n.t("scan_count", max));
@@ -258,19 +306,44 @@ namespace MediaRenamer
 
         private void btnSeriesScan_Click(object sender, EventArgs e)
         {
+            if (parseSeriesThread != null && parseSeriesThread.IsAlive)
+            {
+                parseSeriesThread.Abort();
+                series_ScanDone();
+                return;
+            }
+
             if (!validPath(seriesScanPath.Text)) return;
+
+            btnSeriesScan.Text = "Stop Scan";
+
+            seriesScanPath.Enabled = false;
+            btnSeriesBrowse.Enabled = false;
+            optionGroupSeries.Enabled = false;
+
             storeSeriesPath(seriesScanPath.Text);
-
-            Cursor = Cursors.WaitCursor;
-
             scanSeriesList.Items.Clear();
 
             MediaRenamer.Series.Parser tparse = new MediaRenamer.Series.Parser(seriesScanPath.Text);
             tparse.ScanProgress += new ScanProgressHandler(series_ScanProgress);
             tparse.ListEpisode += new ListEpisodeHandler(series_ListEpisode);
-            tparse.startScan();
+            tparse.ScanDone += new ScanDone(series_ScanDone);
 
-            Cursor = Cursors.Default;
+            parseSeriesThread = new Thread(new ThreadStart(tparse.startScan));
+            parseSeriesThread.Start();
+        }
+
+        void series_ScanDone()
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new ScanDone(series_ScanDone), null);
+                return;
+            }
+            btnSeriesScan.Text = "Start Scan";
+            seriesScanPath.Enabled = true;
+            btnSeriesBrowse.Enabled = true;
+            optionGroupSeries.Enabled = true;
         }
 
         private void storeSeriesPath(string p)
@@ -287,7 +360,12 @@ namespace MediaRenamer
 
         void series_ListEpisode(Episode ep)
         {
-            ListViewItem node = scanSeriesList.Items.Add(ep.series);
+            if (InvokeRequired)
+            {
+                Invoke(new ListEpisodeHandler(series_ListEpisode), ep);
+                return;
+            }
+            ListViewItem node = new ListViewItem(ep.series);
             node.SubItems.Add(ep.season.ToString());
             String episodes = "";
             for (int i = 0; i < ep.episodes.Length; i++)
@@ -304,10 +382,17 @@ namespace MediaRenamer
             node.SubItems.Add(fi.Name);
             node.SubItems.Add(ep.modifiedName());
             node.Tag = ep;
+
+            scanSeriesList.Items.Add(node);
         }
 
         void series_ScanProgress(int pos, int max)
         {
+            if (InvokeRequired)
+            {
+                Invoke(new ScanProgressHandler(series_ScanProgress), pos, max);
+                return;
+            }
             if (scanSeriesProgressbar.Maximum == 0)
             {
                 Log.Add(String.Format("{0} files found.", max));
@@ -645,7 +730,7 @@ namespace MediaRenamer
             // with only 2 numbers specified;
             // the next two are generated from the date.
             // This routine decodes them.
-            System.Version v = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+            Version v = Assembly.GetExecutingAssembly().GetName().Version;
 
             // v.Build is days since Jan. 1, 2000
             // v.Revision*2 is seconds since local midnight
@@ -661,7 +746,7 @@ namespace MediaRenamer
 
         private void btnAppAbout_Click(object sender, EventArgs e)
         {
-            System.Version v = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+            Version v = Assembly.GetExecutingAssembly().GetName().Version;
             DateTime dt = DateCompiled();
 
             String str = "";
@@ -672,17 +757,14 @@ namespace MediaRenamer
             str += "\n";
             str += "Data provided by:\n";
             str += "* EpisodeWorld.com\n";
+            str += "* TheTVDB.com\n";
             str += "* IMDB.com\n";
             str += "\n";
             str += "Third party code used:\n";
             str += "* JsonExSerializer for C# (http://code.google.com/p/jsonexserializer/)\n";
+            str += "* DotNetZip Library (http://www.codeplex.com/DotNetZip)\n";
 
             MessageBox.Show(this, str, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void scanSeriesList_DrawItem(object sender, DrawListViewItemEventArgs e)
-        {
-
         }
 
         private void optionSeriesParser_SelectedIndexChanged(object sender, EventArgs e)

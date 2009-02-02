@@ -24,6 +24,7 @@ using MediaRenamer.Common;
 using System.Windows.Forms;
 using System.Collections;
 using System.Collections.Generic;
+using Ionic.Utils.Zip;
 
 namespace MediaRenamer.Series
 {
@@ -36,11 +37,13 @@ namespace MediaRenamer.Series
         private const String TVDBLanguages = "TVDB.languages";
 
         //                         Mirror                           ID   Language
-        private String detailUrl = "{0}/api/8D6EACA70DB47D29/series/{1}/all/{2}.xml";
+        private String detailUrl = "{0}/api/8D6EACA70DB47D29/series/{1}/all/{2}.zip";
         //                                                                           Series
         private String queryUrl = "http://www.thetvdb.com/api/GetSeries.php?seriesname={0}";
         private String mirrorUrl = "http://www.thetvdb.com/api/8D6EACA70DB47D29/mirrors.xml";
         private String languageUrl = "http://www.thetvdb.com/api/8D6EACA70DB47D29/languages.xml";
+
+        private String zipCache = "";
 
         private List<String> mirrors;
         private Hashtable languages;
@@ -49,6 +52,7 @@ namespace MediaRenamer.Series
 
         public OnlineParserTVDB()
         {
+            zipCache = episodeCache.Replace(".xml", ".zip");
             Object data;
             data = Settings.GetValueAsObject<List<String>>(TVDBMirrors);
             if (data != null)
@@ -183,7 +187,8 @@ namespace MediaRenamer.Series
                 {
                     //I know which series - just download it
                     cli.DownloadFile(String.Format(detailUrl, randomMirror(), show.ID, languages[show.Lang]),
-                        episodeCache);
+                        zipCache);
+                    extractXml(languages[show.Lang].ToString());
                     xml.Load(episodeCache);
                 }
                 else
@@ -310,7 +315,8 @@ namespace MediaRenamer.Series
                         ep.language = (String)languages[show.Lang];
                         ep.series = show.Name;
                         cli.DownloadFile(String.Format(detailUrl, randomMirror(), show.ID, ep.language),
-                            episodeCache);
+                            zipCache);
+                        extractXml(languages[show.Lang].ToString());
                     }
                     shows.Clear();
                 }
@@ -325,7 +331,8 @@ namespace MediaRenamer.Series
                 {
                     File.Delete(episodeCache);
                     cli.DownloadFile(String.Format(detailUrl, randomMirror(), show.ID, show.Lang),
-                        episodeCache);
+                        zipCache);
+                    extractXml(languages[show.Lang].ToString());
                 }
                 if (File.Exists(episodeCache))
                 {
@@ -374,6 +381,18 @@ namespace MediaRenamer.Series
             
             return false;
             // Done
+        }
+
+        private void extractXml(String lang)
+        {
+            ZipFile zipFile = ZipFile.Read(zipCache);
+            foreach (ZipEntry entry in zipFile)
+            {
+                if (entry.FileName == lang + ".xml")
+                {
+                    entry.Extract(File.OpenWrite(episodeCache));
+                }
+            }
         }
     }
 }
