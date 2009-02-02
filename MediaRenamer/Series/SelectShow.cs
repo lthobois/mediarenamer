@@ -161,9 +161,29 @@ namespace MediaRenamer.Series
 
 		public void addShows(List<showClass> shows)
 		{
+            shows.Sort();
             foreach (showClass show in shows)
             {
-                showList.Items.Add(show);
+                bool exists = false;
+                foreach (showClass existing in showList.Items)
+                {
+                    if (existing.Equals(show))
+                    {
+                        exists = true;
+                        break;
+                    }
+                }
+                if (!exists)
+                {
+                    this.showList.Items.Add(show);
+                }
+
+                /*
+                if (!showList.Items.Contains(show))
+                {
+                    showList.Items.Add(show);
+                }
+                */
             }
 		}
 

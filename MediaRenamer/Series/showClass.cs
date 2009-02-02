@@ -20,11 +20,53 @@ namespace MediaRenamer.Series
 	/// <summary>
 	/// Zusammenfassung für showClass.
 	/// </summary>
-	public class showClass
+    public class showClass : IComparable<showClass>, IEquatable<showClass>
 	{
 		public String ID = "";
 		public String Name = "";
 		public int Year = 0;
 		public String Lang = "";
-	}
+
+        #region IComparable<showClass> Member
+
+        public int CompareTo(showClass show)
+        {
+            if (this.Name == show.Name)
+            {
+                if (this.Year == show.Year)
+                {
+                    if (this.Lang == show.Lang)
+                    {
+                        return 0;
+                    }
+                    else
+                    {
+                        return this.Lang.CompareTo(show.Lang);
+                    }
+                }
+                else
+                {
+                    return this.Year.CompareTo(show.Year);
+                }
+            }
+            else
+            {
+                return this.Name.CompareTo(show.Name);
+            }
+        }
+
+        #endregion
+
+        #region IEquatable<showClass> Member
+
+        public bool Equals(showClass other)
+        {
+            return this.Name == other.Name &&
+                this.Year == other.Year &&
+                this.Lang == other.Lang &&
+                this.ID == other.ID;
+        }
+
+        #endregion
+    }
 }
