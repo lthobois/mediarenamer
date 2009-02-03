@@ -166,6 +166,10 @@
     <EmbeddedResource Include="Resources\help.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Common\InputDialog.de.resx">
+      <DependentUpon>InputDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="mainForm.de.resx">
       <DependentUpon>mainForm.cs</DependentUpon>
       <SubType>Designer</SubType>

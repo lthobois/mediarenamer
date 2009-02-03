@@ -911,6 +911,7 @@
             this.Controls.Add(this.btnAppAbout);
             this.Controls.Add(this.tabControl);
             this.Font = null;
+            this.Icon = null;
             this.Name = "mainForm";
             this.toolTip.SetToolTip(this, resources.GetString("$this.ToolTip"));
             this.Load += new System.EventHandler(this.mainForm_Load);

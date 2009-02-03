@@ -102,14 +102,14 @@ namespace MediaRenamer {
             optionSeriesParser.Items.Add(OnlineParserTVDB.parserName);
             optionSeriesParser.SelectedItem = parserName;
 
-            if (VistaGlass.IsGlassSupported()) {
+            /*if (VistaGlass.IsGlassSupported()) {
                 VistaGlass.Margins marg = new VistaGlass.Margins();
                 //marg.Top = panelTop.Height;
                 //marg.Left = panelTop.Width;
 
                 //panelTop.BackColor = Color.Black;
                 VistaGlass.ExtendGlassFrame(this.Handle, ref marg);
-            }
+            }*/
 
         }
 
@@ -167,11 +167,11 @@ namespace MediaRenamer {
 
         private bool validPath(String path) {
             if (path == String.Empty) {
-                MessageBox.Show("Please select a folder!", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(resources.GetString("folderChoose"), Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             if (!Directory.Exists(path)) {
-                MessageBox.Show("The selected folder does not exist!\nPlease choose a different one.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(resources.GetString("folderMissing"), Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             return true;
@@ -242,14 +242,6 @@ namespace MediaRenamer {
             if (InvokeRequired) {
                 Invoke(new ScanProgressHandler(movie_ScanProgress), pos, max);
                 return;
-            }
-            if (scanMovieProgressbar.Maximum == 0) {
-                //Log.Add(i18n.t("scan_count", max));
-                Log.Add(String.Format("{0} files found.", max));
-            }
-            if (pos == 0 && max == 0) {
-                //Log.Add(i18n.t("scan_complete"));
-                Log.Add("Scan successfully completed!");
             }
 
             scanMovieProgressbar.Maximum = max;
@@ -332,12 +324,7 @@ namespace MediaRenamer {
                 Invoke(new ScanProgressHandler(series_ScanProgress), pos, max);
                 return;
             }
-            if (scanSeriesProgressbar.Maximum == 0) {
-                Log.Add(String.Format("{0} files found.", max));
-            }
-            if (pos == 0 && max == 0) {
-                Log.Add("Scan successfully completed!");
-            }
+
             scanSeriesProgressbar.Maximum = max;
             scanSeriesProgressbar.Value = pos;
         }
@@ -354,11 +341,11 @@ namespace MediaRenamer {
         private void contextRename_Opening(object sender, CancelEventArgs e) {
             if (tabControl.SelectedTab == tabSeries) {
                 contextOptionRename.Enabled = (scanSeriesList.CheckedItems.Count > 0);
-                contextOptionRename.Text = "Rename selected Episodes";
+                contextOptionRename.Text = resources.GetString("contextRenameEpisode");
             }
             if (tabControl.SelectedTab == tabMovies) {
                 contextOptionRename.Enabled = (scanMovieList.CheckedItems.Count > 0);
-                contextOptionRename.Text = "Rename selected Movies";
+                contextOptionRename.Text = resources.GetString("contextRenameMovie");
             }
         }
 
@@ -547,7 +534,7 @@ namespace MediaRenamer {
 
         private void btnMovePath_Click(object sender, EventArgs e) {
             FolderBrowserDialog browse = new FolderBrowserDialog();
-            browse.Description = "Select folder where renamed movies should be moved to:";
+            browse.Description = resources.GetString("moveFolderDescription");
             if (browse.ShowDialog() == DialogResult.OK) {
                 option_movieTargetLocation.Text = browse.SelectedPath;
                 Settings.SetValue(SettingKeys.MovieLocation, option_movieTargetLocation.Text);
