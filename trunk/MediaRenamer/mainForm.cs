@@ -620,7 +620,6 @@ namespace MediaRenamer {
             str += "Third party components:\n";
             str += "* JsonExSerializer for C# (http://code.google.com/p/jsonexserializer/)\n";
             str += "* DotNetZip Library (http://www.codeplex.com/DotNetZip)\n";
-            str += "* FamFamFam Icons (http://www.famfamfam.com)\n";
 
             MessageBox.Show(this, str, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }

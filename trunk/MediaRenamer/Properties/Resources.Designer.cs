@@ -66,12 +66,5 @@ namespace MediaRenamer.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-        
-        public static System.Drawing.Bitmap help {
-            get {
-                object obj = ResourceManager.GetObject("help", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
     }
 }
