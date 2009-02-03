@@ -1,6 +1,6 @@
-#define MyAppName "MediaRenamer"
+#define MyAppName "Media Renamer"
 #define MyAppVer "2.0"
-#define MyAppPublisher "ccMatrix"
+#define MyAppPublisher "Benjamin Schirmer"
 #define MyAppURL "http://code.google.com/p/mediarenamer/"
 
 #define DLLVersion "Release"
@@ -14,7 +14,7 @@ AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
 AppID={{869D06EA-2277-4588-9567-CDFE5C30A399}
 VersionInfoCompany={#MyAppPublisher}
-VersionInfoCopyright=©2006-2007 ccMatrix
+VersionInfoCopyright=©2006-2009 Benjamin Schirmer
 VersionInfoDescription=Media Renamer Suite
 VersionInfoTextVersion={#MyAppVer}
 VersionInfoVersion={#MyAppVer}
@@ -34,8 +34,7 @@ InfoAfterFile=
 InternalCompressLevel=ultra
 ShowLanguageDialog=yes
 AppVersion={#MyAppVer}
-AppContact=ccMatrix
-;UninstallDisplayIcon={app}\ccMatrix.ico
+AppContact=Benjamin Schirmer
 UninstallDisplayName={#MyAppName}
 ChangesAssociations=true
 LicenseFile=IS-Setup\license.txt
