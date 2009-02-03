@@ -64,6 +64,7 @@ namespace MediaRenamer.Movies {
         /// Der Inhalt der Methode darf nicht mit dem Code-Editor geändert werden.
         /// </summary>
         private void InitializeComponent() {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SelectMovie));
             this.btnOk = new System.Windows.Forms.Button();
             this.movieList = new System.Windows.Forms.ListBox();
             this.btnSkip = new System.Windows.Forms.Button();
@@ -71,44 +72,51 @@ namespace MediaRenamer.Movies {
             // 
             // btnOk
             // 
-            this.btnOk.Location = new System.Drawing.Point(304, 176);
+            this.btnOk.AccessibleDescription = null;
+            this.btnOk.AccessibleName = null;
+            resources.ApplyResources(this.btnOk, "btnOk");
+            this.btnOk.BackgroundImage = null;
+            this.btnOk.Font = null;
             this.btnOk.Name = "btnOk";
-            this.btnOk.TabIndex = 0;
-            this.btnOk.Text = "OK";
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
             // movieList
             // 
-            this.movieList.Location = new System.Drawing.Point(8, 8);
+            this.movieList.AccessibleDescription = null;
+            this.movieList.AccessibleName = null;
+            resources.ApplyResources(this.movieList, "movieList");
+            this.movieList.BackgroundImage = null;
+            this.movieList.Font = null;
             this.movieList.Name = "movieList";
-            this.movieList.Size = new System.Drawing.Size(368, 160);
-            this.movieList.TabIndex = 1;
-            this.movieList.DoubleClick += new System.EventHandler(this.showList_DoubleClick);
             this.movieList.SelectedIndexChanged += new System.EventHandler(this.showList_SelectedIndexChanged);
+            this.movieList.DoubleClick += new System.EventHandler(this.showList_DoubleClick);
             // 
             // btnSkip
             // 
+            this.btnSkip.AccessibleDescription = null;
+            this.btnSkip.AccessibleName = null;
+            resources.ApplyResources(this.btnSkip, "btnSkip");
+            this.btnSkip.BackgroundImage = null;
             this.btnSkip.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnSkip.Location = new System.Drawing.Point(184, 176);
+            this.btnSkip.Font = null;
             this.btnSkip.Name = "btnSkip";
-            this.btnSkip.Size = new System.Drawing.Size(112, 23);
-            this.btnSkip.TabIndex = 2;
-            this.btnSkip.Text = "Skip";
             this.btnSkip.Click += new System.EventHandler(this.btnSkip_Click);
             // 
             // SelectMovie
             // 
             this.AcceptButton = this.btnOk;
-            this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
+            this.AccessibleDescription = null;
+            this.AccessibleName = null;
+            resources.ApplyResources(this, "$this");
+            this.BackgroundImage = null;
             this.CancelButton = this.btnSkip;
-            this.ClientSize = new System.Drawing.Size(384, 208);
             this.Controls.Add(this.btnSkip);
             this.Controls.Add(this.movieList);
             this.Controls.Add(this.btnOk);
+            this.Font = null;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Icon = null;
             this.Name = "SelectMovie";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Select the Movie from the list";
             this.Load += new System.EventHandler(this.SelectMovie_Load);
             this.ResumeLayout(false);
 
@@ -125,7 +133,9 @@ namespace MediaRenamer.Movies {
         }
 
         private void showList_SelectedIndexChanged(object sender, System.EventArgs e) {
-            selectedMovie = movieList.SelectedItem.ToString();
+            if (selectedMovie != null) {
+                selectedMovie = movieList.SelectedItem.ToString();
+            }
         }
 
         private void showList_DoubleClick(object sender, System.EventArgs e) {

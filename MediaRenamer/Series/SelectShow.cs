@@ -68,6 +68,7 @@ namespace MediaRenamer.Series {
         /// Der Inhalt der Methode darf nicht mit dem Code-Editor geändert werden.
         /// </summary>
         private void InitializeComponent() {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SelectShow));
             this.btnOk = new System.Windows.Forms.Button();
             this.showList = new System.Windows.Forms.ListBox();
             this.btnSkip = new System.Windows.Forms.Button();
@@ -77,67 +78,71 @@ namespace MediaRenamer.Series {
             // 
             // btnOk
             // 
-            this.btnOk.Location = new System.Drawing.Point(299, 261);
+            this.btnOk.AccessibleDescription = null;
+            this.btnOk.AccessibleName = null;
+            resources.ApplyResources(this.btnOk, "btnOk");
+            this.btnOk.BackgroundImage = null;
+            this.btnOk.Font = null;
             this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(75, 23);
-            this.btnOk.TabIndex = 0;
-            this.btnOk.Text = "OK";
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
             // showList
             // 
+            this.showList.AccessibleDescription = null;
+            this.showList.AccessibleName = null;
+            resources.ApplyResources(this.showList, "showList");
+            this.showList.BackgroundImage = null;
             this.showList.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.showList.Location = new System.Drawing.Point(8, 47);
+            this.showList.Font = null;
             this.showList.Name = "showList";
-            this.showList.Size = new System.Drawing.Size(366, 199);
-            this.showList.TabIndex = 1;
             this.showList.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.showList_DrawItem);
             this.showList.SelectedIndexChanged += new System.EventHandler(this.showList_SelectedIndexChanged);
             this.showList.DoubleClick += new System.EventHandler(this.showList_DoubleClick);
             // 
             // btnSkip
             // 
+            this.btnSkip.AccessibleDescription = null;
+            this.btnSkip.AccessibleName = null;
+            resources.ApplyResources(this.btnSkip, "btnSkip");
+            this.btnSkip.BackgroundImage = null;
             this.btnSkip.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnSkip.Location = new System.Drawing.Point(179, 261);
+            this.btnSkip.Font = null;
             this.btnSkip.Name = "btnSkip";
-            this.btnSkip.Size = new System.Drawing.Size(112, 23);
-            this.btnSkip.TabIndex = 2;
-            this.btnSkip.Text = "Skip";
             this.btnSkip.Click += new System.EventHandler(this.btnSkip_Click);
             // 
             // labelEpisode
             // 
-            this.labelEpisode.AutoSize = true;
-            this.labelEpisode.Location = new System.Drawing.Point(12, 9);
+            this.labelEpisode.AccessibleDescription = null;
+            this.labelEpisode.AccessibleName = null;
+            resources.ApplyResources(this.labelEpisode, "labelEpisode");
+            this.labelEpisode.Font = null;
             this.labelEpisode.Name = "labelEpisode";
-            this.labelEpisode.Size = new System.Drawing.Size(48, 13);
-            this.labelEpisode.TabIndex = 6;
-            this.labelEpisode.Text = "Episode:";
             // 
             // labelFile
             // 
-            this.labelFile.AutoSize = true;
-            this.labelFile.Location = new System.Drawing.Point(12, 28);
+            this.labelFile.AccessibleDescription = null;
+            this.labelFile.AccessibleName = null;
+            resources.ApplyResources(this.labelFile, "labelFile");
+            this.labelFile.Font = null;
             this.labelFile.Name = "labelFile";
-            this.labelFile.Size = new System.Drawing.Size(26, 13);
-            this.labelFile.TabIndex = 7;
-            this.labelFile.Text = "File:";
             // 
             // SelectShow
             // 
             this.AcceptButton = this.btnOk;
-            this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
+            this.AccessibleDescription = null;
+            this.AccessibleName = null;
+            resources.ApplyResources(this, "$this");
+            this.BackgroundImage = null;
             this.CancelButton = this.btnSkip;
-            this.ClientSize = new System.Drawing.Size(386, 296);
             this.Controls.Add(this.labelFile);
             this.Controls.Add(this.labelEpisode);
             this.Controls.Add(this.btnSkip);
             this.Controls.Add(this.showList);
             this.Controls.Add(this.btnOk);
+            this.Font = null;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Icon = null;
             this.Name = "SelectShow";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Select the Show from the list";
             this.Load += new System.EventHandler(this.SelectShow_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -204,7 +209,9 @@ namespace MediaRenamer.Series {
         }
 
         private void showList_SelectedIndexChanged(object sender, System.EventArgs e) {
-            selectedShow = showList.SelectedItem as showClass;
+            if (showList.SelectedItem != null) {
+                selectedShow = (showClass)showList.SelectedItem;
+            }
         }
 
         private void showList_DoubleClick(object sender, System.EventArgs e) {
