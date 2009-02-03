@@ -46,9 +46,6 @@ namespace MediaRenamer {
         }
 
         private void mainForm_Load(object sender, EventArgs e) {
-            RegistryKey key = Registry.CurrentUser.CreateSubKey(@"Software\MediaRenamer");
-            key.Close();
-
             System.Version v = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
             this.Text = Application.ProductName + " v" + v.ToString();
 

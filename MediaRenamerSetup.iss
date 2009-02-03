@@ -4,7 +4,9 @@
 #define MyAppURL "http://code.google.com/p/mediarenamer/"
 
 #define DLLVersion "Release"
-#define MediaRenamerFolder "..\MediaRenamer\"
+
+[[UninstallDelete]
+Name: {userappdata}\MediaRenamer; Type: filesandordirs
 
 [Setup]
 AppName={#MyAppName}
@@ -25,10 +27,9 @@ DefaultGroupName={#MyAppName}
 DisableProgramGroupPage=false
 AllowNoIcons=true
 OutputBaseFilename=mediarenamer_{#MyAppVer}
-OutputDir=IS-Setup\Output
+OutputDir=Setup
 Compression=lzma/ultra
 SolidCompression=true
-SourceDir=..\
 WizardImageFile=compiler:WizModernImage-IS.bmp
 WizardSmallImageFile=compiler:WizModernSmallImage-IS.bmp
 InfoAfterFile=
@@ -38,60 +39,34 @@ AppVersion={#MyAppVer}
 AppContact=Benjamin Schirmer
 UninstallDisplayName={#MyAppName}
 ChangesAssociations=true
-LicenseFile=IS-Setup\license.txt
+LicenseFile=MediaRenamer\Apache2.0.txt
+ArchitecturesInstallIn64BitMode=x64
 
 [Languages]
 Name: en; MessagesFile: compiler:Default.isl
 Name: de; MessagesFile: compiler:Languages\German.isl
 
 [CustomMessages]
-en.dotNetMissing=You do not have a .NET Framework 2.0 installed. Please download it from the WindowsUpdate Homepage.
-en.Register=Registering Shell Extension
-en.UnRegister=Removing Shell Extension
-
-de.dotNetMissing=Sie haben das .NET Framework 2.0 nicht installiert. Bitte laden Sie es sich von WidowsUpdate herunter.
-de.Register=Registriere Shell Erweiterung
-de.UnRegister=Entferne Shell Erweiterung
-de.installSource=Source Code installieren
-en.installSource=install Source Code
+en.dotNetMissing=You do not have a .NET Framework 2.0 installed. Please install it using Windows Update.
+de.dotNetMissing=Sie haben das .NET Framework 2.0 nicht installiert. Bitte installieren sie es über Windows Update.
 
 [Files]
-;Source: IS-Setup\regsvrnet\bin\Release\regsvrnet.exe; DestDir: {app}; Flags: ignoreversion
-
-
-Source: IS-Setup\Language\*.ini; DestDir: {app}\Language
-;Source: IS-Setup\MediaRenamer.tar.gz; DestDir: {app}; Components: source
-Source: IS-Setup\Files\MovieRenamer\format.dat; DestDir: {userappdata}\MovieRenamer; Flags: onlyifdoesntexist
-Source: IS-Setup\Files\TVShowRenamer\format.dat; DestDir: {userappdata}\TVShowRenamer; Flags: onlyifdoesntexist
 Source: MediaRenamer\bin\Release\MediaRenamer.exe; DestDir: {app}
+Source: MediaRenamer\bin\Release\JsonExSerializer.dll; DestDir: {app}
+Source: MediaRenamer\bin\Release\JsonExSerializer.license.txt; DestDir: {app}
+Source: MediaRenamer\bin\Release\de\MediaRenamer.resources.dll; DestDir: {app}\de\
+Source: MediaRenamer\bin\Release\Apache2.0.txt; DestDir: {app}
+Source: MediaRenamer\bin\Release\Ionic.Utils.Zip.dll; DestDir: {app}
+Source: MediaRenamer\bin\Release\Ionic.Utils.Zip.license.txt; DestDir: {app}
 
 [Dirs]
-Name: {app}\Language
-
-[Components]
-Name: source; Description: Source Code; Types: custom
+Name: {app}\de
 
 [Run]
-; Unregister if already registered (for Update Installation)
-;Filename: {app}\regsvrnet.exe; Parameters: "remove ""{app}\TVShowRenamer.dll"""; WorkingDir: {app}; StatusMsg: {cm:Register}; Flags: runhidden
-;Filename: {app}\regsvrnet.exe; Parameters: "removeasm ""{app}\TVShowRenamer.dll"""; WorkingDir: {app}; StatusMsg: {cm:Register}; Flags: runhidden
-; Register new Plugin
-;Filename: {app}\regsvrnet.exe; Parameters: "install ""{app}\TVShowRenamer.dll"""; WorkingDir: {app}; StatusMsg: {cm:Register}; Flags: runhidden
-;Filename: {app}\regsvrnet.exe; Parameters: "installasm ""{app}\TVShowRenamer.dll"""; WorkingDir: {app}; StatusMsg: {cm:Register}; Flags: runhidden
+Filename: {code:getDotNetDir}\ngen.exe; Parameters: "install ""{app}\MediaRenamer.exe"" /nologo /silent"; WorkingDir: {code:getDotNetDir}; StatusMsg: optimizing executable for native execution; Flags: runminimized runhidden
 
 [UninstallRun]
-; Unregister if already registered (for Update Installation)
-;Filename: {app}\regsvrnet.exe; Parameters: "remove ""{app}\TVShowRenamer.dll"""; WorkingDir: {app}; StatusMsg: {cm:Register}; Flags: runhidden
-;Filename: {app}\regsvrnet.exe; Parameters: "removeasm ""{app}\TVShowRenamer.dll"""; WorkingDir: {app}; StatusMsg: {cm:Register}; Flags: runhidden
-
-[UninstallDelete]
-Name: {userappdata}\TVShowRenamer; Type: filesandordirs
-Name: {userappdata}\MovieRenamer; Type: filesandordirs
-
-[Registry]
-Root: HKCU; Subkey: Software\MediaRenamer; ValueType: string; ValueName: locale; ValueData: {language}; Flags: uninsdeletekey deletevalue
-Root: HKCU; Subkey: Software\MediaRenamer; ValueType: string; ValueName: path; ValueData: {app}; Flags: uninsdeletekey deletevalue
-Root: HKCU; Subkey: Software\MediaRenamer\Series
+Filename: {code:getDotNetDir}\ngen.exe; Parameters: "uninstall ""{app}\MediaRenamer.exe"" /nologo /silent"; WorkingDir: {code:getDotNetDir}; StatusMsg: removing executable from native code cache; Flags: runminimized runhidden
 
 [Icons]
 Name: {group}\{cm:UninstallProgram,{#MyAppName}}; Filename: {uninstallexe}
@@ -163,13 +138,21 @@ function initializeSetup(): boolean;
 var
   FindRec: TFindRec;
   curPath: String;
+  DotNetBase: String;
 begin
   result := true;
-  if FindFirst(ExpandConstant('{win}\microsoft.net\Framework\v2.0.50727\*'), FindRec) then begin
+  if Is64BitInstallMode then
+  begin
+    DotNetBase := ExpandConstant('{win}\microsoft.net\Framework\v2.0.50727\');
+  end else begin
+    DotNetBase := ExpandConstant('{win}\microsoft.net\Framework64\v2.0.50727\');
+  end;
+
+  if FindFirst(DotNetBase + '*', FindRec) then begin
     try
       repeat
           begin
-            curPath := ExpandConstant('{win}\microsoft.net\Framework\v2.0.50727\')+FindRec.Name;
+            curPath := DotNetBase + FindRec.Name;
             if not (FileSearch('IEExec.exe', curPath) = '') then
             begin
               netpath := curPath;
