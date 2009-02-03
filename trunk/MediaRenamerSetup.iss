@@ -1,46 +1,45 @@
-#define MyAppName "Media Renamer"
-#define MyAppVer "2.0"
-#define MyAppPublisher "Benjamin Schirmer"
-#define MyAppURL "http://code.google.com/p/mediarenamer/"
-
-#define DLLVersion "Release"
-
-[[UninstallDelete]
-Name: {userappdata}\MediaRenamer; Type: filesandordirs
+#define AppName "Media Renamer"
+#define AppVer "2.0b3"
+#define AppVerLong GetFileVersion("MediaRenamer\bin\Release\MediaRenamer.exe")
+#define AppPublisher "Benjamin Schirmer"
+#define AppURL "http://code.google.com/p/mediarenamer/"
 
 [Setup]
-AppName={#MyAppName}
-AppVerName={#MyAppName} {#MyAppVer}
-AppPublisher={#MyAppPublisher}
-AppPublisherURL={#MyAppURL}
-AppSupportURL={#MyAppURL}
-AppUpdatesURL={#MyAppURL}
+AppName={#AppName}
+AppVersion={#AppVer}
+AppContact=Benjamin Schirmer
+AppVerName={#AppName} {#AppVer}
+AppPublisher={#AppPublisher}
+AppPublisherURL={#AppURL}
+AppSupportURL={#AppURL}
+AppUpdatesURL={#AppURL}
 AppID={{869D06EA-2277-4588-9567-CDFE5C30A399}
-VersionInfoCompany={#MyAppPublisher}
+
+VersionInfoCompany={#AppPublisher}
 VersionInfoCopyright=©2006-2009 Benjamin Schirmer
-VersionInfoDescription=Media Renamer Suite
-VersionInfoTextVersion={#MyAppVer}
-VersionInfoVersion={#MyAppVer}
+VersionInfoDescription=Media Renamer
+VersionInfoTextVersion={#AppVerLong}
+VersionInfoVersion={#AppVerLong}
+
 DefaultDirName={pf}\Media Renamer
 DisableDirPage=false
-DefaultGroupName={#MyAppName}
+DefaultGroupName={#AppName}
 DisableProgramGroupPage=false
+UninstallDisplayName={#AppName}
 AllowNoIcons=true
-OutputBaseFilename=mediarenamer_{#MyAppVer}
-OutputDir=Setup
 Compression=lzma/ultra
 SolidCompression=true
-WizardImageFile=compiler:WizModernImage-IS.bmp
-WizardSmallImageFile=compiler:WizModernSmallImage-IS.bmp
-InfoAfterFile=
+OutputBaseFilename=mediarenamer_{#AppVer}
+OutputDir=Setup
 InternalCompressLevel=ultra
 ShowLanguageDialog=yes
-AppVersion={#MyAppVer}
-AppContact=Benjamin Schirmer
-UninstallDisplayName={#MyAppName}
 ChangesAssociations=true
 LicenseFile=MediaRenamer\Apache2.0.txt
 ArchitecturesInstallIn64BitMode=x64
+
+WizardImageFile=compiler:WizModernImage-IS.bmp
+WizardSmallImageFile=compiler:WizModernSmallImage-IS.bmp
+
 
 [Languages]
 Name: en; MessagesFile: compiler:Default.isl
@@ -68,8 +67,11 @@ Filename: {code:getDotNetDir}\ngen.exe; Parameters: "install ""{app}\MediaRename
 [UninstallRun]
 Filename: {code:getDotNetDir}\ngen.exe; Parameters: "uninstall ""{app}\MediaRenamer.exe"" /nologo /silent"; WorkingDir: {code:getDotNetDir}; StatusMsg: removing executable from native code cache; Flags: runminimized runhidden
 
+[UninstallDelete]
+Name: {userappdata}\MediaRenamer; Type: filesandordirs
+
 [Icons]
-Name: {group}\{cm:UninstallProgram,{#MyAppName}}; Filename: {uninstallexe}
+Name: {group}\{cm:UninstallProgram,{#AppName}}; Filename: {uninstallexe}
 Name: {group}\MediaRenamer; Filename: {app}\MediaRenamer.exe; WorkingDir: {app}; IconFilename: {app}\MediaRenamer.exe
 
 [Code]
@@ -143,9 +145,9 @@ begin
   result := true;
   if Is64BitInstallMode then
   begin
-    DotNetBase := ExpandConstant('{win}\microsoft.net\Framework\v2.0.50727\');
-  end else begin
     DotNetBase := ExpandConstant('{win}\microsoft.net\Framework64\v2.0.50727\');
+  end else begin
+    DotNetBase := ExpandConstant('{win}\microsoft.net\Framework\v2.0.50727\');
   end;
 
   if FindFirst(DotNetBase + '*', FindRec) then begin
