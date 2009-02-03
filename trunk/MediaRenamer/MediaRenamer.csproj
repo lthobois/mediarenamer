@@ -72,8 +72,6 @@
   <ItemGroup>
     <Compile Include="Common\EregiReplace.cs" />
     <Compile Include="Common\EventHandlers.cs" />
-    <Compile Include="Common\FileSystemWatcher.cs" />
-    <Compile Include="Common\i18n.cs" />
     <Compile Include="Common\InputDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -82,6 +80,7 @@
     </Compile>
     <Compile Include="Common\Log.cs" />
     <Compile Include="Common\MD5.cs" />
+    <Compile Include="Common\renameObject.cs" />
     <Compile Include="Common\Settings.cs" />
     <Compile Include="mainForm.cs">
       <SubType>Form</SubType>
@@ -144,11 +143,7 @@
     </Compile>
     <Compile Include="Series\SeriesLocations.cs" />
     <Compile Include="Series\showClass.cs" />
-    <Compile Include="Common\watchedFolderEntry.cs" />
     <Compile Include="Common\VistaGlass.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\EPW-Logo_168.jpg" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\movies.png" />
@@ -163,30 +158,32 @@
       <DependentUpon>RenameDrop.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\thread_running.png" />
-    <EmbeddedResource Include="Resources\thread_stopped.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="MediaRenamer_TemporaryKey.pfx" />
     <None Include="Properties\app.manifest" />
-    <None Include="Resources\help.png" />
+    <EmbeddedResource Include="Resources\help.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="mainForm.de.resx">
+      <DependentUpon>mainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mainForm.en.resx">
+      <DependentUpon>mainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\dropTarget.png" />
     <Content Include="Apache2.0.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="JsonExSerializer.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <None Include="JsonExSerializer.dll" />
     <Content Include="JsonExSerializer.license.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\SysTray.ico" />
-    <Content Include="Ionic.Utils.Zip.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <None Include="Ionic.Utils.Zip.dll" />
     <Content Include="Ionic.Utils.Zip.license.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

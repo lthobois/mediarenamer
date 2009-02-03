@@ -67,13 +67,6 @@ namespace MediaRenamer.Properties {
             }
         }
         
-        public static System.Drawing.Bitmap EPW_Logo_168 {
-            get {
-                object obj = ResourceManager.GetObject("EPW-Logo_168", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
         public static System.Drawing.Bitmap help {
             get {
                 object obj = ResourceManager.GetObject("help", resourceCulture);

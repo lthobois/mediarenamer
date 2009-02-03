@@ -22,14 +22,10 @@ using System.Drawing;
 using System.Windows.Forms;
 
 
-namespace MediaRenamer.Common
-{
-    public class VistaGlass
-    {
-        public struct Margins
-        {
-            public Margins(Rectangle t)
-            {
+namespace MediaRenamer.Common {
+    public class VistaGlass {
+        public struct Margins {
+            public Margins(Rectangle t) {
                 Left = (int)t.Left;
                 Right = (int)t.Right;
                 Top = (int)t.Top;
@@ -47,21 +43,18 @@ namespace MediaRenamer.Common
         [DllImport("dwmapi.dll")]
         static extern void DwmIsCompositionEnabled(ref bool pfEnabled);
 
-        public static bool IsGlassSupported()
-        {
-            if (Environment.OSVersion.Version.Major < 6)
-            {
+        public static bool IsGlassSupported() {
+            if (Environment.OSVersion.Version.Major < 6) {
                 // Feature is only available in Vista and later
                 return false;
-            }   
+            }
 
             bool isGlassSupported = false;
             DwmIsCompositionEnabled(ref isGlassSupported);
             return isGlassSupported;
         }
 
-        public static void ExtendGlassFrame(IntPtr hwnd, ref Margins marg)
-        {
+        public static void ExtendGlassFrame(IntPtr hwnd, ref Margins marg) {
             if (!VistaGlass.IsGlassSupported()) return;
             DwmExtendFrameIntoClientArea(hwnd, ref marg);
         }

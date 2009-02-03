@@ -14,18 +14,14 @@
  * limitations under the License.
  */
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
+using System.IO;
+using System.Reflection;
+using System.Threading;
 using System.Windows.Forms;
 using MediaRenamer.Common;
 using MediaRenamer.Movies;
 using MediaRenamer.Series;
-using System.Reflection;
-using System.IO;
-using System.Threading;
 
 namespace MediaRenamer
 {
@@ -80,41 +76,9 @@ namespace MediaRenamer
             // loop through the string array, adding each filename to the ListBox
             foreach (string file in files)
             {
-                FileInfo fi = new FileInfo(file.Trim());
-                if (Episode.validEpisodeFile(fi.Name))
-                {
-                    Episode ep = Episode.parseFile(fi.FullName);
-                    if (ep.needRenaming())
-                    {
-                        SeriesLocations locations = new SeriesLocations();
-                        String path = locations.getEpisodePath(ep);
-                        if (Directory.Exists(path))
-                        {
-                            ep.renameEpisodeAndMove(path);
-                            locations.addSeriesLocation(ep);
-                        }
-                        else
-                        {
-                            ep.renameEpisode();
-                        }
-                    }
-                }
-                else
-                {
-                    Movie movie = Movie.parseFile(fi.FullName, fi.DirectoryName + @"\");
-                    if (movie.needRenaming())
-                    {
-                        if (Settings.GetValueAsBool(SettingKeys.MoveMovies))
-                        {
-                            String path = Settings.GetValueAsString(SettingKeys.MovieLocation);
-                            movie.renameMovieAndMove(path);
-                        }
-                        else
-                        {
-                            movie.renameMovie();
-                        }
-                    }
-                }
+                renameObject tmp = new renameObject(file);
+                Thread renameThread = new Thread(new ThreadStart(tmp.rename));
+                renameThread.Start();
             }
         }
 
