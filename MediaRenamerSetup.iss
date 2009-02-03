@@ -4,6 +4,7 @@
 #define MyAppURL "http://code.google.com/p/mediarenamer/"
 
 #define DLLVersion "Release"
+#define MediaRenamerFolder "..\MediaRenamer\"
 
 [Setup]
 AppName={#MyAppName}
