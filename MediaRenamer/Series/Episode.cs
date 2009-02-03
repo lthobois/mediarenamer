@@ -15,11 +15,9 @@
  */
 using System;
 using System.IO;
-using System.Threading;
-using MediaRenamer;
-using MediaRenamer.Common;
-using System.Windows.Forms;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
+using MediaRenamer.Common;
 
 namespace MediaRenamer.Series {
     /// <summary>
