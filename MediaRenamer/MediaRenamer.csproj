@@ -218,4 +218,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PostBuildEvent>"C:\Program Files (x86)\Inno Setup 5\ISCC.exe" "$(SolutionDir)MediaRenamerSetup.iss"</PostBuildEvent>
+  </PropertyGroup>
 </Project>
