@@ -16,8 +16,7 @@
 using MediaRenamer.Movies;
 using MediaRenamer.Series;
 
-namespace MediaRenamer.Common
-{
+namespace MediaRenamer.Common {
     public delegate void ScanDone();
     public delegate void ScanProgressHandler(int pos, int max);
     public delegate void ListMovieHandler(Movie m);

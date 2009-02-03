@@ -68,8 +68,6 @@
             this.tabOptions = new System.Windows.Forms.TabPage();
             this.optionGroupOthers = new System.Windows.Forms.GroupBox();
             this.optionDropTarget = new System.Windows.Forms.CheckBox();
-            this.label_langUI = new System.Windows.Forms.Label();
-            this.option_langUI = new System.Windows.Forms.ComboBox();
             this.optionSysTray = new System.Windows.Forms.CheckBox();
             this.optionStartMinimized = new System.Windows.Forms.CheckBox();
             this.optionGroupMovies = new System.Windows.Forms.GroupBox();
@@ -97,14 +95,14 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.deleteSelectedWatcherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.sysTrayMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.sysTrayOpen = new System.Windows.Forms.ToolStripMenuItem();
             this.displayDropTargetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.sysTrayExit = new System.Windows.Forms.ToolStripMenuItem();
-            this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.btnAppAbout = new System.Windows.Forms.Button();
+            this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.tabControl.SuspendLayout();
             this.tabSeries.SuspendLayout();
             this.contextRename.SuspendLayout();
@@ -120,70 +118,75 @@
             // 
             // tabControl
             // 
+            this.tabControl.AccessibleDescription = null;
+            this.tabControl.AccessibleName = null;
+            resources.ApplyResources(this.tabControl, "tabControl");
+            this.tabControl.BackgroundImage = null;
             this.tabControl.Controls.Add(this.tabSeries);
             this.tabControl.Controls.Add(this.tabMovies);
             this.tabControl.Controls.Add(this.tabOptions);
-            this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tabControl.Location = new System.Drawing.Point(0, 0);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(714, 429);
-            this.tabControl.TabIndex = 3;
+            this.toolTip.SetToolTip(this.tabControl, resources.GetString("tabControl.ToolTip"));
             // 
             // tabSeries
             // 
+            this.tabSeries.AccessibleDescription = null;
+            this.tabSeries.AccessibleName = null;
+            resources.ApplyResources(this.tabSeries, "tabSeries");
+            this.tabSeries.BackgroundImage = null;
             this.tabSeries.Controls.Add(this.tvRenameEpisodes);
             this.tabSeries.Controls.Add(this.tvSelNone);
             this.tabSeries.Controls.Add(this.tvSelAll);
             this.tabSeries.Controls.Add(this.scanSeriesList);
             this.tabSeries.Controls.Add(this.groupSeries);
-            this.tabSeries.Location = new System.Drawing.Point(4, 22);
+            this.tabSeries.Font = null;
             this.tabSeries.Name = "tabSeries";
-            this.tabSeries.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSeries.Size = new System.Drawing.Size(706, 403);
-            this.tabSeries.TabIndex = 0;
-            this.tabSeries.Text = "TV Series";
+            this.toolTip.SetToolTip(this.tabSeries, resources.GetString("tabSeries.ToolTip"));
             this.tabSeries.UseVisualStyleBackColor = true;
             // 
             // tvRenameEpisodes
             // 
-            this.tvRenameEpisodes.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.tvRenameEpisodes.Location = new System.Drawing.Point(554, 372);
+            this.tvRenameEpisodes.AccessibleDescription = null;
+            this.tvRenameEpisodes.AccessibleName = null;
+            resources.ApplyResources(this.tvRenameEpisodes, "tvRenameEpisodes");
+            this.tvRenameEpisodes.BackgroundImage = null;
+            this.tvRenameEpisodes.Font = null;
             this.tvRenameEpisodes.Name = "tvRenameEpisodes";
-            this.tvRenameEpisodes.Size = new System.Drawing.Size(144, 23);
-            this.tvRenameEpisodes.TabIndex = 6;
-            this.tvRenameEpisodes.Text = "rename selected episodes";
+            this.toolTip.SetToolTip(this.tvRenameEpisodes, resources.GetString("tvRenameEpisodes.ToolTip"));
             this.tvRenameEpisodes.UseVisualStyleBackColor = true;
             this.tvRenameEpisodes.Click += new System.EventHandler(this.tvRenameEpisodes_Click);
             // 
             // tvSelNone
             // 
-            this.tvSelNone.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.tvSelNone.Location = new System.Drawing.Point(88, 372);
+            this.tvSelNone.AccessibleDescription = null;
+            this.tvSelNone.AccessibleName = null;
+            resources.ApplyResources(this.tvSelNone, "tvSelNone");
+            this.tvSelNone.BackgroundImage = null;
+            this.tvSelNone.Font = null;
             this.tvSelNone.Name = "tvSelNone";
-            this.tvSelNone.Size = new System.Drawing.Size(75, 23);
-            this.tvSelNone.TabIndex = 5;
-            this.tvSelNone.Text = "select none";
+            this.toolTip.SetToolTip(this.tvSelNone, resources.GetString("tvSelNone.ToolTip"));
             this.tvSelNone.UseVisualStyleBackColor = true;
             this.tvSelNone.Click += new System.EventHandler(this.tvSelNone_Click);
             // 
             // tvSelAll
             // 
-            this.tvSelAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.tvSelAll.Location = new System.Drawing.Point(7, 372);
+            this.tvSelAll.AccessibleDescription = null;
+            this.tvSelAll.AccessibleName = null;
+            resources.ApplyResources(this.tvSelAll, "tvSelAll");
+            this.tvSelAll.BackgroundImage = null;
+            this.tvSelAll.Font = null;
             this.tvSelAll.Name = "tvSelAll";
-            this.tvSelAll.Size = new System.Drawing.Size(75, 23);
-            this.tvSelAll.TabIndex = 4;
-            this.tvSelAll.Text = "select all";
+            this.toolTip.SetToolTip(this.tvSelAll, resources.GetString("tvSelAll.ToolTip"));
             this.tvSelAll.UseVisualStyleBackColor = true;
             this.tvSelAll.Click += new System.EventHandler(this.tvSelAll_Click);
             // 
             // scanSeriesList
             // 
-            this.scanSeriesList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.scanSeriesList.AccessibleDescription = null;
+            this.scanSeriesList.AccessibleName = null;
+            resources.ApplyResources(this.scanSeriesList, "scanSeriesList");
+            this.scanSeriesList.BackgroundImage = null;
             this.scanSeriesList.CheckBoxes = true;
             this.scanSeriesList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.headSeries,
@@ -193,186 +196,195 @@
             this.headFilename,
             this.headNewname});
             this.scanSeriesList.ContextMenuStrip = this.contextRename;
+            this.scanSeriesList.Font = null;
             this.scanSeriesList.FullRowSelect = true;
-            this.scanSeriesList.Location = new System.Drawing.Point(7, 95);
             this.scanSeriesList.Name = "scanSeriesList";
             this.scanSeriesList.ShowGroups = false;
-            this.scanSeriesList.Size = new System.Drawing.Size(691, 271);
-            this.scanSeriesList.TabIndex = 3;
+            this.toolTip.SetToolTip(this.scanSeriesList, resources.GetString("scanSeriesList.ToolTip"));
             this.scanSeriesList.UseCompatibleStateImageBehavior = false;
             this.scanSeriesList.View = System.Windows.Forms.View.Details;
             // 
             // headSeries
             // 
-            this.headSeries.Text = "Series";
-            this.headSeries.Width = 150;
+            resources.ApplyResources(this.headSeries, "headSeries");
             // 
             // headSeason
             // 
-            this.headSeason.Text = "Season";
-            this.headSeason.Width = 50;
+            resources.ApplyResources(this.headSeason, "headSeason");
             // 
             // headEpisode
             // 
-            this.headEpisode.Text = "Episode";
-            this.headEpisode.Width = 50;
+            resources.ApplyResources(this.headEpisode, "headEpisode");
             // 
             // headTitle
             // 
-            this.headTitle.Text = "Title";
-            this.headTitle.Width = 220;
+            resources.ApplyResources(this.headTitle, "headTitle");
             // 
             // headFilename
             // 
-            this.headFilename.Text = "Filename";
-            this.headFilename.Width = 180;
+            resources.ApplyResources(this.headFilename, "headFilename");
             // 
             // headNewname
             // 
-            this.headNewname.Text = "New Filename";
-            this.headNewname.Width = 180;
+            resources.ApplyResources(this.headNewname, "headNewname");
             // 
             // contextRename
             // 
+            this.contextRename.AccessibleDescription = null;
+            this.contextRename.AccessibleName = null;
+            resources.ApplyResources(this.contextRename, "contextRename");
+            this.contextRename.BackgroundImage = null;
+            this.contextRename.Font = null;
             this.contextRename.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.contextOptionRename});
             this.contextRename.Name = "contextRename";
-            this.contextRename.Size = new System.Drawing.Size(172, 26);
+            this.toolTip.SetToolTip(this.contextRename, resources.GetString("contextRename.ToolTip"));
             this.contextRename.Opening += new System.ComponentModel.CancelEventHandler(this.contextRename_Opening);
             // 
             // contextOptionRename
             // 
+            this.contextOptionRename.AccessibleDescription = null;
+            this.contextOptionRename.AccessibleName = null;
+            resources.ApplyResources(this.contextOptionRename, "contextOptionRename");
+            this.contextOptionRename.BackgroundImage = null;
             this.contextOptionRename.Name = "contextOptionRename";
-            this.contextOptionRename.Size = new System.Drawing.Size(171, 22);
-            this.contextOptionRename.Text = "rename episode(s)";
+            this.contextOptionRename.ShortcutKeyDisplayString = null;
             this.contextOptionRename.Click += new System.EventHandler(this.contextOptionRename_Click);
             // 
             // groupSeries
             // 
-            this.groupSeries.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupSeries.AccessibleDescription = null;
+            this.groupSeries.AccessibleName = null;
+            resources.ApplyResources(this.groupSeries, "groupSeries");
+            this.groupSeries.BackgroundImage = null;
             this.groupSeries.Controls.Add(this.btnSeriesBrowse);
             this.groupSeries.Controls.Add(this.scanSeriesProgressbar);
             this.groupSeries.Controls.Add(this.btnSeriesScan);
             this.groupSeries.Controls.Add(this.label1);
             this.groupSeries.Controls.Add(this.seriesScanPath);
-            this.groupSeries.Location = new System.Drawing.Point(7, 7);
+            this.groupSeries.Font = null;
             this.groupSeries.Name = "groupSeries";
-            this.groupSeries.Size = new System.Drawing.Size(691, 82);
-            this.groupSeries.TabIndex = 0;
             this.groupSeries.TabStop = false;
-            this.groupSeries.Text = "TV Series scan mode";
+            this.toolTip.SetToolTip(this.groupSeries, resources.GetString("groupSeries.ToolTip"));
             // 
             // btnSeriesBrowse
             // 
-            this.btnSeriesBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSeriesBrowse.Location = new System.Drawing.Point(577, 30);
+            this.btnSeriesBrowse.AccessibleDescription = null;
+            this.btnSeriesBrowse.AccessibleName = null;
+            resources.ApplyResources(this.btnSeriesBrowse, "btnSeriesBrowse");
+            this.btnSeriesBrowse.BackgroundImage = null;
+            this.btnSeriesBrowse.Font = null;
             this.btnSeriesBrowse.Name = "btnSeriesBrowse";
-            this.btnSeriesBrowse.Size = new System.Drawing.Size(27, 23);
-            this.btnSeriesBrowse.TabIndex = 6;
-            this.btnSeriesBrowse.Text = "...";
+            this.toolTip.SetToolTip(this.btnSeriesBrowse, resources.GetString("btnSeriesBrowse.ToolTip"));
             this.btnSeriesBrowse.UseVisualStyleBackColor = true;
             this.btnSeriesBrowse.Click += new System.EventHandler(this.btnSeriesBrowse_Click);
             // 
             // scanSeriesProgressbar
             // 
-            this.scanSeriesProgressbar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.scanSeriesProgressbar.Location = new System.Drawing.Point(10, 59);
+            this.scanSeriesProgressbar.AccessibleDescription = null;
+            this.scanSeriesProgressbar.AccessibleName = null;
+            resources.ApplyResources(this.scanSeriesProgressbar, "scanSeriesProgressbar");
+            this.scanSeriesProgressbar.BackgroundImage = null;
+            this.scanSeriesProgressbar.Font = null;
             this.scanSeriesProgressbar.Maximum = 0;
             this.scanSeriesProgressbar.Name = "scanSeriesProgressbar";
-            this.scanSeriesProgressbar.Size = new System.Drawing.Size(675, 11);
-            this.scanSeriesProgressbar.TabIndex = 5;
+            this.toolTip.SetToolTip(this.scanSeriesProgressbar, resources.GetString("scanSeriesProgressbar.ToolTip"));
             // 
             // btnSeriesScan
             // 
-            this.btnSeriesScan.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSeriesScan.Enabled = false;
-            this.btnSeriesScan.Location = new System.Drawing.Point(610, 30);
+            this.btnSeriesScan.AccessibleDescription = null;
+            this.btnSeriesScan.AccessibleName = null;
+            resources.ApplyResources(this.btnSeriesScan, "btnSeriesScan");
+            this.btnSeriesScan.BackgroundImage = null;
+            this.btnSeriesScan.Font = null;
             this.btnSeriesScan.Name = "btnSeriesScan";
-            this.btnSeriesScan.Size = new System.Drawing.Size(75, 23);
-            this.btnSeriesScan.TabIndex = 4;
-            this.btnSeriesScan.Text = "Start scan";
+            this.toolTip.SetToolTip(this.btnSeriesScan, resources.GetString("btnSeriesScan.ToolTip"));
             this.btnSeriesScan.UseVisualStyleBackColor = true;
             this.btnSeriesScan.Click += new System.EventHandler(this.btnSeriesScan_Click);
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(7, 16);
+            this.label1.AccessibleDescription = null;
+            this.label1.AccessibleName = null;
+            resources.ApplyResources(this.label1, "label1");
+            this.label1.Font = null;
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(111, 13);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Scan movies in folder:";
+            this.toolTip.SetToolTip(this.label1, resources.GetString("label1.ToolTip"));
             // 
             // seriesScanPath
             // 
-            this.seriesScanPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.seriesScanPath.AccessibleDescription = null;
+            this.seriesScanPath.AccessibleName = null;
+            resources.ApplyResources(this.seriesScanPath, "seriesScanPath");
             this.seriesScanPath.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.seriesScanPath.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystemDirectories;
+            this.seriesScanPath.BackgroundImage = null;
+            this.seriesScanPath.Font = null;
             this.seriesScanPath.FormattingEnabled = true;
-            this.seriesScanPath.Location = new System.Drawing.Point(10, 32);
             this.seriesScanPath.Name = "seriesScanPath";
-            this.seriesScanPath.Size = new System.Drawing.Size(561, 21);
-            this.seriesScanPath.TabIndex = 0;
+            this.toolTip.SetToolTip(this.seriesScanPath, resources.GetString("seriesScanPath.ToolTip"));
             this.seriesScanPath.SelectedIndexChanged += new System.EventHandler(this.seriesScanPath_TextUpdate);
             this.seriesScanPath.Leave += new System.EventHandler(this.seriesScanPath_Leave);
             this.seriesScanPath.TextChanged += new System.EventHandler(this.seriesScanPath_TextChanged);
             // 
             // tabMovies
             // 
+            this.tabMovies.AccessibleDescription = null;
+            this.tabMovies.AccessibleName = null;
+            resources.ApplyResources(this.tabMovies, "tabMovies");
+            this.tabMovies.BackgroundImage = null;
             this.tabMovies.Controls.Add(this.movieRename);
             this.tabMovies.Controls.Add(this.movieSelNone);
             this.tabMovies.Controls.Add(this.movieSelAll);
             this.tabMovies.Controls.Add(this.scanMovieList);
             this.tabMovies.Controls.Add(this.groupMovies);
-            this.tabMovies.Location = new System.Drawing.Point(4, 22);
+            this.tabMovies.Font = null;
             this.tabMovies.Name = "tabMovies";
-            this.tabMovies.Padding = new System.Windows.Forms.Padding(3);
-            this.tabMovies.Size = new System.Drawing.Size(706, 403);
-            this.tabMovies.TabIndex = 1;
-            this.tabMovies.Text = "Movies";
+            this.toolTip.SetToolTip(this.tabMovies, resources.GetString("tabMovies.ToolTip"));
             this.tabMovies.UseVisualStyleBackColor = true;
             // 
             // movieRename
             // 
-            this.movieRename.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.movieRename.Location = new System.Drawing.Point(554, 372);
+            this.movieRename.AccessibleDescription = null;
+            this.movieRename.AccessibleName = null;
+            resources.ApplyResources(this.movieRename, "movieRename");
+            this.movieRename.BackgroundImage = null;
+            this.movieRename.Font = null;
             this.movieRename.Name = "movieRename";
-            this.movieRename.Size = new System.Drawing.Size(144, 23);
-            this.movieRename.TabIndex = 9;
-            this.movieRename.Text = "rename selected movies";
+            this.toolTip.SetToolTip(this.movieRename, resources.GetString("movieRename.ToolTip"));
             this.movieRename.UseVisualStyleBackColor = true;
             this.movieRename.Click += new System.EventHandler(this.movieRename_Click);
             // 
             // movieSelNone
             // 
-            this.movieSelNone.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.movieSelNone.Location = new System.Drawing.Point(87, 372);
+            this.movieSelNone.AccessibleDescription = null;
+            this.movieSelNone.AccessibleName = null;
+            resources.ApplyResources(this.movieSelNone, "movieSelNone");
+            this.movieSelNone.BackgroundImage = null;
+            this.movieSelNone.Font = null;
             this.movieSelNone.Name = "movieSelNone";
-            this.movieSelNone.Size = new System.Drawing.Size(75, 23);
-            this.movieSelNone.TabIndex = 8;
-            this.movieSelNone.Text = "select none";
+            this.toolTip.SetToolTip(this.movieSelNone, resources.GetString("movieSelNone.ToolTip"));
             this.movieSelNone.UseVisualStyleBackColor = true;
             this.movieSelNone.Click += new System.EventHandler(this.movieSelNone_Click);
             // 
             // movieSelAll
             // 
-            this.movieSelAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.movieSelAll.Location = new System.Drawing.Point(6, 372);
+            this.movieSelAll.AccessibleDescription = null;
+            this.movieSelAll.AccessibleName = null;
+            resources.ApplyResources(this.movieSelAll, "movieSelAll");
+            this.movieSelAll.BackgroundImage = null;
+            this.movieSelAll.Font = null;
             this.movieSelAll.Name = "movieSelAll";
-            this.movieSelAll.Size = new System.Drawing.Size(75, 23);
-            this.movieSelAll.TabIndex = 7;
-            this.movieSelAll.Text = "select all";
+            this.toolTip.SetToolTip(this.movieSelAll, resources.GetString("movieSelAll.ToolTip"));
             this.movieSelAll.UseVisualStyleBackColor = true;
             this.movieSelAll.Click += new System.EventHandler(this.movieSelAll_Click);
             // 
             // scanMovieList
             // 
-            this.scanMovieList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.scanMovieList.AccessibleDescription = null;
+            this.scanMovieList.AccessibleName = null;
+            resources.ApplyResources(this.scanMovieList, "scanMovieList");
+            this.scanMovieList.BackgroundImage = null;
             this.scanMovieList.CheckBoxes = true;
             this.scanMovieList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.headMovie,
@@ -380,104 +392,102 @@
             this.headMoviefile,
             this.headNewfile});
             this.scanMovieList.ContextMenuStrip = this.contextRename;
+            this.scanMovieList.Font = null;
             this.scanMovieList.FullRowSelect = true;
-            this.scanMovieList.Location = new System.Drawing.Point(7, 96);
             this.scanMovieList.Name = "scanMovieList";
-            this.scanMovieList.Size = new System.Drawing.Size(691, 266);
             this.scanMovieList.Sorting = System.Windows.Forms.SortOrder.Ascending;
-            this.scanMovieList.TabIndex = 2;
+            this.toolTip.SetToolTip(this.scanMovieList, resources.GetString("scanMovieList.ToolTip"));
             this.scanMovieList.UseCompatibleStateImageBehavior = false;
             this.scanMovieList.View = System.Windows.Forms.View.Details;
             // 
             // headMovie
             // 
-            this.headMovie.Text = "Movie";
-            this.headMovie.Width = 120;
+            resources.ApplyResources(this.headMovie, "headMovie");
             // 
             // headYear
             // 
-            this.headYear.Text = "Year";
-            this.headYear.Width = 40;
+            resources.ApplyResources(this.headYear, "headYear");
             // 
             // headMoviefile
             // 
-            this.headMoviefile.Text = "Filename";
-            this.headMoviefile.Width = 180;
+            resources.ApplyResources(this.headMoviefile, "headMoviefile");
             // 
             // headNewfile
             // 
-            this.headNewfile.Text = "New Filename";
-            this.headNewfile.Width = 180;
+            resources.ApplyResources(this.headNewfile, "headNewfile");
             // 
             // groupMovies
             // 
-            this.groupMovies.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupMovies.AccessibleDescription = null;
+            this.groupMovies.AccessibleName = null;
+            resources.ApplyResources(this.groupMovies, "groupMovies");
+            this.groupMovies.BackgroundImage = null;
             this.groupMovies.Controls.Add(this.btnMoviesBrowse);
             this.groupMovies.Controls.Add(this.scanMovieProgressbar);
             this.groupMovies.Controls.Add(this.btnMovieScan);
             this.groupMovies.Controls.Add(this.moviePathLabel);
             this.groupMovies.Controls.Add(this.movieScanPath);
-            this.groupMovies.Location = new System.Drawing.Point(7, 7);
+            this.groupMovies.Font = null;
             this.groupMovies.Name = "groupMovies";
-            this.groupMovies.Size = new System.Drawing.Size(691, 82);
-            this.groupMovies.TabIndex = 1;
             this.groupMovies.TabStop = false;
-            this.groupMovies.Text = "Movie scan mode";
+            this.toolTip.SetToolTip(this.groupMovies, resources.GetString("groupMovies.ToolTip"));
             // 
             // btnMoviesBrowse
             // 
-            this.btnMoviesBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnMoviesBrowse.Location = new System.Drawing.Point(577, 30);
+            this.btnMoviesBrowse.AccessibleDescription = null;
+            this.btnMoviesBrowse.AccessibleName = null;
+            resources.ApplyResources(this.btnMoviesBrowse, "btnMoviesBrowse");
+            this.btnMoviesBrowse.BackgroundImage = null;
+            this.btnMoviesBrowse.Font = null;
             this.btnMoviesBrowse.Name = "btnMoviesBrowse";
-            this.btnMoviesBrowse.Size = new System.Drawing.Size(27, 23);
-            this.btnMoviesBrowse.TabIndex = 5;
-            this.btnMoviesBrowse.Text = "...";
+            this.toolTip.SetToolTip(this.btnMoviesBrowse, resources.GetString("btnMoviesBrowse.ToolTip"));
             this.btnMoviesBrowse.UseVisualStyleBackColor = true;
             this.btnMoviesBrowse.Click += new System.EventHandler(this.btnPathMovies_Click);
             // 
             // scanMovieProgressbar
             // 
-            this.scanMovieProgressbar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.scanMovieProgressbar.Location = new System.Drawing.Point(10, 59);
+            this.scanMovieProgressbar.AccessibleDescription = null;
+            this.scanMovieProgressbar.AccessibleName = null;
+            resources.ApplyResources(this.scanMovieProgressbar, "scanMovieProgressbar");
+            this.scanMovieProgressbar.BackgroundImage = null;
+            this.scanMovieProgressbar.Font = null;
             this.scanMovieProgressbar.Maximum = 0;
             this.scanMovieProgressbar.Name = "scanMovieProgressbar";
-            this.scanMovieProgressbar.Size = new System.Drawing.Size(675, 11);
-            this.scanMovieProgressbar.TabIndex = 4;
+            this.toolTip.SetToolTip(this.scanMovieProgressbar, resources.GetString("scanMovieProgressbar.ToolTip"));
             // 
             // btnMovieScan
             // 
-            this.btnMovieScan.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnMovieScan.Enabled = false;
-            this.btnMovieScan.Location = new System.Drawing.Point(610, 30);
+            this.btnMovieScan.AccessibleDescription = null;
+            this.btnMovieScan.AccessibleName = null;
+            resources.ApplyResources(this.btnMovieScan, "btnMovieScan");
+            this.btnMovieScan.BackgroundImage = null;
+            this.btnMovieScan.Font = null;
             this.btnMovieScan.Name = "btnMovieScan";
-            this.btnMovieScan.Size = new System.Drawing.Size(75, 23);
-            this.btnMovieScan.TabIndex = 3;
-            this.btnMovieScan.Text = "Start scan";
+            this.toolTip.SetToolTip(this.btnMovieScan, resources.GetString("btnMovieScan.ToolTip"));
             this.btnMovieScan.UseVisualStyleBackColor = true;
             this.btnMovieScan.Click += new System.EventHandler(this.btnMovieScan_Click);
             // 
             // moviePathLabel
             // 
-            this.moviePathLabel.AutoSize = true;
-            this.moviePathLabel.Location = new System.Drawing.Point(7, 16);
+            this.moviePathLabel.AccessibleDescription = null;
+            this.moviePathLabel.AccessibleName = null;
+            resources.ApplyResources(this.moviePathLabel, "moviePathLabel");
+            this.moviePathLabel.Font = null;
             this.moviePathLabel.Name = "moviePathLabel";
-            this.moviePathLabel.Size = new System.Drawing.Size(111, 13);
-            this.moviePathLabel.TabIndex = 2;
-            this.moviePathLabel.Text = "Scan movies in folder:";
+            this.toolTip.SetToolTip(this.moviePathLabel, resources.GetString("moviePathLabel.ToolTip"));
             // 
             // movieScanPath
             // 
-            this.movieScanPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.movieScanPath.AccessibleDescription = null;
+            this.movieScanPath.AccessibleName = null;
+            resources.ApplyResources(this.movieScanPath, "movieScanPath");
             this.movieScanPath.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.movieScanPath.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystemDirectories;
+            this.movieScanPath.BackgroundImage = null;
+            this.movieScanPath.Font = null;
             this.movieScanPath.FormattingEnabled = true;
-            this.movieScanPath.Location = new System.Drawing.Point(10, 32);
             this.movieScanPath.Name = "movieScanPath";
-            this.movieScanPath.Size = new System.Drawing.Size(561, 21);
-            this.movieScanPath.TabIndex = 1;
+            this.toolTip.SetToolTip(this.movieScanPath, resources.GetString("movieScanPath.ToolTip"));
             this.movieScanPath.SelectedIndexChanged += new System.EventHandler(this.movieScanPath_TextUpdate);
             this.movieScanPath.Leave += new System.EventHandler(this.movieScanPath_Leave);
             this.movieScanPath.TextUpdate += new System.EventHandler(this.movieScanPath_TextUpdate);
@@ -485,367 +495,424 @@
             // 
             // tabOptions
             // 
-            this.tabOptions.AutoScroll = true;
+            this.tabOptions.AccessibleDescription = null;
+            this.tabOptions.AccessibleName = null;
+            resources.ApplyResources(this.tabOptions, "tabOptions");
+            this.tabOptions.BackgroundImage = null;
             this.tabOptions.Controls.Add(this.optionGroupOthers);
             this.tabOptions.Controls.Add(this.optionGroupMovies);
             this.tabOptions.Controls.Add(this.optionGroupSeries);
-            this.tabOptions.Location = new System.Drawing.Point(4, 22);
+            this.tabOptions.Font = null;
             this.tabOptions.Name = "tabOptions";
-            this.tabOptions.Padding = new System.Windows.Forms.Padding(5);
-            this.tabOptions.Size = new System.Drawing.Size(706, 403);
-            this.tabOptions.TabIndex = 3;
-            this.tabOptions.Text = "Options";
+            this.toolTip.SetToolTip(this.tabOptions, resources.GetString("tabOptions.ToolTip"));
             this.tabOptions.UseVisualStyleBackColor = true;
             // 
             // optionGroupOthers
             // 
+            this.optionGroupOthers.AccessibleDescription = null;
+            this.optionGroupOthers.AccessibleName = null;
+            resources.ApplyResources(this.optionGroupOthers, "optionGroupOthers");
+            this.optionGroupOthers.BackgroundImage = null;
             this.optionGroupOthers.Controls.Add(this.optionDropTarget);
-            this.optionGroupOthers.Controls.Add(this.label_langUI);
-            this.optionGroupOthers.Controls.Add(this.option_langUI);
             this.optionGroupOthers.Controls.Add(this.optionSysTray);
             this.optionGroupOthers.Controls.Add(this.optionStartMinimized);
-            this.optionGroupOthers.Dock = System.Windows.Forms.DockStyle.Top;
-            this.optionGroupOthers.Location = new System.Drawing.Point(5, 172);
+            this.optionGroupOthers.Font = null;
             this.optionGroupOthers.Name = "optionGroupOthers";
-            this.optionGroupOthers.Size = new System.Drawing.Size(696, 128);
-            this.optionGroupOthers.TabIndex = 3;
             this.optionGroupOthers.TabStop = false;
-            this.optionGroupOthers.Text = "General Options";
+            this.toolTip.SetToolTip(this.optionGroupOthers, resources.GetString("optionGroupOthers.ToolTip"));
             // 
             // optionDropTarget
             // 
-            this.optionDropTarget.AutoSize = true;
-            this.optionDropTarget.Location = new System.Drawing.Point(30, 42);
+            this.optionDropTarget.AccessibleDescription = null;
+            this.optionDropTarget.AccessibleName = null;
+            resources.ApplyResources(this.optionDropTarget, "optionDropTarget");
+            this.optionDropTarget.BackgroundImage = null;
+            this.optionDropTarget.Font = null;
             this.optionDropTarget.Name = "optionDropTarget";
-            this.optionDropTarget.Size = new System.Drawing.Size(173, 17);
-            this.optionDropTarget.TabIndex = 17;
-            this.optionDropTarget.Text = "Display dropTarget on Desktop";
+            this.toolTip.SetToolTip(this.optionDropTarget, resources.GetString("optionDropTarget.ToolTip"));
             this.optionDropTarget.UseVisualStyleBackColor = true;
             this.optionDropTarget.CheckedChanged += new System.EventHandler(this.optionDropTarget_CheckedChanged);
             // 
-            // label_langUI
-            // 
-            this.label_langUI.Location = new System.Drawing.Point(5, 86);
-            this.label_langUI.Name = "label_langUI";
-            this.label_langUI.Size = new System.Drawing.Size(130, 23);
-            this.label_langUI.TabIndex = 16;
-            this.label_langUI.Text = "UI Language";
-            this.label_langUI.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // option_langUI
-            // 
-            this.option_langUI.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.option_langUI.FormattingEnabled = true;
-            this.option_langUI.Location = new System.Drawing.Point(141, 88);
-            this.option_langUI.Name = "option_langUI";
-            this.option_langUI.Size = new System.Drawing.Size(229, 21);
-            this.option_langUI.TabIndex = 2;
-            // 
             // optionSysTray
             // 
-            this.optionSysTray.AutoSize = true;
-            this.optionSysTray.Location = new System.Drawing.Point(30, 65);
+            this.optionSysTray.AccessibleDescription = null;
+            this.optionSysTray.AccessibleName = null;
+            resources.ApplyResources(this.optionSysTray, "optionSysTray");
+            this.optionSysTray.BackgroundImage = null;
+            this.optionSysTray.Font = null;
             this.optionSysTray.Name = "optionSysTray";
-            this.optionSysTray.Size = new System.Drawing.Size(219, 17);
-            this.optionSysTray.TabIndex = 1;
-            this.optionSysTray.Text = "Display icon in system tray (next to clock)";
+            this.toolTip.SetToolTip(this.optionSysTray, resources.GetString("optionSysTray.ToolTip"));
             this.optionSysTray.UseVisualStyleBackColor = true;
             this.optionSysTray.CheckedChanged += new System.EventHandler(this.optionSysTray_CheckedChanged);
             // 
             // optionStartMinimized
             // 
-            this.optionStartMinimized.AutoSize = true;
-            this.optionStartMinimized.Location = new System.Drawing.Point(30, 19);
+            this.optionStartMinimized.AccessibleDescription = null;
+            this.optionStartMinimized.AccessibleName = null;
+            resources.ApplyResources(this.optionStartMinimized, "optionStartMinimized");
+            this.optionStartMinimized.BackgroundImage = null;
+            this.optionStartMinimized.Font = null;
             this.optionStartMinimized.Name = "optionStartMinimized";
-            this.optionStartMinimized.Size = new System.Drawing.Size(150, 17);
-            this.optionStartMinimized.TabIndex = 0;
-            this.optionStartMinimized.Text = "Start application minimized";
+            this.toolTip.SetToolTip(this.optionStartMinimized, resources.GetString("optionStartMinimized.ToolTip"));
             this.optionStartMinimized.UseVisualStyleBackColor = true;
             this.optionStartMinimized.CheckedChanged += new System.EventHandler(this.optionStartMinimized_CheckedChanged);
             // 
             // optionGroupMovies
             // 
-            this.optionGroupMovies.AutoSize = true;
-            this.optionGroupMovies.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.optionGroupMovies.AccessibleDescription = null;
+            this.optionGroupMovies.AccessibleName = null;
+            resources.ApplyResources(this.optionGroupMovies, "optionGroupMovies");
+            this.optionGroupMovies.BackgroundImage = null;
             this.optionGroupMovies.Controls.Add(this.btnMovePath);
             this.optionGroupMovies.Controls.Add(this.option_movieTargetLocation);
             this.optionGroupMovies.Controls.Add(this.option_moveMovies);
             this.optionGroupMovies.Controls.Add(this.option_movieFormat);
             this.optionGroupMovies.Controls.Add(this.labelMovieOutpu);
-            this.optionGroupMovies.Dock = System.Windows.Forms.DockStyle.Top;
-            this.optionGroupMovies.Location = new System.Drawing.Point(5, 88);
+            this.optionGroupMovies.Font = null;
             this.optionGroupMovies.Name = "optionGroupMovies";
-            this.optionGroupMovies.Size = new System.Drawing.Size(696, 84);
-            this.optionGroupMovies.TabIndex = 2;
             this.optionGroupMovies.TabStop = false;
-            this.optionGroupMovies.Text = "Movie Options";
+            this.toolTip.SetToolTip(this.optionGroupMovies, resources.GetString("optionGroupMovies.ToolTip"));
             // 
             // btnMovePath
             // 
-            this.btnMovePath.Location = new System.Drawing.Point(578, 42);
+            this.btnMovePath.AccessibleDescription = null;
+            this.btnMovePath.AccessibleName = null;
+            resources.ApplyResources(this.btnMovePath, "btnMovePath");
+            this.btnMovePath.BackgroundImage = null;
+            this.btnMovePath.Font = null;
             this.btnMovePath.Name = "btnMovePath";
-            this.btnMovePath.Size = new System.Drawing.Size(29, 23);
-            this.btnMovePath.TabIndex = 20;
-            this.btnMovePath.Text = "...";
+            this.toolTip.SetToolTip(this.btnMovePath, resources.GetString("btnMovePath.ToolTip"));
             this.btnMovePath.UseVisualStyleBackColor = true;
             this.btnMovePath.Click += new System.EventHandler(this.btnMovePath_Click);
             // 
             // option_movieTargetLocation
             // 
-            this.option_movieTargetLocation.Location = new System.Drawing.Point(300, 44);
+            this.option_movieTargetLocation.AccessibleDescription = null;
+            this.option_movieTargetLocation.AccessibleName = null;
+            resources.ApplyResources(this.option_movieTargetLocation, "option_movieTargetLocation");
+            this.option_movieTargetLocation.BackgroundImage = null;
+            this.option_movieTargetLocation.Font = null;
             this.option_movieTargetLocation.Name = "option_movieTargetLocation";
-            this.option_movieTargetLocation.Size = new System.Drawing.Size(272, 20);
-            this.option_movieTargetLocation.TabIndex = 19;
+            this.toolTip.SetToolTip(this.option_movieTargetLocation, resources.GetString("option_movieTargetLocation.ToolTip"));
             this.option_movieTargetLocation.TextChanged += new System.EventHandler(this.option_movieTargetLocation_TextChanged);
             // 
             // option_moveMovies
             // 
-            this.option_moveMovies.AutoSize = true;
-            this.option_moveMovies.Location = new System.Drawing.Point(142, 46);
+            this.option_moveMovies.AccessibleDescription = null;
+            this.option_moveMovies.AccessibleName = null;
+            resources.ApplyResources(this.option_moveMovies, "option_moveMovies");
+            this.option_moveMovies.BackgroundImage = null;
+            this.option_moveMovies.Font = null;
             this.option_moveMovies.Name = "option_moveMovies";
-            this.option_moveMovies.Size = new System.Drawing.Size(152, 17);
-            this.option_moveMovies.TabIndex = 18;
-            this.option_moveMovies.Text = "Move Movies to the folder:";
+            this.toolTip.SetToolTip(this.option_moveMovies, resources.GetString("option_moveMovies.ToolTip"));
             this.option_moveMovies.UseVisualStyleBackColor = true;
             this.option_moveMovies.CheckedChanged += new System.EventHandler(this.option_moveMovies_CheckedChanged);
             // 
             // option_movieFormat
             // 
+            this.option_movieFormat.AccessibleDescription = null;
+            this.option_movieFormat.AccessibleName = null;
+            resources.ApplyResources(this.option_movieFormat, "option_movieFormat");
             this.option_movieFormat.AutoCompleteCustomSource.AddRange(new string[] {
-            "<moviename> (<year><disk:,CD><disk><lang:,><lang>)"});
+            resources.GetString("option_movieFormat.AutoCompleteCustomSource")});
             this.option_movieFormat.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.option_movieFormat.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.option_movieFormat.BackgroundImage = null;
             this.option_movieFormat.ContextMenuStrip = this.contextProposals;
-            this.option_movieFormat.Location = new System.Drawing.Point(142, 18);
+            this.option_movieFormat.Font = null;
             this.option_movieFormat.Name = "option_movieFormat";
-            this.option_movieFormat.Size = new System.Drawing.Size(465, 20);
-            this.option_movieFormat.TabIndex = 17;
-            this.option_movieFormat.Text = "<moviename> (<year><disk:,CD><disk><lang:,><lang>)";
+            this.toolTip.SetToolTip(this.option_movieFormat, resources.GetString("option_movieFormat.ToolTip"));
             this.option_movieFormat.Leave += new System.EventHandler(this.option_movieFormat_Leave);
             this.option_movieFormat.MouseDown += new System.Windows.Forms.MouseEventHandler(this.option_movieFormat_MouseDown);
             // 
             // contextProposals
             // 
+            this.contextProposals.AccessibleDescription = null;
+            this.contextProposals.AccessibleName = null;
+            resources.ApplyResources(this.contextProposals, "contextProposals");
+            this.contextProposals.BackgroundImage = null;
+            this.contextProposals.Font = null;
             this.contextProposals.Name = "contextProposals";
-            this.contextProposals.Size = new System.Drawing.Size(61, 4);
+            this.toolTip.SetToolTip(this.contextProposals, resources.GetString("contextProposals.ToolTip"));
             this.contextProposals.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.contextProposals_ItemClicked);
             this.contextProposals.Opening += new System.ComponentModel.CancelEventHandler(this.contextProposals_Opening);
             // 
             // labelMovieOutpu
             // 
-            this.labelMovieOutpu.Location = new System.Drawing.Point(6, 16);
+            this.labelMovieOutpu.AccessibleDescription = null;
+            this.labelMovieOutpu.AccessibleName = null;
+            resources.ApplyResources(this.labelMovieOutpu, "labelMovieOutpu");
+            this.labelMovieOutpu.Font = null;
             this.labelMovieOutpu.Name = "labelMovieOutpu";
-            this.labelMovieOutpu.Size = new System.Drawing.Size(130, 23);
-            this.labelMovieOutpu.TabIndex = 15;
-            this.labelMovieOutpu.Text = "Output Format:";
-            this.labelMovieOutpu.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolTip.SetToolTip(this.labelMovieOutpu, resources.GetString("labelMovieOutpu.ToolTip"));
             // 
             // optionGroupSeries
             // 
-            this.optionGroupSeries.AutoSize = true;
+            this.optionGroupSeries.AccessibleDescription = null;
+            this.optionGroupSeries.AccessibleName = null;
+            resources.ApplyResources(this.optionGroupSeries, "optionGroupSeries");
+            this.optionGroupSeries.BackgroundImage = null;
             this.optionGroupSeries.Controls.Add(this.optionSeriesParser);
             this.optionGroupSeries.Controls.Add(this.labelTVSource);
             this.optionGroupSeries.Controls.Add(this.option_seriesFormat);
             this.optionGroupSeries.Controls.Add(this.labelTVOutput);
-            this.optionGroupSeries.Dock = System.Windows.Forms.DockStyle.Top;
-            this.optionGroupSeries.Location = new System.Drawing.Point(5, 5);
+            this.optionGroupSeries.Font = null;
             this.optionGroupSeries.Name = "optionGroupSeries";
-            this.optionGroupSeries.Size = new System.Drawing.Size(696, 83);
-            this.optionGroupSeries.TabIndex = 1;
             this.optionGroupSeries.TabStop = false;
-            this.optionGroupSeries.Text = "TV Series Options";
+            this.toolTip.SetToolTip(this.optionGroupSeries, resources.GetString("optionGroupSeries.ToolTip"));
             // 
             // optionSeriesParser
             // 
+            this.optionSeriesParser.AccessibleDescription = null;
+            this.optionSeriesParser.AccessibleName = null;
+            resources.ApplyResources(this.optionSeriesParser, "optionSeriesParser");
+            this.optionSeriesParser.BackgroundImage = null;
             this.optionSeriesParser.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.optionSeriesParser.Font = null;
             this.optionSeriesParser.FormattingEnabled = true;
-            this.optionSeriesParser.Location = new System.Drawing.Point(143, 43);
             this.optionSeriesParser.Name = "optionSeriesParser";
-            this.optionSeriesParser.Size = new System.Drawing.Size(227, 21);
-            this.optionSeriesParser.TabIndex = 17;
+            this.toolTip.SetToolTip(this.optionSeriesParser, resources.GetString("optionSeriesParser.ToolTip"));
             this.optionSeriesParser.SelectedIndexChanged += new System.EventHandler(this.optionSeriesParser_SelectedIndexChanged);
             // 
             // labelTVSource
             // 
-            this.labelTVSource.Location = new System.Drawing.Point(6, 39);
+            this.labelTVSource.AccessibleDescription = null;
+            this.labelTVSource.AccessibleName = null;
+            resources.ApplyResources(this.labelTVSource, "labelTVSource");
+            this.labelTVSource.Font = null;
             this.labelTVSource.Name = "labelTVSource";
-            this.labelTVSource.Size = new System.Drawing.Size(130, 23);
-            this.labelTVSource.TabIndex = 14;
-            this.labelTVSource.Text = "Online Datasource:";
-            this.labelTVSource.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolTip.SetToolTip(this.labelTVSource, resources.GetString("labelTVSource.ToolTip"));
             // 
             // option_seriesFormat
             // 
+            this.option_seriesFormat.AccessibleDescription = null;
+            this.option_seriesFormat.AccessibleName = null;
+            resources.ApplyResources(this.option_seriesFormat, "option_seriesFormat");
             this.option_seriesFormat.AutoCompleteCustomSource.AddRange(new string[] {
-            "<series> - <season>x<episode2><title: - ><title>",
-            "<series> - s<season2>e<episod2><title: - ><title>",
-            "<series> <season>x<episode2><title: - ><title>",
-            "<series> s<season2>e<episode2><title: - ><title>",
-            "<season>x<episode2><title: - ><title>",
-            "s<season2>e<episode2><title: - ><title>"});
+            resources.GetString("option_seriesFormat.AutoCompleteCustomSource"),
+            resources.GetString("option_seriesFormat.AutoCompleteCustomSource1"),
+            resources.GetString("option_seriesFormat.AutoCompleteCustomSource2"),
+            resources.GetString("option_seriesFormat.AutoCompleteCustomSource3"),
+            resources.GetString("option_seriesFormat.AutoCompleteCustomSource4"),
+            resources.GetString("option_seriesFormat.AutoCompleteCustomSource5")});
             this.option_seriesFormat.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.option_seriesFormat.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.option_seriesFormat.BackgroundImage = null;
             this.option_seriesFormat.ContextMenuStrip = this.contextProposals;
-            this.option_seriesFormat.Location = new System.Drawing.Point(142, 16);
+            this.option_seriesFormat.Font = null;
             this.option_seriesFormat.Name = "option_seriesFormat";
-            this.option_seriesFormat.Size = new System.Drawing.Size(465, 20);
-            this.option_seriesFormat.TabIndex = 13;
-            this.option_seriesFormat.Text = "<series> - <season>x<episode2><title: - ><title>";
+            this.toolTip.SetToolTip(this.option_seriesFormat, resources.GetString("option_seriesFormat.ToolTip"));
             this.option_seriesFormat.Leave += new System.EventHandler(this.option_seriesFormat_Leave);
             this.option_seriesFormat.MouseDown += new System.Windows.Forms.MouseEventHandler(this.option_seriesFormat_MouseDown);
             // 
             // labelTVOutput
             // 
-            this.labelTVOutput.Location = new System.Drawing.Point(6, 16);
+            this.labelTVOutput.AccessibleDescription = null;
+            this.labelTVOutput.AccessibleName = null;
+            resources.ApplyResources(this.labelTVOutput, "labelTVOutput");
+            this.labelTVOutput.Font = null;
             this.labelTVOutput.Name = "labelTVOutput";
-            this.labelTVOutput.Size = new System.Drawing.Size(130, 23);
-            this.labelTVOutput.TabIndex = 12;
-            this.labelTVOutput.Text = "Output Format:";
-            this.labelTVOutput.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolTip.SetToolTip(this.labelTVOutput, resources.GetString("labelTVOutput.ToolTip"));
             // 
             // tabWatch
             // 
-            this.tabWatch.Location = new System.Drawing.Point(0, 0);
+            this.tabWatch.AccessibleDescription = null;
+            this.tabWatch.AccessibleName = null;
+            resources.ApplyResources(this.tabWatch, "tabWatch");
+            this.tabWatch.BackgroundImage = null;
+            this.tabWatch.Font = null;
             this.tabWatch.Name = "tabWatch";
-            this.tabWatch.Size = new System.Drawing.Size(200, 100);
-            this.tabWatch.TabIndex = 0;
+            this.toolTip.SetToolTip(this.tabWatch, resources.GetString("tabWatch.ToolTip"));
             // 
             // groupBox1
             // 
-            this.groupBox1.Location = new System.Drawing.Point(0, 0);
+            this.groupBox1.AccessibleDescription = null;
+            this.groupBox1.AccessibleName = null;
+            resources.ApplyResources(this.groupBox1, "groupBox1");
+            this.groupBox1.BackgroundImage = null;
+            this.groupBox1.Font = null;
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(200, 100);
-            this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
+            this.toolTip.SetToolTip(this.groupBox1, resources.GetString("groupBox1.ToolTip"));
             // 
             // label_watchType
             // 
-            this.label_watchType.Location = new System.Drawing.Point(0, 0);
+            this.label_watchType.AccessibleDescription = null;
+            this.label_watchType.AccessibleName = null;
+            resources.ApplyResources(this.label_watchType, "label_watchType");
+            this.label_watchType.Font = null;
             this.label_watchType.Name = "label_watchType";
-            this.label_watchType.Size = new System.Drawing.Size(100, 23);
-            this.label_watchType.TabIndex = 0;
+            this.toolTip.SetToolTip(this.label_watchType, resources.GetString("label_watchType.ToolTip"));
             // 
             // label_watchPath
             // 
-            this.label_watchPath.Location = new System.Drawing.Point(0, 0);
+            this.label_watchPath.AccessibleDescription = null;
+            this.label_watchPath.AccessibleName = null;
+            resources.ApplyResources(this.label_watchPath, "label_watchPath");
+            this.label_watchPath.Font = null;
             this.label_watchPath.Name = "label_watchPath";
-            this.label_watchPath.Size = new System.Drawing.Size(100, 23);
-            this.label_watchPath.TabIndex = 0;
+            this.toolTip.SetToolTip(this.label_watchPath, resources.GetString("label_watchPath.ToolTip"));
             // 
             // addWatchType
             // 
-            this.addWatchType.Location = new System.Drawing.Point(0, 0);
+            this.addWatchType.AccessibleDescription = null;
+            this.addWatchType.AccessibleName = null;
+            resources.ApplyResources(this.addWatchType, "addWatchType");
+            this.addWatchType.BackgroundImage = null;
+            this.addWatchType.Font = null;
             this.addWatchType.Name = "addWatchType";
-            this.addWatchType.Size = new System.Drawing.Size(121, 21);
-            this.addWatchType.TabIndex = 0;
+            this.toolTip.SetToolTip(this.addWatchType, resources.GetString("addWatchType.ToolTip"));
             // 
             // addWatchFolder
             // 
-            this.addWatchFolder.Location = new System.Drawing.Point(0, 0);
+            this.addWatchFolder.AccessibleDescription = null;
+            this.addWatchFolder.AccessibleName = null;
+            resources.ApplyResources(this.addWatchFolder, "addWatchFolder");
+            this.addWatchFolder.BackgroundImage = null;
+            this.addWatchFolder.Font = null;
             this.addWatchFolder.Name = "addWatchFolder";
-            this.addWatchFolder.Size = new System.Drawing.Size(75, 23);
-            this.addWatchFolder.TabIndex = 0;
+            this.toolTip.SetToolTip(this.addWatchFolder, resources.GetString("addWatchFolder.ToolTip"));
             // 
             // addWatchPath
             // 
-            this.addWatchPath.Location = new System.Drawing.Point(0, 0);
+            this.addWatchPath.AccessibleDescription = null;
+            this.addWatchPath.AccessibleName = null;
+            resources.ApplyResources(this.addWatchPath, "addWatchPath");
+            this.addWatchPath.BackgroundImage = null;
+            this.addWatchPath.Font = null;
             this.addWatchPath.Name = "addWatchPath";
-            this.addWatchPath.Size = new System.Drawing.Size(100, 20);
-            this.addWatchPath.TabIndex = 0;
+            this.toolTip.SetToolTip(this.addWatchPath, resources.GetString("addWatchPath.ToolTip"));
             // 
             // watchedFolders
             // 
-            this.watchedFolders.Location = new System.Drawing.Point(0, 0);
+            this.watchedFolders.AccessibleDescription = null;
+            this.watchedFolders.AccessibleName = null;
+            resources.ApplyResources(this.watchedFolders, "watchedFolders");
+            this.watchedFolders.BackgroundImage = null;
+            this.watchedFolders.Font = null;
             this.watchedFolders.Name = "watchedFolders";
-            this.watchedFolders.Size = new System.Drawing.Size(120, 95);
-            this.watchedFolders.TabIndex = 0;
+            this.toolTip.SetToolTip(this.watchedFolders, resources.GetString("watchedFolders.ToolTip"));
             // 
             // runWatcherToolStripMenuItem
             // 
+            this.runWatcherToolStripMenuItem.AccessibleDescription = null;
+            this.runWatcherToolStripMenuItem.AccessibleName = null;
+            resources.ApplyResources(this.runWatcherToolStripMenuItem, "runWatcherToolStripMenuItem");
+            this.runWatcherToolStripMenuItem.BackgroundImage = null;
             this.runWatcherToolStripMenuItem.Name = "runWatcherToolStripMenuItem";
-            this.runWatcherToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
+            this.runWatcherToolStripMenuItem.ShortcutKeyDisplayString = null;
             // 
             // stopWatcherToolStripMenuItem
             // 
+            this.stopWatcherToolStripMenuItem.AccessibleDescription = null;
+            this.stopWatcherToolStripMenuItem.AccessibleName = null;
+            resources.ApplyResources(this.stopWatcherToolStripMenuItem, "stopWatcherToolStripMenuItem");
+            this.stopWatcherToolStripMenuItem.BackgroundImage = null;
             this.stopWatcherToolStripMenuItem.Name = "stopWatcherToolStripMenuItem";
-            this.stopWatcherToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
+            this.stopWatcherToolStripMenuItem.ShortcutKeyDisplayString = null;
             // 
             // toolStripSeparator2
             // 
+            this.toolStripSeparator2.AccessibleDescription = null;
+            this.toolStripSeparator2.AccessibleName = null;
+            resources.ApplyResources(this.toolStripSeparator2, "toolStripSeparator2");
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 6);
             // 
             // deleteSelectedWatcherToolStripMenuItem
             // 
+            this.deleteSelectedWatcherToolStripMenuItem.AccessibleDescription = null;
+            this.deleteSelectedWatcherToolStripMenuItem.AccessibleName = null;
+            resources.ApplyResources(this.deleteSelectedWatcherToolStripMenuItem, "deleteSelectedWatcherToolStripMenuItem");
+            this.deleteSelectedWatcherToolStripMenuItem.BackgroundImage = null;
             this.deleteSelectedWatcherToolStripMenuItem.Name = "deleteSelectedWatcherToolStripMenuItem";
-            this.deleteSelectedWatcherToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
-            // 
-            // notifyIcon
-            // 
-            this.notifyIcon.ContextMenuStrip = this.sysTrayMenu;
-            this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
-            this.notifyIcon.Text = "MediaRenamer";
-            this.notifyIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseClick);
+            this.deleteSelectedWatcherToolStripMenuItem.ShortcutKeyDisplayString = null;
             // 
             // sysTrayMenu
             // 
+            this.sysTrayMenu.AccessibleDescription = null;
+            this.sysTrayMenu.AccessibleName = null;
+            resources.ApplyResources(this.sysTrayMenu, "sysTrayMenu");
+            this.sysTrayMenu.BackgroundImage = null;
+            this.sysTrayMenu.Font = null;
             this.sysTrayMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.sysTrayOpen,
             this.displayDropTargetToolStripMenuItem,
             this.toolStripSeparator1,
             this.sysTrayExit});
             this.sysTrayMenu.Name = "sysTrayMenu";
-            this.sysTrayMenu.Size = new System.Drawing.Size(176, 76);
+            this.toolTip.SetToolTip(this.sysTrayMenu, resources.GetString("sysTrayMenu.ToolTip"));
             // 
             // sysTrayOpen
             // 
-            this.sysTrayOpen.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.sysTrayOpen.AccessibleDescription = null;
+            this.sysTrayOpen.AccessibleName = null;
+            resources.ApplyResources(this.sysTrayOpen, "sysTrayOpen");
+            this.sysTrayOpen.BackgroundImage = null;
             this.sysTrayOpen.Name = "sysTrayOpen";
-            this.sysTrayOpen.Size = new System.Drawing.Size(175, 22);
-            this.sysTrayOpen.Text = "Show Application";
+            this.sysTrayOpen.ShortcutKeyDisplayString = null;
             this.sysTrayOpen.Click += new System.EventHandler(this.sysTrayOpen_Click);
             // 
             // displayDropTargetToolStripMenuItem
             // 
+            this.displayDropTargetToolStripMenuItem.AccessibleDescription = null;
+            this.displayDropTargetToolStripMenuItem.AccessibleName = null;
+            resources.ApplyResources(this.displayDropTargetToolStripMenuItem, "displayDropTargetToolStripMenuItem");
+            this.displayDropTargetToolStripMenuItem.BackgroundImage = null;
             this.displayDropTargetToolStripMenuItem.Name = "displayDropTargetToolStripMenuItem";
-            this.displayDropTargetToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
-            this.displayDropTargetToolStripMenuItem.Text = "Display DropTarget";
+            this.displayDropTargetToolStripMenuItem.ShortcutKeyDisplayString = null;
             this.displayDropTargetToolStripMenuItem.Click += new System.EventHandler(this.displayDropTargetToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
+            this.toolStripSeparator1.AccessibleDescription = null;
+            this.toolStripSeparator1.AccessibleName = null;
+            resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(172, 6);
             // 
             // sysTrayExit
             // 
+            this.sysTrayExit.AccessibleDescription = null;
+            this.sysTrayExit.AccessibleName = null;
+            resources.ApplyResources(this.sysTrayExit, "sysTrayExit");
+            this.sysTrayExit.BackgroundImage = null;
             this.sysTrayExit.Name = "sysTrayExit";
-            this.sysTrayExit.Size = new System.Drawing.Size(175, 22);
-            this.sysTrayExit.Text = "Exit";
+            this.sysTrayExit.ShortcutKeyDisplayString = null;
             this.sysTrayExit.Click += new System.EventHandler(this.sysTrayExit_Click);
             // 
             // btnAppAbout
             // 
-            this.btnAppAbout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAppAbout.Location = new System.Drawing.Point(666, 0);
+            this.btnAppAbout.AccessibleDescription = null;
+            this.btnAppAbout.AccessibleName = null;
+            resources.ApplyResources(this.btnAppAbout, "btnAppAbout");
+            this.btnAppAbout.BackgroundImage = null;
+            this.btnAppAbout.Font = null;
             this.btnAppAbout.Name = "btnAppAbout";
-            this.btnAppAbout.Size = new System.Drawing.Size(47, 20);
-            this.btnAppAbout.TabIndex = 4;
-            this.btnAppAbout.Text = "About";
+            this.toolTip.SetToolTip(this.btnAppAbout, resources.GetString("btnAppAbout.ToolTip"));
             this.btnAppAbout.UseVisualStyleBackColor = true;
             this.btnAppAbout.Click += new System.EventHandler(this.btnAppAbout_Click);
             // 
+            // notifyIcon
+            // 
+            resources.ApplyResources(this.notifyIcon, "notifyIcon");
+            this.notifyIcon.ContextMenuStrip = this.sysTrayMenu;
+            this.notifyIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseClick);
+            // 
+            // folderBrowserDialog
+            // 
+            resources.ApplyResources(this.folderBrowserDialog, "folderBrowserDialog");
+            // 
             // mainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AccessibleDescription = null;
+            this.AccessibleName = null;
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(714, 429);
+            this.BackgroundImage = null;
             this.Controls.Add(this.btnAppAbout);
             this.Controls.Add(this.tabControl);
-            this.MinimumSize = new System.Drawing.Size(730, 465);
+            this.Font = null;
             this.Name = "mainForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "MediaRenamer";
+            this.toolTip.SetToolTip(this, resources.GetString("$this.ToolTip"));
             this.Load += new System.EventHandler(this.mainForm_Load);
             this.SizeChanged += new System.EventHandler(this.mainForm_SizeChanged);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.mainForm_FormClosing);
@@ -913,8 +980,6 @@
         private System.Windows.Forms.ToolStripMenuItem sysTrayExit;
         private System.Windows.Forms.ToolStripMenuItem sysTrayOpen;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.Label label_langUI;
-        private System.Windows.Forms.ComboBox option_langUI;
         private System.Windows.Forms.ListView scanSeriesList;
         private System.Windows.Forms.ColumnHeader headFilename;
         private System.Windows.Forms.ColumnHeader headSeries;

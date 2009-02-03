@@ -21,22 +21,20 @@ using MediaRenamer.Common;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
 
-namespace MediaRenamer.Series
-{
-	/// <summary>
-	/// Episode class
-	/// </summary>
-	public class Episode
-	{
-		private String _filename = "";
-		private String _series = "";
-		private String _title = "";
-		private String _altSeries = "";
-		private String _language = "";
-		public int year = 0;
-		private int _season = 0;
-		private int _episode = 0;
-		private int[] _episodes = {0};
+namespace MediaRenamer.Series {
+    /// <summary>
+    /// Episode class
+    /// </summary>
+    public class Episode {
+        private String _filename = "";
+        private String _series = "";
+        private String _title = "";
+        private String _altSeries = "";
+        private String _language = "";
+        public int year = 0;
+        private int _season = 0;
+        private int _episode = 0;
+        private int[] _episodes = { 0 };
 
         // This are the regular Expressions to find season and episode number
         public static String[] regEx = {	
@@ -50,145 +48,116 @@ namespace MediaRenamer.Series
                                     @" (?<season>[1-9]{1})(?<episode>[0-9]{2}) ",
                                     @" (?<season>[1-9]{1})(?<episode>[0-9]{2})\+([1-9]{1})(?<episode2>[0-9]{2}) "
 								 };
-		private char[] badPathChars = {'/', '\\', ':', '*', '?', '"', '<', '>', '|'};
+        private char[] badPathChars = { '/', '\\', ':', '*', '?', '"', '<', '>', '|' };
 
-		public Episode(String fname)
-		{
-			_filename = fname;
-		}
+        public Episode(String fname) {
+            _filename = fname;
+        }
 
-		# region get/set methods
+        # region get/set methods
 
-		public String series
-		{
-			get 
-			{
-				return _series;
-			}
-			set 
-			{
-				foreach (char c in badPathChars)
-					value = value.Replace(c, '.');
-				_series = value;
-			}
-		}
+        public String series {
+            get {
+                return _series;
+            }
+            set {
+                foreach (char c in badPathChars)
+                    value = value.Replace(c, '.');
+                _series = value;
+            }
+        }
 
-		public String altSeries
-		{
-			get 
-			{
-				return _altSeries;
-			}
-			set 
-			{
-				foreach (char c in badPathChars)
-					value = value.Replace(c, '.');
-				_altSeries = value;
-			}
-		}
+        public String altSeries {
+            get {
+                return _altSeries;
+            }
+            set {
+                foreach (char c in badPathChars)
+                    value = value.Replace(c, '.');
+                _altSeries = value;
+            }
+        }
 
-		public String language
-		{
-			get 
-			{
-				return _language;
-			}
-			set 
-			{
-				_language = value;
-			}
-		}
+        public String language {
+            get {
+                return _language;
+            }
+            set {
+                _language = value;
+            }
+        }
 
-		public String title
-		{
-			get 
-			{
-				return _title;
-			}
-			set 
-			{
-				foreach (char c in badPathChars)
-					value = value.Replace(c, '.');
-				value = value.Trim();
-				_title = value;
-			}
-		}
+        public String title {
+            get {
+                return _title;
+            }
+            set {
+                foreach (char c in badPathChars)
+                    value = value.Replace(c, '.');
+                value = value.Trim();
+                _title = value;
+            }
+        }
 
-		public int season
-		{
-			get 
-			{
-				return _season;
-			}
-			set 
-			{
-				_season = value;
-			}
-		}
+        public int season {
+            get {
+                return _season;
+            }
+            set {
+                _season = value;
+            }
+        }
 
-		public int episode
-		{
-			get 
-			{
-				return _episode;
-			}
-			set 
-			{
-				_episode = value;
-				if (_episodes[0] == 0)
-					_episodes[0] = value;
-			}
-		}
+        public int episode {
+            get {
+                return _episode;
+            }
+            set {
+                _episode = value;
+                if (_episodes[0] == 0)
+                    _episodes[0] = value;
+            }
+        }
 
-		public int[] episodes
-		{
-			get 
-			{
-				return _episodes;
-			}
-			set 
-			{
-				_episodes = value;
-			}
-		}
+        public int[] episodes {
+            get {
+                return _episodes;
+            }
+            set {
+                _episodes = value;
+            }
+        }
 
-		public bool special
-		{
-			get
-			{
-				bool isSpecial = false;
-				if (_filename.ToLower().IndexOf(@"\special") > 0) isSpecial = true;
-				if (_filename.ToLower().IndexOf(@"\extra") > 0) isSpecial = true;
-				if (_filename.ToLower().IndexOf(@"\bonus") > 0) isSpecial = true;
-				return isSpecial;
-			}
-		}
+        public bool special {
+            get {
+                bool isSpecial = false;
+                if (_filename.ToLower().IndexOf(@"\special") > 0) isSpecial = true;
+                if (_filename.ToLower().IndexOf(@"\extra") > 0) isSpecial = true;
+                if (_filename.ToLower().IndexOf(@"\bonus") > 0) isSpecial = true;
+                return isSpecial;
+            }
+        }
 
-		public String filename
-		{
-			get
-			{
-				return _filename;
-			}
-		}
-		
-		#endregion
+        public String filename {
+            get {
+                return _filename;
+            }
+        }
+
+        #endregion
 
         /// <summary>
         /// Parses a filename for episode information
         /// </summary>
         /// <param name="file">complete filename</param>
         /// <returns>filled Episode class</returns>
-        public static Episode parseFile(String file)
-        {
+        public static Episode parseFile(String file) {
             Episode ep = new Episode(file);
             FileInfo fi = new FileInfo(file);
-            try
-            {
+            try {
                 String dir = "";
                 dir = fi.Directory.FullName;
-                while (true)
-                {
+                while (true) {
                     if (dir == null) break;
                     DirectoryInfo di = new DirectoryInfo(dir);
                     // Skip those folders since they probably contain no episodes but extras/bonus material
@@ -198,17 +167,14 @@ namespace MediaRenamer.Series
                         (di.Name.ToLower().IndexOf("special") != 0) &&
                         (di.Name.ToLower().IndexOf("bonus") != 0) &&
                         (di.Name.ToLower().IndexOf("dvd") != 0)
-                        )
-                    {
+                        ) {
                         ep.series = di.Name;
                         Regex reg = new Regex("([0-9]{4})");
                         Match m = null;
                         m = reg.Match(ep.series);
-                        if (m.Success)
-                        {
+                        if (m.Success) {
                             int year = Int32.Parse(m.Groups[1].Captures[0].Value);
-                            if (year <= DateTime.Now.Year)
-                            {
+                            if (year <= DateTime.Now.Year) {
                                 ep.year = year;
                                 ep.series = ep.series.Replace(m.Groups[1].Captures[0].Value, "");
                             }
@@ -216,8 +182,7 @@ namespace MediaRenamer.Series
                         ep.series = ep.series.Replace("()", "");
                         break;
                     }
-                    else
-                    {
+                    else {
                         dir = di.Parent.FullName;
                     }
                 }
@@ -228,32 +193,27 @@ namespace MediaRenamer.Series
                 bool matched = false;
                 // Scan for season and episode
                 String[] regExp = Episode.regEx;
-                foreach (String pat in regExp)
-                {
+                foreach (String pat in regExp) {
                     Regex reg = new Regex(pat, RegexOptions.IgnoreCase);
                     Match m = null;
                     m = reg.Match(name);
-                    if (m.Success)
-                    {
+                    if (m.Success) {
                         ep.season = Int32.Parse(m.Result("${season}"));
                         ep.episode = Int32.Parse(m.Result("${episode}"));
                         String episode2str = m.Result("${episode2}");
                         int episode2 = -1;
                         Int32.TryParse(episode2str, out episode2);
-                        if (episode2 != 0)
-                        {
+                        if (episode2 != 0) {
                             ep.episodes = new int[2];
                             ep.episodes[0] = ep.episode;
                             ep.episodes[1] = episode2;
                         }
-                        else
-                        {
+                        else {
                             ep.episodes = new int[1];
                             ep.episodes[0] = ep.episode;
                         }
 
-                        if (name.IndexOf(m.Value) > 0)
-                        {
+                        if (name.IndexOf(m.Value) > 0) {
                             series = name.Substring(0, name.IndexOf(m.Value) - 1);
 
                             series = Eregi.replace("([a-zA-Z]{1})([0-9]{1})", "\\1 \\2", series);
@@ -274,16 +234,13 @@ namespace MediaRenamer.Series
                         ep.series = series;
                         if (ep.series == "") ep.series = ep.altSeries;
 
-                        if (name.IndexOf(m.Value) == 0)
-                        {
+                        if (name.IndexOf(m.Value) == 0) {
                             title = name.Replace(m.Value, "");
                         }
-                        else
-                        {
+                        else {
                             title = name.Substring(name.IndexOf(m.Value) + m.Value.Length);
                         }
-                        if (title.StartsWith(" - "))
-                        {
+                        if (title.StartsWith(" - ")) {
                             title = title.Substring(3);
                         }
                         title = title.Trim();
@@ -293,12 +250,10 @@ namespace MediaRenamer.Series
                         // find title using online parser
                         OnlineParserBase parser = null;
                         String selectedParser = Settings.GetValueAsString(SettingKeys.SeriesParser);
-                        if (selectedParser == OnlineParserTVDB.parserName)
-                        {
+                        if (selectedParser == OnlineParserTVDB.parserName) {
                             parser = new OnlineParserTVDB();
                         }
-                        else if (selectedParser == OnlineParserEPW.parserName)
-                        {
+                        else if (selectedParser == OnlineParserEPW.parserName) {
                             parser = new OnlineParserEPW();
                         }
                         parser.getEpisodeData(ref ep);
@@ -309,12 +264,10 @@ namespace MediaRenamer.Series
                     }
                 }
                 // no matching data found. try to find title of episode anyway
-                if (!matched)
-                {
+                if (!matched) {
                     ep.season = 0;
                     ep.episode = 0;
-                    if (file.IndexOf("-") > 0)
-                    {
+                    if (file.IndexOf("-") > 0) {
                         title = file.Substring(file.IndexOf("-") + 1);
                         title = title.Trim();
                         title = title.Substring(0, title.LastIndexOf("."));
@@ -322,8 +275,7 @@ namespace MediaRenamer.Series
                     }
                 }
             }
-            catch (Exception E)
-            {
+            catch (Exception E) {
                 Log.Add("ParseFile(" + ep.filename + "): " + E.Message);
             }
 
@@ -336,143 +288,120 @@ namespace MediaRenamer.Series
         /// </summary>
         /// <param name="file">filename</param>
         /// <returns>true if valid, false if invalid</returns>
-        public static bool validEpisodeFile(String file)
-        {
+        public static bool validEpisodeFile(String file) {
             String[] regEx2 = Episode.regEx;
             FileInfo fi = new FileInfo(file);
-            foreach (String pat in regEx2)
-            {
+            foreach (String pat in regEx2) {
                 Regex reg = new Regex(pat, RegexOptions.IgnoreCase);
                 Match m = null;
                 m = reg.Match(fi.Name);
-                if (m.Success)
-                {
+                if (m.Success) {
                     return true;
                 }
             }
             return false;
         }
 
-		/// <summary>
-		/// Checks if the episode needs renaming or already matches the filename
-		/// </summary>
-		/// <returns>true if needs renaming, false if not</returns>
-		public bool needRenaming()
-		{
-			FileInfo fi = new FileInfo(filename);
-			if (modifiedName() == fi.Name)
-			{
-				return false;
-			}
-			else
-			{
-				return true;
-			}
-		}
+        /// <summary>
+        /// Checks if the episode needs renaming or already matches the filename
+        /// </summary>
+        /// <returns>true if needs renaming, false if not</returns>
+        public bool needRenaming() {
+            FileInfo fi = new FileInfo(filename);
+            if (modifiedName() == fi.Name) {
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
 
-		/// <summary>
-		/// retreive new name of the episode
-		/// </summary>
-		/// <returns></returns>
-		public String modifiedName()
-		{
-			String renameFormat = "<series> - <season>x<episode2> - <title>";
+        /// <summary>
+        /// retreive new name of the episode
+        /// </summary>
+        /// <returns></returns>
+        public String modifiedName() {
+            String renameFormat = "<series> - <season>x<episode2> - <title>";
             String savedFormat = Settings.GetValueAsString(SettingKeys.SeriesFormat);
             if (savedFormat != "" && savedFormat != String.Empty && savedFormat != null)
                 renameFormat = savedFormat;
 
-			String[] eps1 = new String[_episodes.Length];
-			for (int i=0; i<eps1.Length; i++)
-			{
-				eps1[i] = _episodes[i].ToString();
-				if (_episodes[i] < 10)
-				{
-					eps1[i] = eps1[i];
-				}
-			}
-			String episodes1 = String.Join("-", eps1);
+            String[] eps1 = new String[_episodes.Length];
+            for (int i = 0; i < eps1.Length; i++) {
+                eps1[i] = _episodes[i].ToString();
+                if (_episodes[i] < 10) {
+                    eps1[i] = eps1[i];
+                }
+            }
+            String episodes1 = String.Join("-", eps1);
 
-			String[] eps2 = new String[_episodes.Length];
-			for (int i=0; i<eps2.Length; i++)
-			{
-				eps2[i] = _episodes[i].ToString();
-				if (_episodes[i] < 10)
-				{
-					eps2[i] = "0"+eps2[i];
-				}
-			}
-			String episodes2 = String.Join("-", eps2);
+            String[] eps2 = new String[_episodes.Length];
+            for (int i = 0; i < eps2.Length; i++) {
+                eps2[i] = _episodes[i].ToString();
+                if (_episodes[i] < 10) {
+                    eps2[i] = "0" + eps2[i];
+                }
+            }
+            String episodes2 = String.Join("-", eps2);
 
-			String season2 = _season.ToString();
-			if (_season < 10) season2 = "0"+season2;
+            String season2 = _season.ToString();
+            if (_season < 10) season2 = "0" + season2;
 
-			renameFormat = renameFormat.Replace("<series>", _series);
-			renameFormat = renameFormat.Replace("<season>", _season.ToString());
-			renameFormat = renameFormat.Replace("<season2>", season2);
-			renameFormat = renameFormat.Replace("<episode>", episodes1);
-			renameFormat = renameFormat.Replace("<episode2>", episodes2);
-			if (_title.Length > 0)
-			{
-				renameFormat = renameFormat.Replace("<title>", _title);
-				renameFormat = Eregi.replace("<title:([^>]*)>", "\\1", renameFormat);
-			}
-			else
-			{
-				renameFormat = renameFormat.Replace("<title>", "");
+            renameFormat = renameFormat.Replace("<series>", _series);
+            renameFormat = renameFormat.Replace("<season>", _season.ToString());
+            renameFormat = renameFormat.Replace("<season2>", season2);
+            renameFormat = renameFormat.Replace("<episode>", episodes1);
+            renameFormat = renameFormat.Replace("<episode2>", episodes2);
+            if (_title.Length > 0) {
+                renameFormat = renameFormat.Replace("<title>", _title);
+                renameFormat = Eregi.replace("<title:([^>]*)>", "\\1", renameFormat);
+            }
+            else {
+                renameFormat = renameFormat.Replace("<title>", "");
                 renameFormat = Eregi.replace("<title:([^>]*)>", "", renameFormat);
-			}
+            }
             FileInfo fi = new FileInfo(filename);
             renameFormat += fi.Extension;
-			return renameFormat;
-		}
+            return renameFormat;
+        }
 
-        public void renameEpisode()
-        {
-            if (needRenaming())
-            {
+        public void renameEpisode() {
+            if (needRenaming()) {
                 FileInfo fi = new FileInfo(filename);
                 String modifiedFilename = fi.DirectoryName + @"\" + modifiedName();
                 if (!File.Exists(modifiedFilename) ||
-                    modifiedFilename.ToLower() == filename.ToLower())
-                {
+                    modifiedFilename.ToLower() == filename.ToLower()) {
                     fi.MoveTo(modifiedFilename);
                 }
-                else
-                {
+                else {
                     MessageBox.Show("A file with the same name already exists. \nYou cannot rename the file " + fi.Name, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
 
-        public void renameEpisodeAndMove(String targetFolder)
-        {
-            if (needRenaming())
-            {
+        public void renameEpisodeAndMove(String targetFolder) {
+            if (needRenaming()) {
                 FileInfo fi = new FileInfo(filename);
                 String modifiedFilename = targetFolder + @"\" + modifiedName();
                 if (!File.Exists(modifiedFilename) ||
-                    modifiedFilename.ToLower() == filename.ToLower())
-                {
+                    modifiedFilename.ToLower() == filename.ToLower()) {
                     fi.MoveTo(modifiedFilename);
                     _filename = modifiedFilename;
                 }
-                else
-                {
+                else {
                     MessageBox.Show("A file with the same name already exists. \nYou cannot rename the file " + fi.Name, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
 
-		public override String ToString()
-		{
-			String str = "";
-			if (special)
-			{
-				str += "SPECIAL: ";
-			}
-			str += modifiedName();
-			str += " ("+_filename+")";
-			return str;
-		}
+        public override String ToString() {
+            String str = "";
+            if (special) {
+                str += "SPECIAL: ";
+            }
+            str += modifiedName();
+            str += " (" + _filename + ")";
+            return str;
+        }
     }
 }

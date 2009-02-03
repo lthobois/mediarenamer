@@ -25,13 +25,11 @@ using System.Windows.Forms;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace MediaRenamer.Series
-{
+namespace MediaRenamer.Series {
     /// <summary>
     /// Zusammenfassung für OnlineParser.
     /// </summary>
-    public class OnlineParserEPW: OnlineParserBase
-    {
+    public class OnlineParserEPW : OnlineParserBase {
         //																		id season year language
         private String detailUrl = "http://www.episodeworld.com/tools/mediarenamer/{0}/{1}/{2}/{3}/strict";
         //																		name season
@@ -39,22 +37,18 @@ namespace MediaRenamer.Series
 
         public static String parserName = "EpisodeWorld.com";
 
-        override public bool getSeriesData(ref showClass show, ref Episode ep)
-        {
+        override public bool getSeriesData(ref showClass show, ref Episode ep) {
             WebClient cli = new WebClient();
             XmlDocument xml = new XmlDocument();
 
-            if (!File.Exists(episodeCache))
-            {
-                if (show.ID != null && show.Year > 0)
-                {
+            if (!File.Exists(episodeCache)) {
+                if (show.ID != null && show.Year > 0) {
                     //I know which series - just download it
                     cli.DownloadFile(String.Format(detailUrl, show.ID, ep.season, show.Year, show.Lang),
                         episodeCache);
                     xml.Load(episodeCache);
                 }
-                else
-                {
+                else {
                     // Search for series
                     cli.DownloadFile(String.Format(queryUrl, ep.series, ep.season), searchCache);
                     xml.Load(searchCache);
@@ -62,11 +56,9 @@ namespace MediaRenamer.Series
                     List<showClass> shows = new List<showClass>();
                     XmlNodeList nodes;
                     // Shows found on episodeworld.com
-                    if (xml.DocumentElement.Name == "search")
-                    {
+                    if (xml.DocumentElement.Name == "search") {
                         nodes = xml.GetElementsByTagName("found");
-                        foreach (XmlNode node in nodes)
-                        {
+                        foreach (XmlNode node in nodes) {
                             showClass sc = new showClass();
                             sc.ID = node.Attributes["id"].Value;
                             sc.Name = node.Attributes["name"].Value;
@@ -74,18 +66,15 @@ namespace MediaRenamer.Series
                             shows.Add(sc);
                         }
 
-                        if (ep.series != ep.altSeries)
-                        {
+                        if (ep.series != ep.altSeries) {
                             // Check altSeries list as well
                             cli.DownloadFile(String.Format(queryUrl, ep.altSeries, ep.season), searchCache);
                             xml.Load(searchCache);
 
                             if ((xml.DocumentElement.ChildNodes.Count > 0) &&
-                            (xml.DocumentElement.Name == "search"))
-                            {
+                            (xml.DocumentElement.Name == "search")) {
                                 nodes = xml.GetElementsByTagName("found");
-                                foreach (XmlNode node in nodes)
-                                {
+                                foreach (XmlNode node in nodes) {
                                     showClass sc = new showClass();
                                     sc.ID = node.Attributes["id"].Value;
                                     sc.Name = node.Attributes["name"].Value;
@@ -95,18 +84,15 @@ namespace MediaRenamer.Series
                             }
                         }
                     }
-                    
-                    if (xml.DocumentElement.Name == "series")
-                    {
+
+                    if (xml.DocumentElement.Name == "series") {
                         // Found series directly.
                         FileInfo fi = new FileInfo(searchCache);
                         fi.MoveTo(episodeCache);
                     }
-                    else
-                    {
+                    else {
                         show = chooseSeries(ep, shows);
-                        if (show != null)
-                        {
+                        if (show != null) {
                             cli.DownloadFile(
                                 String.Format(detailUrl, show.ID, ep.season, show.Year, show.Lang), episodeCache
                                 );
@@ -117,41 +103,32 @@ namespace MediaRenamer.Series
             }
 
             // Check if cache is outdated
-            if (File.Exists(episodeCache))
-            {
+            if (File.Exists(episodeCache)) {
                 DateTime dt = File.GetLastWriteTime(episodeCache);
-                if (DateTime.Now.Subtract(dt).TotalDays > 3)
-                {
+                if (DateTime.Now.Subtract(dt).TotalDays > 3) {
                     // Log.Add( i18n.t( "oparse_older", ep.series) );
                     File.Delete(episodeCache);
                     cli.DownloadFile(String.Format(detailUrl, show.ID, ep.season, show.Year, show.Lang),
                         episodeCache);
                 }
-                if (File.Exists(episodeCache))
-                {
+                if (File.Exists(episodeCache)) {
                     xml.Load(episodeCache);
                 }
 
-                if (xml.DocumentElement.Attributes.Count > 1)
-                {
-                    if (show.Lang == "")
-                    {
+                if (xml.DocumentElement.Attributes.Count > 1) {
+                    if (show.Lang == "") {
                         List<String> languages = new List<String>();
                         XmlNodeList nodes = xml.GetElementsByTagName("episode");
-                        foreach (XmlNode node in nodes)
-                        {
+                        foreach (XmlNode node in nodes) {
                             String lang = node.Attributes["language"].Value;
-                            if (!languages.Contains(lang))
-                            {
+                            if (!languages.Contains(lang)) {
                                 languages.Add(lang);
                             }
                         }
 
-                        if (languages.Count > 1)
-                        {
+                        if (languages.Count > 1) {
                             List<showClass> shows = new List<showClass>();
-                            foreach (String lang in languages)
-                            {
+                            foreach (String lang in languages) {
                                 showClass showTemp = new showClass();
                                 showTemp.ID = xml.DocumentElement.Attributes["id"].Value;
                                 showTemp.Name = xml.DocumentElement.Attributes["name"].Value;
@@ -161,8 +138,7 @@ namespace MediaRenamer.Series
                             }
                             show = chooseSeries(ep, shows);
                         }
-                        else
-                        {
+                        else {
                             show.ID = xml.DocumentElement.Attributes["id"].Value;
                             show.Name = xml.DocumentElement.Attributes["name"].Value;
                             show.Year = Int32.Parse(xml.DocumentElement.Attributes["year"].Value);
@@ -181,35 +157,29 @@ namespace MediaRenamer.Series
 
             // Find title for episode
             XmlNodeList episodes = xml.GetElementsByTagName("episode");
-            if (episodes.Count > 0)
-            {
+            if (episodes.Count > 0) {
                 bool foundEp = false;
                 // Search episode
-                foreach (XmlNode node in episodes)
-                {
+                foreach (XmlNode node in episodes) {
                     if ((node.Attributes["season"].Value == ep.season.ToString()) &&
                          (node.Attributes["episode"].Value == ep.episode.ToString()) &&
                          (node.Attributes["language"].Value == ep.language.ToString()) &&
                          (node.Attributes["special"].Value == "false")
-                        )
-                    {
+                        ) {
                         foundEp = true;
                         ep.title = node.Attributes["title"].Value;
                         break;
                     }
                 }
 
-                if (!foundEp)
-                {
+                if (!foundEp) {
                     // Not found - maybe special episode after all ?
-                    foreach (XmlNode node in episodes)
-                    {
+                    foreach (XmlNode node in episodes) {
                         if ((node.Attributes["season"].Value == ep.season.ToString()) &&
                              (node.Attributes["episode"].Value == ep.episode.ToString()) &&
                              (node.Attributes["language"].Value == ep.language.ToString()) &&
                              (node.Attributes["special"].Value == "true")
-                            )
-                        {
+                            ) {
                             foundEp = true;
                             ep.title = node.Attributes["title"].Value;
                             break;
@@ -217,24 +187,20 @@ namespace MediaRenamer.Series
                     }
                 }
 
-                if (foundEp)
-                {
-                    if (ep.episodes.Length > 1)
-                    {
-                        if (ep.title.EndsWith(")"))
-                        {
+                if (foundEp) {
+                    if (ep.episodes.Length > 1) {
+                        if (ep.title.EndsWith(")")) {
                             ep.title = ep.title.Substring(0, ep.title.LastIndexOf("("));
                         }
                     }
                     ep.title = ep.title.Replace(".i.", "");
-                    if (ep.title.IndexOf("aka") > 0)
-                    {
+                    if (ep.title.IndexOf("aka") > 0) {
                         ep.title = Eregi.replace("\\(aka([^)]*)\\)", "", ep.title);
                     }
                     return true;
                 }
-            } 
-            
+            }
+
             return false;
             // Done
         }

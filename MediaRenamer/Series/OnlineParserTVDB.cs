@@ -26,13 +26,11 @@ using System.Collections;
 using System.Collections.Generic;
 using Ionic.Utils.Zip;
 
-namespace MediaRenamer.Series
-{
+namespace MediaRenamer.Series {
     /// <summary>
     /// Zusammenfassung für OnlineParser.
     /// </summary>
-    public class OnlineParserTVDB: OnlineParserBase
-    {
+    public class OnlineParserTVDB : OnlineParserBase {
         private const String TVDBMirrors = "TVDB.mirrors";
         private const String TVDBLanguages = "TVDB.languages";
 
@@ -50,15 +48,13 @@ namespace MediaRenamer.Series
 
         public static String parserName = "TheTVDB.com";
 
-        public OnlineParserTVDB()
-        {
+        public OnlineParserTVDB() {
             zipCache = episodeCache.Replace(".xml", ".zip");
             Object data;
             data = Settings.GetValueAsObject<List<String>>(TVDBMirrors);
             if (data != null)
                 mirrors = (List<String>)data;
-            else
-            {
+            else {
                 mirrors = new List<String>();
                 this.loadMirrors();
             }
@@ -66,21 +62,18 @@ namespace MediaRenamer.Series
             data = Settings.GetValueAsObject<Hashtable>(TVDBLanguages);
             if (data != null)
                 languages = (Hashtable)data;
-            else
-            {
+            else {
                 languages = new Hashtable();
                 this.loadLanguages();
             }
         }
 
-        private void storeInternalData()
-        {
+        private void storeInternalData() {
             Settings.SetValue(TVDBMirrors, mirrors);
             Settings.SetValue(TVDBLanguages, languages);
         }
 
-        private void loadMirrors()
-        {
+        private void loadMirrors() {
             /**
              * <Mirrors>
              *   <Mirror>
@@ -98,38 +91,31 @@ namespace MediaRenamer.Series
             XmlDocument xml = new XmlDocument();
             xml.Load(mirrorFile);
             XmlNodeList nodes = xml.DocumentElement.ChildNodes;
-            foreach (XmlNode node in nodes)
-            {
+            foreach (XmlNode node in nodes) {
                 String mirror = "";
                 Int32 typemask = 0;
-                foreach (XmlNode subnode in node.ChildNodes)
-                {
-                    if (subnode.Name == "typemask")
-                    {
+                foreach (XmlNode subnode in node.ChildNodes) {
+                    if (subnode.Name == "typemask") {
                         typemask = Int32.Parse(subnode.InnerText);
                     }
-                    if (subnode.Name == "mirrorpath")
-                    {
+                    if (subnode.Name == "mirrorpath") {
                         mirror = subnode.InnerText;
                     }
                 }
-                if ((typemask | 1) == typemask)
-                {
+                if ((typemask | 1) == typemask) {
                     mirrors.Add(mirror);
                 }
             }
 
             // Backup if no mirrors found.
-            if (mirrors.Count == 0)
-            {
+            if (mirrors.Count == 0) {
                 mirrors.Add("http://thetvdb.com");
             }
 
             this.storeInternalData();
         }
 
-        private void loadLanguages()
-        {
+        private void loadLanguages() {
             /**
              * <Languages>
              *   <Language>
@@ -148,18 +134,14 @@ namespace MediaRenamer.Series
             XmlDocument xml = new XmlDocument();
             xml.Load(languageFile);
             XmlNodeList nodes = xml.DocumentElement.ChildNodes;
-            foreach (XmlNode node in nodes)
-            {
+            foreach (XmlNode node in nodes) {
                 String language = "";
                 String abbreviation = "";
-                foreach (XmlNode subnode in node.ChildNodes)
-                {
-                    if (subnode.Name == "name")
-                    {
+                foreach (XmlNode subnode in node.ChildNodes) {
+                    if (subnode.Name == "name") {
                         language = subnode.InnerText;
                     }
-                    if (subnode.Name == "abbreviation")
-                    {
+                    if (subnode.Name == "abbreviation") {
                         abbreviation = subnode.InnerText;
                     }
                 }
@@ -169,30 +151,25 @@ namespace MediaRenamer.Series
             this.storeInternalData();
         }
 
-        private String randomMirror()
-        {
+        private String randomMirror() {
             Random rand = new Random();
             int randNum = rand.Next(0, mirrors.Count);
             return mirrors[randNum];
         }
 
-        override public bool getSeriesData(ref showClass show, ref Episode ep)
-        {
+        override public bool getSeriesData(ref showClass show, ref Episode ep) {
             WebClient cli = new WebClient();
             XmlDocument xml = new XmlDocument();
 
-            if (!File.Exists(episodeCache))
-            {
-                if (show.ID != null && show.Year > 0)
-                {
+            if (!File.Exists(episodeCache)) {
+                if (show.ID != null && show.Year > 0) {
                     //I know which series - just download it
                     cli.DownloadFile(String.Format(detailUrl, randomMirror(), show.ID, languages[show.Lang]),
                         zipCache);
                     extractXml(languages[show.Lang].ToString());
                     xml.Load(episodeCache);
                 }
-                else
-                {
+                else {
                     // Search for series
                     cli.DownloadFile(String.Format(queryUrl, ep.series), searchCache);
                     xml.Load(searchCache);
@@ -200,18 +177,15 @@ namespace MediaRenamer.Series
                     List<showClass> shows = new List<showClass>();
                     XmlNodeList nodes = xml.GetElementsByTagName("Series");
                     // Shows found on thetvdb.com
-                    if (nodes.Count != 1)
-                    {
-                        foreach (XmlNode node in nodes)
-                        {
+                    if (nodes.Count != 1) {
+                        foreach (XmlNode node in nodes) {
                             showClass sc = new showClass();
                             sc.ID = node.SelectSingleNode("seriesid").InnerText;
                             sc.Name = node.SelectSingleNode("SeriesName").InnerText;
                             if (node.SelectSingleNode("FirstAired") == null)
                                 continue;
                             sc.Year = Int32.Parse(node.SelectSingleNode("FirstAired").InnerText.Substring(0, 4));
-                            foreach (String lang in languages.Keys)
-                            {
+                            foreach (String lang in languages.Keys) {
                                 showClass showtmp = new showClass();
                                 showtmp.ID = sc.ID;
                                 showtmp.Name = sc.Name;
@@ -222,23 +196,19 @@ namespace MediaRenamer.Series
                         }
 
                         // Check altSeries list as well
-                        if (ep.series != ep.altSeries)
-                        {
+                        if (ep.series != ep.altSeries) {
                             cli.DownloadFile(String.Format(queryUrl, ep.altSeries), searchCache);
                             xml.Load(searchCache);
 
                             nodes = xml.GetElementsByTagName("Series");
 
-                            if (nodes.Count > 1)
-                            {
-                                foreach (XmlNode node in nodes)
-                                {
+                            if (nodes.Count > 1) {
+                                foreach (XmlNode node in nodes) {
                                     showClass sc = new showClass();
                                     sc.ID = node.SelectSingleNode("seriesid").InnerText;
                                     sc.Name = node.SelectSingleNode("SeriesName").InnerText;
                                     sc.Year = Int32.Parse(node.SelectSingleNode("FirstAired").InnerText.Substring(0, 4));
-                                    foreach (String lang in languages.Keys)
-                                    {
+                                    foreach (String lang in languages.Keys) {
                                         showClass showtmp = new showClass();
                                         showtmp.ID = sc.ID;
                                         showtmp.Name = sc.Name;
@@ -251,29 +221,23 @@ namespace MediaRenamer.Series
                         }
                     }
 
-                    if (nodes.Count != 1 && shows.Count == 0)
-                    {
-                        while (true)
-                        {
+                    if (nodes.Count != 1 && shows.Count == 0) {
+                        while (true) {
                             InputDialog input = new InputDialog("Couldn't find the matching series - please enter a valid series name:", Application.ProductName, ep.series);
-                            if (input.ShowDialog(mainForm.instance) == DialogResult.OK)
-                            {
+                            if (input.ShowDialog(mainForm.instance) == DialogResult.OK) {
                                 String seriesName = input.value;
                                 cli.DownloadFile(String.Format(queryUrl, seriesName), searchCache);
                                 xml.Load(searchCache);
                                 nodes = xml.GetElementsByTagName("Series");
-                                if (nodes.Count > 0)
-                                {
-                                    foreach (XmlNode node in nodes)
-                                    {
+                                if (nodes.Count > 0) {
+                                    foreach (XmlNode node in nodes) {
                                         showClass sc = new showClass();
                                         sc.ID = node.SelectSingleNode("seriesid").InnerText;
                                         sc.Name = node.SelectSingleNode("SeriesName").InnerText;
                                         if (node.SelectSingleNode("FirstAired") == null)
                                             continue;
                                         sc.Year = Int32.Parse(node.SelectSingleNode("FirstAired").InnerText.Substring(0, 4));
-                                        foreach (String lang in languages.Keys)
-                                        {
+                                        foreach (String lang in languages.Keys) {
                                             showClass showtmp = new showClass();
                                             showtmp.ID = sc.ID;
                                             showtmp.Name = sc.Name;
@@ -285,21 +249,18 @@ namespace MediaRenamer.Series
                                     break;
                                 }
                             }
-                            else
-                            {
+                            else {
                                 break;
                             }
                         }
                     }
 
-                    if (nodes.Count == 1)
-                    {
+                    if (nodes.Count == 1) {
                         // Found series directly.
                         show.ID = xml.SelectSingleNode("//Data/Series/seriesid").InnerText;
                         show.Name = xml.SelectSingleNode("//Data/Series/SeriesName").InnerText;
                         show.Year = Int32.Parse(xml.SelectSingleNode("//Data/Series/FirstAired").InnerText.Substring(0, 4));
-                        foreach (String lang in languages.Keys)
-                        {
+                        foreach (String lang in languages.Keys) {
                             showClass showtmp = new showClass();
                             showtmp.ID = show.ID;
                             showtmp.Name = show.Name;
@@ -308,10 +269,9 @@ namespace MediaRenamer.Series
                             shows.Add(showtmp);
                         }
                     }
-                    
+
                     show = chooseSeries(ep, shows);
-                    if (show != null)
-                    {
+                    if (show != null) {
                         ep.language = (String)languages[show.Lang];
                         ep.series = show.Name;
                         cli.DownloadFile(String.Format(detailUrl, randomMirror(), show.ID, ep.language),
@@ -323,19 +283,16 @@ namespace MediaRenamer.Series
             }
 
             // Check if cache is available
-            if (File.Exists(episodeCache))
-            {
+            if (File.Exists(episodeCache)) {
                 DateTime dt = File.GetLastWriteTime(episodeCache);
                 // Check if cache is outdated
-                if (DateTime.Now.Subtract(dt).TotalDays > 3)
-                {
+                if (DateTime.Now.Subtract(dt).TotalDays > 3) {
                     File.Delete(episodeCache);
                     cli.DownloadFile(String.Format(detailUrl, randomMirror(), show.ID, show.Lang),
                         zipCache);
                     extractXml(languages[show.Lang].ToString());
                 }
-                if (File.Exists(episodeCache))
-                {
+                if (File.Exists(episodeCache)) {
                     xml.Load(episodeCache);
                 }
             }
@@ -349,47 +306,38 @@ namespace MediaRenamer.Series
 
             // Find title for episode
             XmlNodeList episodes = xml.GetElementsByTagName("Episode");
-            if (episodes.Count > 0)
-            {
+            if (episodes.Count > 0) {
                 // Search episode
-                foreach (XmlNode node in episodes)
-                {
+                foreach (XmlNode node in episodes) {
                     Int32 season = Int32.Parse(node.SelectSingleNode("SeasonNumber").InnerText);
                     Int32 episode = Int32.Parse(node.SelectSingleNode("EpisodeNumber").InnerText);
 
-                    if (season == ep.season && episode == ep.episode)
-                    {
+                    if (season == ep.season && episode == ep.episode) {
                         ep.title = node.SelectSingleNode("EpisodeName").InnerText;
 
-                        if (ep.episodes.Length > 1)
-                        {
-                            if (ep.title.EndsWith(")"))
-                            {
+                        if (ep.episodes.Length > 1) {
+                            if (ep.title.EndsWith(")")) {
                                 ep.title = ep.title.Substring(0, ep.title.LastIndexOf("("));
                             }
                         }
                         ep.title = ep.title.Replace(".i.", "");
-                        if (ep.title.IndexOf("aka") > 0)
-                        {
+                        if (ep.title.IndexOf("aka") > 0) {
                             ep.title = Eregi.replace("\\(aka([^)]*)\\)", "", ep.title);
                         }
 
                         return true;
                     }
                 }
-            } 
-            
+            }
+
             return false;
             // Done
         }
 
-        private void extractXml(String lang)
-        {
+        private void extractXml(String lang) {
             ZipFile zipFile = ZipFile.Read(zipCache);
-            foreach (ZipEntry entry in zipFile)
-            {
-                if (entry.FileName == lang + ".xml")
-                {
+            foreach (ZipEntry entry in zipFile) {
+                if (entry.FileName == lang + ".xml") {
                     entry.Extract(File.OpenWrite(episodeCache));
                 }
             }

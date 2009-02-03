@@ -23,58 +23,51 @@ using MediaRenamer.Common;
 using System.IO;
 using System.Collections.Generic;
 
-namespace MediaRenamer.Series
-{
-	/// <summary>
-	/// Zusammenfassung für SelectShow.
-	/// </summary>
-	public class SelectShow : System.Windows.Forms.Form
-	{
-		public showClass selectedShow = null;
-		private System.Windows.Forms.Button btnOk;
-		private System.Windows.Forms.ListBox showList;
+namespace MediaRenamer.Series {
+    /// <summary>
+    /// Zusammenfassung für SelectShow.
+    /// </summary>
+    public class SelectShow : System.Windows.Forms.Form {
+        public showClass selectedShow = null;
+        private System.Windows.Forms.Button btnOk;
+        private System.Windows.Forms.ListBox showList;
         private System.Windows.Forms.Button btnSkip;
         private Label labelEpisode;
         private Label labelFile;
-		/// <summary>
-		/// Erforderliche Designervariable.
-		/// </summary>
-		private System.ComponentModel.Container components = null;
+        /// <summary>
+        /// Erforderliche Designervariable.
+        /// </summary>
+        private System.ComponentModel.Container components = null;
 
-		public SelectShow()
-		{
-			//
-			// Erforderlich für die Windows Form-Designerunterstützung
-			//
-			InitializeComponent();
+        public SelectShow() {
+            //
+            // Erforderlich für die Windows Form-Designerunterstützung
+            //
+            InitializeComponent();
 
-			//
-			// TODO: Fügen Sie den Konstruktorcode nach dem Aufruf von InitializeComponent hinzu
-			//
-		}
+            //
+            // TODO: Fügen Sie den Konstruktorcode nach dem Aufruf von InitializeComponent hinzu
+            //
+        }
 
-		/// <summary>
-		/// Die verwendeten Ressourcen bereinigen.
-		/// </summary>
-		protected override void Dispose( bool disposing )
-		{
-			if( disposing )
-			{
-				if(components != null)
-				{
-					components.Dispose();
-				}
-			}
-			base.Dispose( disposing );
-		}
+        /// <summary>
+        /// Die verwendeten Ressourcen bereinigen.
+        /// </summary>
+        protected override void Dispose(bool disposing) {
+            if (disposing) {
+                if (components != null) {
+                    components.Dispose();
+                }
+            }
+            base.Dispose(disposing);
+        }
 
-		#region Vom Windows Form-Designer generierter Code
-		/// <summary>
-		/// Erforderliche Methode für die Designerunterstützung. 
-		/// Der Inhalt der Methode darf nicht mit dem Code-Editor geändert werden.
-		/// </summary>
-		private void InitializeComponent()
-		{
+        #region Vom Windows Form-Designer generierter Code
+        /// <summary>
+        /// Erforderliche Methode für die Designerunterstützung. 
+        /// Der Inhalt der Methode darf nicht mit dem Code-Editor geändert werden.
+        /// </summary>
+        private void InitializeComponent() {
             this.btnOk = new System.Windows.Forms.Button();
             this.showList = new System.Windows.Forms.ListBox();
             this.btnSkip = new System.Windows.Forms.Button();
@@ -149,32 +142,26 @@ namespace MediaRenamer.Series
             this.ResumeLayout(false);
             this.PerformLayout();
 
-		}
-		#endregion
+        }
+        #endregion
 
-        public void setEpisodeData(Episode ep)
-        {
+        public void setEpisodeData(Episode ep) {
             labelEpisode.Text = "Season " + ep.season + " Episode " + ep.episode + ": " + ep.title;
             FileInfo fi = new FileInfo(ep.filename);
             labelFile.Text = fi.Directory.Parent.Name + @"\" + fi.Directory.Name + @"\" + fi.Name;
         }
 
-		public void addShows(List<showClass> shows)
-		{
+        public void addShows(List<showClass> shows) {
             shows.Sort();
-            foreach (showClass show in shows)
-            {
+            foreach (showClass show in shows) {
                 bool exists = false;
-                foreach (showClass existing in showList.Items)
-                {
-                    if (existing.Equals(show))
-                    {
+                foreach (showClass existing in showList.Items) {
+                    if (existing.Equals(show)) {
                         exists = true;
                         break;
                     }
                 }
-                if (!exists)
-                {
+                if (!exists) {
                     this.showList.Items.Add(show);
                 }
 
@@ -185,62 +172,51 @@ namespace MediaRenamer.Series
                 }
                 */
             }
-		}
+        }
 
-		private void showList_DrawItem(object sender, System.Windows.Forms.DrawItemEventArgs e)
-		{
-			if (e.Index < 0 || e.Index > showList.Items.Count)
-				return;
-			try
-			{
-				showClass sc = (showList.Items[e.Index] as showClass);
-				e.DrawBackground();
-				Brush b = Brushes.Black;
+        private void showList_DrawItem(object sender, System.Windows.Forms.DrawItemEventArgs e) {
+            if (e.Index < 0 || e.Index > showList.Items.Count)
+                return;
+            try {
+                showClass sc = (showList.Items[e.Index] as showClass);
+                e.DrawBackground();
+                Brush b = Brushes.Black;
                 String title = "";
-                if (sc.Lang == "")
-                {
+                if (sc.Lang == "") {
                     title = sc.Name + " (" + sc.Year.ToString() + ")";
                 }
-                else
-                {
+                else {
                     title = sc.Name + " (" + sc.Year.ToString() + "," + sc.Lang + ")";
                 }
                 e.Graphics.DrawString(title, e.Font, b, e.Bounds);
-				e.DrawFocusRectangle();
-			}
-			catch (Exception E)
-			{
-				Log.Add("DrawItem Error:\n"+E.Message);
-			}
-		}
+                e.DrawFocusRectangle();
+            }
+            catch (Exception E) {
+                Log.Add("DrawItem Error:\n" + E.Message);
+            }
+        }
 
-		private void SelectShow_Load(object sender, System.EventArgs e)
-		{
-			if (showList.Items.Count > 0)
-			{
-				selectedShow = showList.Items[0] as showClass;
-				showList.SelectedIndex = 0;
-			}
-		}
+        private void SelectShow_Load(object sender, System.EventArgs e) {
+            if (showList.Items.Count > 0) {
+                selectedShow = showList.Items[0] as showClass;
+                showList.SelectedIndex = 0;
+            }
+        }
 
-		private void showList_SelectedIndexChanged(object sender, System.EventArgs e)
-		{
-			selectedShow = showList.SelectedItem as showClass;
-		}
+        private void showList_SelectedIndexChanged(object sender, System.EventArgs e) {
+            selectedShow = showList.SelectedItem as showClass;
+        }
 
-		private void showList_DoubleClick(object sender, System.EventArgs e)
-		{
-			DialogResult = DialogResult.OK;
-		}
+        private void showList_DoubleClick(object sender, System.EventArgs e) {
+            DialogResult = DialogResult.OK;
+        }
 
-		private void btnSkip_Click(object sender, System.EventArgs e)
-		{
-			DialogResult = DialogResult.Cancel;
-		}
+        private void btnSkip_Click(object sender, System.EventArgs e) {
+            DialogResult = DialogResult.Cancel;
+        }
 
-		private void btnOk_Click(object sender, System.EventArgs e)
-		{
-			DialogResult = DialogResult.OK;
-		}
+        private void btnOk_Click(object sender, System.EventArgs e) {
+            DialogResult = DialogResult.OK;
+        }
     }
 }

@@ -22,29 +22,23 @@ using System.Xml.Serialization;
 using System.Windows.Forms;
 using MediaRenamer.Common;
 
-namespace MediaRenamer.Series
-{
-    class LocationData
-    {
+namespace MediaRenamer.Series {
+    class LocationData {
         public String Series;
         public Hashtable locMap;
 
-        public LocationData()
-        {
+        public LocationData() {
             locMap = new Hashtable();
         }
     }
 
-    class SeriesLocations
-    {
+    class SeriesLocations {
         private String locationFile;
         private Hashtable locations;
 
-        public SeriesLocations()
-        {
+        public SeriesLocations() {
             String baseFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\" + Application.ProductName + @"\";
-            if (!Directory.Exists(baseFolder))
-            {
+            if (!Directory.Exists(baseFolder)) {
                 Directory.CreateDirectory(baseFolder);
             }
             locationFile = baseFolder + "seriesLocations.json";
@@ -52,40 +46,32 @@ namespace MediaRenamer.Series
             this.loadLocations();
         }
 
-        private void loadLocations()
-        {
-            if (File.Exists(locationFile))
-            {
+        private void loadLocations() {
+            if (File.Exists(locationFile)) {
                 locations = (Hashtable)Settings.GetValueAsObject<Hashtable>(SettingKeys.SeriesLocations);
             }
-            if (locations == null)
-            {
+            if (locations == null) {
                 locations = new Hashtable();
             }
         }
 
-        public void saveLocations()
-        {
+        public void saveLocations() {
             Settings.SetValue(SettingKeys.SeriesLocations, locations);
         }
 
-        public void addSeriesLocation(Episode ep)
-        {
+        public void addSeriesLocation(Episode ep) {
             if (ep.special) return;
 
             FileInfo fi = new FileInfo(ep.filename);
             String fileLocation = fi.DirectoryName;
 
-            if (locations.ContainsKey(ep.series))
-            {
+            if (locations.ContainsKey(ep.series)) {
                 LocationData loc = (LocationData)this.locations[ep.series];
-                if (!loc.locMap.ContainsKey(ep.season.ToString()))
-                {
+                if (!loc.locMap.ContainsKey(ep.season.ToString())) {
                     loc.locMap[ep.season.ToString()] = fileLocation;
                 }
             }
-            else
-            {
+            else {
                 LocationData loc = new LocationData();
                 loc.Series = ep.series;
                 loc.locMap[ep.season] = fileLocation;
@@ -93,34 +79,25 @@ namespace MediaRenamer.Series
             }
         }
 
-        public String getEpisodePath(Episode ep)
-        {
-            if (this.locations.ContainsKey(ep.series))
-            {
+        public String getEpisodePath(Episode ep) {
+            if (this.locations.ContainsKey(ep.series)) {
                 LocationData loc = (LocationData)this.locations[ep.series];
-                if (loc.locMap.ContainsKey(ep.season.ToString()))
-                {
+                if (loc.locMap.ContainsKey(ep.season.ToString())) {
                     return loc.locMap[ep.season.ToString()].ToString();
                 }
-                else if (loc.locMap.Count > 1)
-                {
+                else if (loc.locMap.Count > 1) {
                     Char[] previous = null;
                     Char[] generic = null;
-                    foreach (String path in loc.locMap.Values)
-                    {
-                        if (previous == null)
-                        {
+                    foreach (String path in loc.locMap.Values) {
+                        if (previous == null) {
                             previous = path.ToCharArray();
                             generic = path.ToCharArray();
                         }
-                        for (int i = 0; i < path.Length; ++i)
-                        {
-                            if (path[i].Equals(previous[i]))
-                            {
+                        for (int i = 0; i < path.Length; ++i) {
+                            if (path[i].Equals(previous[i])) {
                                 generic[i] = path[i];
                             }
-                            else
-                            {
+                            else {
                                 generic[i] = '|';
                             }
                         }
@@ -128,8 +105,7 @@ namespace MediaRenamer.Series
                     String seasonPath = new String(generic);
                     seasonPath = seasonPath.Replace("||", "|");
                     seasonPath = seasonPath.Replace("|", ep.season.ToString());
-                    if (!Directory.Exists(seasonPath))
-                    {
+                    if (!Directory.Exists(seasonPath)) {
                         Directory.CreateDirectory(seasonPath);
                     }
                     return seasonPath;
@@ -139,12 +115,10 @@ namespace MediaRenamer.Series
             FolderBrowserDialog browse = new FolderBrowserDialog();
             browse.Description = "Please select folder for " + ep.series + " (Season " + ep.season + ").\n" +
                 "The episode will then be moved to that location. If you cancel this dialog the file will not be moved.";
-            if (browse.ShowDialog(mainForm.dialogOwner) == DialogResult.OK)
-            {
+            if (browse.ShowDialog(mainForm.dialogOwner) == DialogResult.OK) {
                 return browse.SelectedPath;
             }
-            else
-            {
+            else {
                 return "";
             }
 

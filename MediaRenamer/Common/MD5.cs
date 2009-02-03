@@ -18,12 +18,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Security.Cryptography;
 
-namespace MediaRenamer.Common
-{
-    class MD5
-    {
-        public static String createHash(String Value)
-        {
+namespace MediaRenamer.Common {
+    class MD5 {
+        public static String createHash(String Value) {
             MD5CryptoServiceProvider x = new MD5CryptoServiceProvider();
             byte[] data = Encoding.ASCII.GetBytes(Value);
             data = x.ComputeHash(data);
