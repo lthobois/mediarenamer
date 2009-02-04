@@ -579,46 +579,9 @@ namespace MediaRenamer {
             btnSeriesScan.Enabled = Directory.Exists(seriesScanPath.Text);
         }
 
-        private DateTime DateCompiled() {
-            // Assumes that in AssemblyInfo.cs,
-            // the version is specified as 1.0.* or the like,
-            // with only 2 numbers specified;
-            // the next two are generated from the date.
-            // This routine decodes them.
-            Version v = Assembly.GetExecutingAssembly().GetName().Version;
-
-            // v.Build is days since Jan. 1, 2000
-            // v.Revision*2 is seconds since local midnight
-            // (NEVER daylight saving time)
-
-            DateTime t = new DateTime(
-                v.Build * TimeSpan.TicksPerDay +
-                v.Revision * TimeSpan.TicksPerSecond * 2
-                ).AddYears(1999).AddDays(-1);
-
-            return t;
-        }
-
         private void btnAppAbout_Click(object sender, EventArgs e) {
-            Version v = Assembly.GetExecutingAssembly().GetName().Version;
-            DateTime dt = DateCompiled();
-
-            String str = "";
-            str += Application.ProductName + " " + v.ToString() + "\n";
-            str += "Compiled on " + dt.ToShortDateString() + "\n";
-            str += "Project webpage: http://code.google.com/p/mediarenamer/\n";
-            str += "Source Code licensed under Apache 2.0\n";
-            str += "\n";
-            str += "Data provided by:\n";
-            str += "* EpisodeWorld.com\n";
-            str += "* TheTVDB.com\n";
-            str += "* IMDB.com\n";
-            str += "\n";
-            str += "Third party components:\n";
-            str += "* JsonExSerializer for C# (http://code.google.com/p/jsonexserializer/)\n";
-            str += "* DotNetZip Library (http://www.codeplex.com/DotNetZip)\n";
-
-            MessageBox.Show(this, str, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            AboutBox about = new AboutBox();
+            about.ShowDialog();
         }
 
         private void optionSeriesParser_SelectedIndexChanged(object sender, EventArgs e) {
