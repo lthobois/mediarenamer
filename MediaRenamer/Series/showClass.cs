@@ -58,5 +58,21 @@ namespace MediaRenamer.Series {
         }
 
         #endregion
+
+        public override String ToString() {
+            String str = this.Name;
+            str += "(";
+            if (this.Year > 0) {
+                str += this.Year.ToString();
+                if (this.Lang != String.Empty) {
+                    str += ",";
+                }
+            }
+            if (this.Lang != String.Empty) {
+                str += this.Lang;
+            }
+            str += ")";
+            return str;
+        }
     }
 }

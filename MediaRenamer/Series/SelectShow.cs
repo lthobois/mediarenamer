@@ -92,7 +92,6 @@ namespace MediaRenamer.Series {
             this.showList.AccessibleName = null;
             resources.ApplyResources(this.showList, "showList");
             this.showList.BackgroundImage = null;
-            this.showList.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.showList.Font = null;
             this.showList.Name = "showList";
             this.showList.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.showList_DrawItem);

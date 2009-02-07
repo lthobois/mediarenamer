@@ -50,6 +50,7 @@
             this.btnSeriesScan = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.seriesScanPath = new System.Windows.Forms.ComboBox();
+            this.btnSeriesScanStop = new System.Windows.Forms.Button();
             this.tabMovies = new System.Windows.Forms.TabPage();
             this.movieRename = new System.Windows.Forms.Button();
             this.movieSelNone = new System.Windows.Forms.Button();
@@ -60,6 +61,7 @@
             this.headMoviefile = new System.Windows.Forms.ColumnHeader();
             this.headNewfile = new System.Windows.Forms.ColumnHeader();
             this.groupMovies = new System.Windows.Forms.GroupBox();
+            this.btnMovieScanStop = new System.Windows.Forms.Button();
             this.btnMoviesBrowse = new System.Windows.Forms.Button();
             this.scanMovieProgressbar = new System.Windows.Forms.ProgressBar();
             this.btnMovieScan = new System.Windows.Forms.Button();
@@ -67,6 +69,7 @@
             this.movieScanPath = new System.Windows.Forms.ComboBox();
             this.tabOptions = new System.Windows.Forms.TabPage();
             this.optionGroupOthers = new System.Windows.Forms.GroupBox();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.optionDropTarget = new System.Windows.Forms.CheckBox();
             this.optionSysTray = new System.Windows.Forms.CheckBox();
             this.optionStartMinimized = new System.Windows.Forms.CheckBox();
@@ -262,10 +265,12 @@
             this.groupSeries.Controls.Add(this.btnSeriesScan);
             this.groupSeries.Controls.Add(this.label1);
             this.groupSeries.Controls.Add(this.seriesScanPath);
+            this.groupSeries.Controls.Add(this.btnSeriesScanStop);
             this.groupSeries.Font = null;
             this.groupSeries.Name = "groupSeries";
             this.groupSeries.TabStop = false;
             this.toolTip.SetToolTip(this.groupSeries, resources.GetString("groupSeries.ToolTip"));
+            this.groupSeries.Enter += new System.EventHandler(this.groupSeries_Enter);
             // 
             // btnSeriesBrowse
             // 
@@ -298,6 +303,7 @@
             this.btnSeriesScan.BackgroundImage = null;
             this.btnSeriesScan.Font = null;
             this.btnSeriesScan.Name = "btnSeriesScan";
+            this.btnSeriesScan.Tag = "";
             this.toolTip.SetToolTip(this.btnSeriesScan, resources.GetString("btnSeriesScan.ToolTip"));
             this.btnSeriesScan.UseVisualStyleBackColor = true;
             this.btnSeriesScan.Click += new System.EventHandler(this.btnSeriesScan_Click);
@@ -326,6 +332,18 @@
             this.seriesScanPath.SelectedIndexChanged += new System.EventHandler(this.seriesScanPath_TextUpdate);
             this.seriesScanPath.Leave += new System.EventHandler(this.seriesScanPath_Leave);
             this.seriesScanPath.TextChanged += new System.EventHandler(this.seriesScanPath_TextChanged);
+            // 
+            // btnSeriesScanStop
+            // 
+            this.btnSeriesScanStop.AccessibleDescription = null;
+            this.btnSeriesScanStop.AccessibleName = null;
+            resources.ApplyResources(this.btnSeriesScanStop, "btnSeriesScanStop");
+            this.btnSeriesScanStop.BackgroundImage = null;
+            this.btnSeriesScanStop.Font = null;
+            this.btnSeriesScanStop.Name = "btnSeriesScanStop";
+            this.toolTip.SetToolTip(this.btnSeriesScanStop, resources.GetString("btnSeriesScanStop.ToolTip"));
+            this.btnSeriesScanStop.UseVisualStyleBackColor = true;
+            this.btnSeriesScanStop.Click += new System.EventHandler(this.btnSeriesScanStop_Click);
             // 
             // tabMovies
             // 
@@ -427,10 +445,23 @@
             this.groupMovies.Controls.Add(this.btnMovieScan);
             this.groupMovies.Controls.Add(this.moviePathLabel);
             this.groupMovies.Controls.Add(this.movieScanPath);
+            this.groupMovies.Controls.Add(this.btnMovieScanStop);
             this.groupMovies.Font = null;
             this.groupMovies.Name = "groupMovies";
             this.groupMovies.TabStop = false;
             this.toolTip.SetToolTip(this.groupMovies, resources.GetString("groupMovies.ToolTip"));
+            // 
+            // btnMovieScanStop
+            // 
+            this.btnMovieScanStop.AccessibleDescription = null;
+            this.btnMovieScanStop.AccessibleName = null;
+            resources.ApplyResources(this.btnMovieScanStop, "btnMovieScanStop");
+            this.btnMovieScanStop.BackgroundImage = null;
+            this.btnMovieScanStop.Font = null;
+            this.btnMovieScanStop.Name = "btnMovieScanStop";
+            this.toolTip.SetToolTip(this.btnMovieScanStop, resources.GetString("btnMovieScanStop.ToolTip"));
+            this.btnMovieScanStop.UseVisualStyleBackColor = true;
+            this.btnMovieScanStop.Click += new System.EventHandler(this.btnMovieScanStop_Click);
             // 
             // btnMoviesBrowse
             // 
@@ -513,6 +544,7 @@
             this.optionGroupOthers.AccessibleName = null;
             resources.ApplyResources(this.optionGroupOthers, "optionGroupOthers");
             this.optionGroupOthers.BackgroundImage = null;
+            this.optionGroupOthers.Controls.Add(this.comboBox1);
             this.optionGroupOthers.Controls.Add(this.optionDropTarget);
             this.optionGroupOthers.Controls.Add(this.optionSysTray);
             this.optionGroupOthers.Controls.Add(this.optionStartMinimized);
@@ -520,6 +552,18 @@
             this.optionGroupOthers.Name = "optionGroupOthers";
             this.optionGroupOthers.TabStop = false;
             this.toolTip.SetToolTip(this.optionGroupOthers, resources.GetString("optionGroupOthers.ToolTip"));
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.AccessibleDescription = null;
+            this.comboBox1.AccessibleName = null;
+            resources.ApplyResources(this.comboBox1, "comboBox1");
+            this.comboBox1.BackgroundImage = null;
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.Font = null;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Name = "comboBox1";
+            this.toolTip.SetToolTip(this.comboBox1, resources.GetString("comboBox1.ToolTip"));
             // 
             // optionDropTarget
             // 
@@ -1012,6 +1056,9 @@
         private System.Windows.Forms.TextBox option_movieTargetLocation;
         private System.Windows.Forms.Button btnAppAbout;
         private System.Windows.Forms.ComboBox optionSeriesParser;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Button btnSeriesScanStop;
+        private System.Windows.Forms.Button btnMovieScanStop;
     }
 }
 
