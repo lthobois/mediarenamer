@@ -287,6 +287,9 @@
   <data name="optionDropTarget.Text" xml:space="preserve">
     <value>Zeige dropTarget auf dem Desktop</value>
   </data>
+  <data name="optionSysTray.Location" type="System.Drawing.Point, System.Drawing">
+    <value>30, 65</value>
+  </data>
   <data name="optionSysTray.Size" type="System.Drawing.Size, System.Drawing">
     <value>223, 17</value>
   </data>
@@ -298,6 +301,9 @@
   </data>
   <data name="optionStartMinimized.Text" xml:space="preserve">
     <value>Applikation minimiert starten</value>
+  </data>
+  <data name="optionGroupOthers.Size" type="System.Drawing.Size, System.Drawing">
+    <value>696, 101</value>
   </data>
   <data name="optionGroupOthers.Text" xml:space="preserve">
     <value>Allgemeine Optionen</value>

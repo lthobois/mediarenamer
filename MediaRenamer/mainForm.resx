@@ -124,9 +124,6 @@
   <data name="labelTVOutput.Size" type="System.Drawing.Size, System.Drawing">
     <value>130, 23</value>
   </data>
-  <data name="&gt;&gt;tabSeries.Parent" xml:space="preserve">
-    <value>tabControl</value>
-  </data>
   <data name="&gt;&gt;groupMovies.Type" xml:space="preserve">
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -136,21 +133,25 @@
   <data name="&gt;&gt;tvSelNone.Parent" xml:space="preserve">
     <value>tabSeries</value>
   </data>
-  <data name="&gt;&gt;toolStripSeparator1.Name" xml:space="preserve">
-    <value>toolStripSeparator1</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="scanSeriesProgressbar.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="headNewname.Width" type="System.Int32, mscorlib">
     <value>180</value>
   </data>
-  <data name="tvSelNone.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
+  <data name="&gt;&gt;option_movieFormat.Parent" xml:space="preserve">
+    <value>optionGroupMovies</value>
   </data>
   <data name="btnSeriesScanStop.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
   <data name="scanSeriesProgressbar.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
+  </data>
+  <data name="&gt;&gt;scanMovieProgressbar.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <data name="scanMovieList.Size" type="System.Drawing.Size, System.Drawing">
     <value>691, 266</value>
@@ -164,20 +165,14 @@
   <data name="addWatchPath.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
-  <data name="&gt;&gt;option_movieFormat.Parent" xml:space="preserve">
-    <value>optionGroupMovies</value>
+  <data name="headMoviefile.Text" xml:space="preserve">
+    <value>Filename</value>
   </data>
   <data name="sysTrayMenu.Size" type="System.Drawing.Size, System.Drawing">
     <value>176, 76</value>
   </data>
-  <data name="watchedFolders.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="headMovie.Width" type="System.Int32, mscorlib">
     <value>120</value>
-  </data>
-  <data name="&gt;&gt;tvRenameEpisodes.Name" xml:space="preserve">
-    <value>tvRenameEpisodes</value>
   </data>
   <data name="btnSeriesBrowse.Location" type="System.Drawing.Point, System.Drawing">
     <value>577, 30</value>
@@ -185,14 +180,14 @@
   <data name="&gt;&gt;labelMovieOutpu.Name" xml:space="preserve">
     <value>labelMovieOutpu</value>
   </data>
+  <data name="&gt;&gt;optionGroupOthers.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;seriesScanPath.Name" xml:space="preserve">
     <value>seriesScanPath</value>
   </data>
   <data name="&gt;&gt;scanSeriesList.Parent" xml:space="preserve">
     <value>tabSeries</value>
-  </data>
-  <data name="labelMovieOutpu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>130, 23</value>
   </data>
   <data name="tabSeries.Size" type="System.Drawing.Size, System.Drawing">
     <value>706, 403</value>
@@ -212,7 +207,6 @@
   <data name="&gt;&gt;movieSelNone.Parent" xml:space="preserve">
     <value>tabMovies</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="groupSeries.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
@@ -222,14 +216,17 @@
   <data name="scanSeriesList.Size" type="System.Drawing.Size, System.Drawing">
     <value>691, 271</value>
   </data>
+  <data name="&gt;&gt;label_watchPath.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
   <data name="movieSelAll.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="scanMovieList.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
+  <data name="optionStartMinimized.Text" xml:space="preserve">
+    <value>Start application minimized</value>
   </data>
   <data name="&gt;&gt;label_watchPath.Name" xml:space="preserve">
     <value>label_watchPath</value>
@@ -242,6 +239,9 @@
   </data>
   <data name="optionDropTarget.Size" type="System.Drawing.Size, System.Drawing">
     <value>173, 17</value>
+  </data>
+  <data name="optionStartMinimized.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="tvRenameEpisodes.Location" type="System.Drawing.Point, System.Drawing">
     <value>554, 372</value>
@@ -279,8 +279,8 @@
   <data name="&gt;&gt;btnMovieScan.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="tvSelNone.Location" type="System.Drawing.Point, System.Drawing">
-    <value>88, 372</value>
+  <data name="&gt;&gt;optionGroupSeries.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;scanSeriesProgressbar.Parent" xml:space="preserve">
     <value>groupSeries</value>
@@ -288,8 +288,8 @@
   <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
     <value>172, 6</value>
   </data>
-  <data name="contextRename.Size" type="System.Drawing.Size, System.Drawing">
-    <value>172, 26</value>
+  <data name="scanSeriesProgressbar.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="tabSeries.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>
@@ -300,17 +300,14 @@
   <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="scanSeriesList.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="groupMovies.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="&gt;&gt;optionGroupMovies.Name" xml:space="preserve">
     <value>optionGroupMovies</value>
   </data>
   <data name="&gt;&gt;headSeries.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="optionGroupOthers.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Top</value>
   </data>
   <data name="btnSeriesScanStop.Location" type="System.Drawing.Point, System.Drawing">
     <value>610, 30</value>
@@ -321,8 +318,14 @@
   <data name="&gt;&gt;btnAppAbout.Name" xml:space="preserve">
     <value>btnAppAbout</value>
   </data>
+  <data name="&gt;&gt;scanMovieList.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
   <data name="btnMoviesBrowse.Size" type="System.Drawing.Size, System.Drawing">
     <value>27, 23</value>
+  </data>
+  <data name="&gt;&gt;watchedFolders.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ListBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="optionGroupSeries.Size" type="System.Drawing.Size, System.Drawing">
     <value>696, 83</value>
@@ -330,14 +333,8 @@
   <data name="groupBox1.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="&gt;&gt;groupMovies.Name" xml:space="preserve">
-    <value>groupMovies</value>
-  </data>
-  <data name="&gt;&gt;tabOptions.Name" xml:space="preserve">
-    <value>tabOptions</value>
-  </data>
-  <data name="&gt;&gt;headMoviefile.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="seriesScanPath.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="&gt;&gt;headEpisode.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -357,14 +354,14 @@
   <data name="&gt;&gt;option_movieTargetLocation.Name" xml:space="preserve">
     <value>option_movieTargetLocation</value>
   </data>
+  <data name="addWatchFolder.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
   <data name="tabControl.Size" type="System.Drawing.Size, System.Drawing">
     <value>714, 429</value>
   </data>
   <data name="headNewfile.Text" xml:space="preserve">
     <value>New Filename</value>
-  </data>
-  <data name="tvRenameEpisodes.Text" xml:space="preserve">
-    <value>rename selected episodes</value>
   </data>
   <data name="labelTVSource.TabIndex" type="System.Int32, mscorlib">
     <value>14</value>
@@ -384,26 +381,11 @@
   <data name="scanSeriesList.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="option_movieFormat.TabIndex" type="System.Int32, mscorlib">
-    <value>17</value>
-  </data>
-  <data name="option_seriesFormat.AutoCompleteCustomSource" xml:space="preserve">
-    <value>&lt;series&gt; - &lt;season&gt;x&lt;episode2&gt;&lt;title: - &gt;&lt;title&gt;</value>
-  </data>
-  <data name="option_seriesFormat.AutoCompleteCustomSource4" xml:space="preserve">
-    <value>&lt;season&gt;x&lt;episode2&gt;&lt;title: - &gt;&lt;title&gt;</value>
-  </data>
   <data name="btnMovieScanStop.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
   </data>
   <data name="&gt;&gt;sysTrayOpen.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="label1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="optionStartMinimized.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
   </data>
   <data name="&gt;&gt;headSeries.Name" xml:space="preserve">
     <value>headSeries</value>
@@ -411,8 +393,8 @@
   <data name="tvSelAll.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="&gt;&gt;movieSelAll.Name" xml:space="preserve">
-    <value>movieSelAll</value>
+  <data name="optionGroupMovies.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Top</value>
   </data>
   <data name="&gt;&gt;optionGroupOthers.Name" xml:space="preserve">
     <value>optionGroupOthers</value>
@@ -435,9 +417,6 @@
   <data name="scanSeriesProgressbar.Location" type="System.Drawing.Point, System.Drawing">
     <value>10, 59</value>
   </data>
-  <data name="&gt;&gt;btnMoviesBrowse.Name" xml:space="preserve">
-    <value>btnMoviesBrowse</value>
-  </data>
   <data name="headSeries.Width" type="System.Int32, mscorlib">
     <value>150</value>
   </data>
@@ -450,6 +429,9 @@
   <data name="scanMovieList.Location" type="System.Drawing.Point, System.Drawing">
     <value>7, 96</value>
   </data>
+  <data name="movieSelAll.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 372</value>
+  </data>
   <data name="&gt;&gt;addWatchType.Name" xml:space="preserve">
     <value>addWatchType</value>
   </data>
@@ -461,6 +443,9 @@
   </data>
   <data name="&gt;&gt;optionStartMinimized.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="contextRename.Size" type="System.Drawing.Size, System.Drawing">
+    <value>172, 26</value>
   </data>
   <data name="&gt;&gt;option_movieFormat.Name" xml:space="preserve">
     <value>option_movieFormat</value>
@@ -492,12 +477,6 @@
   <data name="&gt;&gt;tvRenameEpisodes.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="btnMovieScan.Location" type="System.Drawing.Point, System.Drawing">
-    <value>610, 30</value>
-  </data>
-  <data name="&gt;&gt;notifyIcon.Name" xml:space="preserve">
-    <value>notifyIcon</value>
-  </data>
   <data name="&gt;&gt;headNewname.Name" xml:space="preserve">
     <value>headNewname</value>
   </data>
@@ -513,20 +492,14 @@
   <data name="&gt;&gt;tabSeries.Name" xml:space="preserve">
     <value>tabSeries</value>
   </data>
-  <data name="groupSeries.Text" xml:space="preserve">
-    <value>TV Series scan mode</value>
+  <data name="tvSelNone.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
   </data>
   <data name="tabOptions.Size" type="System.Drawing.Size, System.Drawing">
     <value>706, 403</value>
   </data>
-  <data name="label_watchType.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
   <data name="sysTrayExit.Size" type="System.Drawing.Size, System.Drawing">
     <value>175, 22</value>
-  </data>
-  <data name="$this.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="&gt;&gt;btnSeriesScanStop.ZOrder" xml:space="preserve">
     <value>5</value>
@@ -537,26 +510,20 @@
   <data name="label1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="movieSelNone.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
-  </data>
   <data name="groupMovies.Size" type="System.Drawing.Size, System.Drawing">
     <value>691, 82</value>
   </data>
-  <data name="&gt;&gt;headMovie.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="headFilename.Width" type="System.Int32, mscorlib">
+    <value>180</value>
   </data>
   <data name="&gt;&gt;sysTrayExit.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="groupMovies.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 7</value>
-  </data>
   <data name="&gt;&gt;moviePathLabel.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="&gt;&gt;btnMoviesBrowse.Parent" xml:space="preserve">
-    <value>groupMovies</value>
+  <data name="optionDropTarget.Text" xml:space="preserve">
+    <value>Display dropTarget on Desktop</value>
   </data>
   <data name="&gt;&gt;headFilename.Name" xml:space="preserve">
     <value>headFilename</value>
@@ -578,9 +545,6 @@
   </data>
   <data name="btnAppAbout.Text" xml:space="preserve">
     <value>About</value>
-  </data>
-  <data name="groupSeries.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 7</value>
   </data>
   <data name="&gt;&gt;labelTVOutput.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -609,6 +573,9 @@
   <data name="optionSysTray.Location" type="System.Drawing.Point, System.Drawing">
     <value>30, 93</value>
   </data>
+  <data name="scanMovieList.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
   <data name="&gt;&gt;headEpisode.Name" xml:space="preserve">
     <value>headEpisode</value>
   </data>
@@ -627,11 +594,8 @@
   <data name="tabOptions.AutoScroll" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="btnMoviesBrowse.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="&gt;&gt;optionStartMinimized.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>2</value>
   </data>
   <data name="tvRenameEpisodes.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -642,11 +606,11 @@
   <data name="option_moveMovies.Location" type="System.Drawing.Point, System.Drawing">
     <value>142, 46</value>
   </data>
+  <data name="scanSeriesProgressbar.Size" type="System.Drawing.Size, System.Drawing">
+    <value>675, 11</value>
+  </data>
   <data name="label_watchType.ToolTip" xml:space="preserve">
     <value />
-  </data>
-  <data name="optionStartMinimized.Text" xml:space="preserve">
-    <value>Start application minimized</value>
   </data>
   <data name="&gt;&gt;optionSysTray.Name" xml:space="preserve">
     <value>optionSysTray</value>
@@ -657,11 +621,11 @@
   <data name="&gt;&gt;optionDropTarget.Name" xml:space="preserve">
     <value>optionDropTarget</value>
   </data>
-  <data name="scanSeriesProgressbar.ToolTip" xml:space="preserve">
-    <value />
+  <data name="option_seriesFormat.AutoCompleteCustomSource" xml:space="preserve">
+    <value>&lt;series&gt; - &lt;season&gt;x&lt;episode2&gt;&lt;title: - &gt;&lt;title&gt;</value>
   </data>
   <data name="&gt;&gt;optionSysTray.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>1</value>
   </data>
   <data name="&gt;&gt;scanSeriesProgressbar.Type" xml:space="preserve">
     <value>System.Windows.Forms.ProgressBar, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -681,11 +645,14 @@
   <data name="&gt;&gt;contextRename.Name" xml:space="preserve">
     <value>contextRename</value>
   </data>
-  <data name="&gt;&gt;optionGroupSeries.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="optionStartMinimized.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
   <data name="labelTVSource.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 39</value>
+  </data>
+  <data name="movieSelNone.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
   </data>
   <data name="&gt;&gt;btnSeriesScanStop.Parent" xml:space="preserve">
     <value>groupSeries</value>
@@ -696,11 +663,14 @@
   <data name="&gt;&gt;option_seriesFormat.Parent" xml:space="preserve">
     <value>optionGroupSeries</value>
   </data>
+  <data name="watchedFolders.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
   <data name="&gt;&gt;tabControl.Name" xml:space="preserve">
     <value>tabControl</value>
   </data>
-  <data name="headSeason.Width" type="System.Int32, mscorlib">
-    <value>50</value>
+  <data name="&gt;&gt;btnMoviesBrowse.Parent" xml:space="preserve">
+    <value>groupMovies</value>
   </data>
   <data name="addWatchFolder.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
@@ -711,14 +681,14 @@
   <data name="&gt;&gt;movieRename.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="optionGroupSeries.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Top</value>
+  <data name="headTitle.Width" type="System.Int32, mscorlib">
+    <value>220</value>
   </data>
   <data name="scanMovieList.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="sysTrayMenu.ToolTip" xml:space="preserve">
-    <value />
+  <data name="movieSelNone.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
   </data>
   <data name="&gt;&gt;labelTVSource.ZOrder" xml:space="preserve">
     <value>1</value>
@@ -765,26 +735,20 @@
   <data name="&gt;&gt;btnMovePath.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="optionGroupSeries.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+  <data name="headSeason.Width" type="System.Int32, mscorlib">
+    <value>50</value>
+  </data>
+  <data name="&gt;&gt;labelTVOutput.Parent" xml:space="preserve">
+    <value>optionGroupSeries</value>
   </data>
   <data name="&gt;&gt;movieSelAll.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="labelMovieOutpu.Text" xml:space="preserve">
-    <value>Output Format:</value>
+  <data name="optionGroupSeries.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Top</value>
   </data>
-  <data name="optionDropTarget.Text" xml:space="preserve">
-    <value>Display dropTarget on Desktop</value>
-  </data>
-  <data name="&gt;&gt;btnSeriesScanStop.Name" xml:space="preserve">
-    <value>btnSeriesScanStop</value>
-  </data>
-  <data name="&gt;&gt;optionGroupSeries.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>MediaRenamer</value>
+  <data name="scanSeriesList.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
   </data>
   <data name="&gt;&gt;scanMovieProgressbar.Name" xml:space="preserve">
     <value>scanMovieProgressbar</value>
@@ -794,12 +758,6 @@
   </data>
   <data name="&gt;&gt;tabOptions.Parent" xml:space="preserve">
     <value>tabControl</value>
-  </data>
-  <data name="headTitle.Width" type="System.Int32, mscorlib">
-    <value>220</value>
-  </data>
-  <data name="seriesScanPath.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="&gt;&gt;contextRename.Type" xml:space="preserve">
     <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -827,6 +785,9 @@
   </data>
   <data name="movieRename.Size" type="System.Drawing.Size, System.Drawing">
     <value>144, 23</value>
+  </data>
+  <data name="&gt;&gt;btnSeriesScan.Name" xml:space="preserve">
+    <value>btnSeriesScan</value>
   </data>
   <data name="&gt;&gt;tabWatch.Name" xml:space="preserve">
     <value>tabWatch</value>
@@ -864,9 +825,6 @@
   <data name="sysTrayOpen.Size" type="System.Drawing.Size, System.Drawing">
     <value>175, 22</value>
   </data>
-  <data name="btnSeriesBrowse.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
   <data name="&gt;&gt;option_seriesFormat.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -891,6 +849,9 @@
   <data name="optionGroupSeries.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="tabMovies.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="&gt;&gt;movieRename.Name" xml:space="preserve">
     <value>movieRename</value>
   </data>
@@ -906,8 +867,8 @@
   <data name="btnSeriesScanStop.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
   </data>
-  <data name="btnSeriesScan.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
+  <data name="&gt;&gt;optionSysTray.Parent" xml:space="preserve">
+    <value>optionGroupOthers</value>
   </data>
   <data name="tabOptions.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -933,6 +894,9 @@
   <data name="btnMovieScan.Text" xml:space="preserve">
     <value>Start scan</value>
   </data>
+  <data name="btnMovieScan.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
   <data name="&gt;&gt;folderBrowserDialog.Type" xml:space="preserve">
     <value>System.Windows.Forms.FolderBrowserDialog, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -957,9 +921,6 @@
   <data name="&gt;&gt;headYear.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="option_seriesFormat.Location" type="System.Drawing.Point, System.Drawing">
-    <value>142, 16</value>
-  </data>
   <data name="&gt;&gt;moviePathLabel.Parent" xml:space="preserve">
     <value>groupMovies</value>
   </data>
@@ -980,9 +941,6 @@
   </data>
   <data name="scanMovieProgressbar.Location" type="System.Drawing.Point, System.Drawing">
     <value>10, 59</value>
-  </data>
-  <data name="&gt;&gt;label1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;labelMovieOutpu.Parent" xml:space="preserve">
     <value>optionGroupMovies</value>
@@ -1011,17 +969,14 @@
   <data name="&gt;&gt;toolStripSeparator1.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="btnMoviesBrowse.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
   <data name="tabControl.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
-  <data name="headFilename.Width" type="System.Int32, mscorlib">
-    <value>180</value>
-  </data>
   <data name="optionDropTarget.TabIndex" type="System.Int32, mscorlib">
     <value>17</value>
-  </data>
-  <data name="&gt;&gt;btnMovieScanStop.Name" xml:space="preserve">
-    <value>btnMovieScanStop</value>
   </data>
   <data name="&gt;&gt;tvSelNone.ZOrder" xml:space="preserve">
     <value>1</value>
@@ -1041,9 +996,6 @@
   <data name="optionGroupMovies.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="btnSeriesBrowse.Size" type="System.Drawing.Size, System.Drawing">
-    <value>27, 23</value>
-  </data>
   <data name="tvRenameEpisodes.ToolTip" xml:space="preserve">
     <value />
   </data>
@@ -1058,6 +1010,9 @@
   </data>
   <data name="optionDropTarget.Location" type="System.Drawing.Point, System.Drawing">
     <value>30, 42</value>
+  </data>
+  <data name="option_movieFormat.AutoCompleteCustomSource" xml:space="preserve">
+    <value>&lt;moviename&gt; (&lt;year&gt;&lt;disk:,CD&gt;&lt;disk&gt;&lt;lang:,&gt;&lt;lang&gt;)</value>
   </data>
   <data name="&gt;&gt;groupBox1.Name" xml:space="preserve">
     <value>groupBox1</value>
@@ -1074,17 +1029,20 @@
   <data name="contextProposals.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="headMoviefile.Text" xml:space="preserve">
-    <value>Filename</value>
-  </data>
-  <data name="&gt;&gt;optionGroupMovies.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;tabOptions.Name" xml:space="preserve">
+    <value>tabOptions</value>
   </data>
   <data name="tabMovies.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
   <data name="&gt;&gt;labelMovieOutpu.ZOrder" xml:space="preserve">
     <value>4</value>
+  </data>
+  <data name="groupSeries.Text" xml:space="preserve">
+    <value>TV Series scan mode</value>
+  </data>
+  <data name="headNewfile.Width" type="System.Int32, mscorlib">
+    <value>180</value>
   </data>
   <data name="&gt;&gt;headTitle.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -1107,14 +1065,17 @@
   <data name="watchedFolders.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
+  <data name="&gt;&gt;tabSeries.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;addWatchPath.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;tvSelAll.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
   <data name="btnMovieScanStop.ToolTip" xml:space="preserve">
     <value />
-  </data>
-  <data name="moviePathLabel.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
   </data>
   <data name="tabOptions.Text" xml:space="preserve">
     <value>Options</value>
@@ -1128,14 +1089,20 @@
   <data name="&gt;&gt;comboBox1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;labelTVOutput.Parent" xml:space="preserve">
-    <value>optionGroupSeries</value>
-  </data>
   <data name="&gt;&gt;option_movieTargetLocation.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;optionSeriesParser.Parent" xml:space="preserve">
     <value>optionGroupSeries</value>
+  </data>
+  <data name="headFilename.Text" xml:space="preserve">
+    <value>Filename</value>
+  </data>
+  <data name="sysTrayOpen.Text" xml:space="preserve">
+    <value>Show Application</value>
+  </data>
+  <data name="movieSelAll.Text" xml:space="preserve">
+    <value>select all</value>
   </data>
   <data name="option_seriesFormat.Text" xml:space="preserve">
     <value>&lt;series&gt; - &lt;season&gt;x&lt;episode2&gt;&lt;title: - &gt;&lt;title&gt;</value>
@@ -1158,17 +1125,17 @@
   <data name="groupSeries.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="tabControl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
+  <data name="btnAppAbout.Size" type="System.Drawing.Size, System.Drawing">
+    <value>47, 20</value>
   </data>
   <data name="tabWatch.ToolTip" xml:space="preserve">
     <value />
   </data>
+  <data name="tvSelNone.Location" type="System.Drawing.Point, System.Drawing">
+    <value>88, 372</value>
+  </data>
   <data name="&gt;&gt;optionGroupSeries.Name" xml:space="preserve">
     <value>optionGroupSeries</value>
-  </data>
-  <data name="option_movieTargetLocation.TabIndex" type="System.Int32, mscorlib">
-    <value>19</value>
   </data>
   <data name="&gt;&gt;optionGroupMovies.Parent" xml:space="preserve">
     <value>tabOptions</value>
@@ -1181,9 +1148,6 @@
   </data>
   <data name="&gt;&gt;tvSelAll.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="optionGroupOthers.Size" type="System.Drawing.Size, System.Drawing">
-    <value>696, 129</value>
   </data>
   <data name="&gt;&gt;scanSeriesList.ZOrder" xml:space="preserve">
     <value>3</value>
@@ -1200,8 +1164,8 @@
   <data name="&gt;&gt;optionSeriesParser.Name" xml:space="preserve">
     <value>optionSeriesParser</value>
   </data>
-  <data name="optionGroupMovies.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Top</value>
+  <data name="&gt;&gt;headMovie.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="movieScanPath.ToolTip" xml:space="preserve">
     <value />
@@ -1218,8 +1182,14 @@
   <data name="&gt;&gt;option_moveMovies.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
+  <data name="&gt;&gt;tabOptions.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;stopWatcherToolStripMenuItem.Name" xml:space="preserve">
     <value>stopWatcherToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;btnSeriesBrowse.Name" xml:space="preserve">
+    <value>btnSeriesBrowse</value>
   </data>
   <data name="tvSelAll.Location" type="System.Drawing.Point, System.Drawing">
     <value>7, 372</value>
@@ -1229,9 +1199,6 @@
   </data>
   <data name="&gt;&gt;tvSelNone.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;headNewfile.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="labelMovieOutpu.TabIndex" type="System.Int32, mscorlib">
     <value>15</value>
@@ -1269,8 +1236,17 @@
   <data name="movieSelNone.ToolTip" xml:space="preserve">
     <value />
   </data>
+  <data name="&gt;&gt;headSeason.Name" xml:space="preserve">
+    <value>headSeason</value>
+  </data>
+  <data name="btnSeriesScan.Location" type="System.Drawing.Point, System.Drawing">
+    <value>610, 30</value>
+  </data>
   <data name="optionStartMinimized.Location" type="System.Drawing.Point, System.Drawing">
     <value>30, 19</value>
+  </data>
+  <data name="tabSeries.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
   <data name="moviePathLabel.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -1278,8 +1254,8 @@
   <data name="&gt;&gt;seriesScanPath.Type" xml:space="preserve">
     <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;btnAppAbout.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;deleteSelectedWatcherToolStripMenuItem.Name" xml:space="preserve">
+    <value>deleteSelectedWatcherToolStripMenuItem</value>
   </data>
   <data name="option_moveMovies.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1287,8 +1263,8 @@
   <data name="tvRenameEpisodes.Size" type="System.Drawing.Size, System.Drawing">
     <value>144, 23</value>
   </data>
-  <data name="btnAppAbout.Size" type="System.Drawing.Size, System.Drawing">
-    <value>47, 20</value>
+  <data name="&gt;&gt;tvRenameEpisodes.Name" xml:space="preserve">
+    <value>tvRenameEpisodes</value>
   </data>
   <data name="&gt;&gt;option_movieFormat.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -1296,11 +1272,11 @@
   <data name="&gt;&gt;optionSeriesParser.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="groupMovies.Text" xml:space="preserve">
+    <value>Movie scan mode</value>
+  </data>
   <data name="comboBox1.Size" type="System.Drawing.Size, System.Drawing">
     <value>283, 21</value>
-  </data>
-  <data name="&gt;&gt;tabControl.ZOrder" xml:space="preserve">
-    <value>4</value>
   </data>
   <data name="&gt;&gt;sysTrayMenu.Name" xml:space="preserve">
     <value>sysTrayMenu</value>
@@ -1308,11 +1284,8 @@
   <data name="labelTVOutput.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 16</value>
   </data>
-  <data name="&gt;&gt;tabMovies.Parent" xml:space="preserve">
-    <value>tabControl</value>
-  </data>
-  <data name="&gt;&gt;btnSeriesScan.Name" xml:space="preserve">
-    <value>btnSeriesScan</value>
+  <data name="option_seriesFormat.AutoCompleteCustomSource4" xml:space="preserve">
+    <value>&lt;season&gt;x&lt;episode2&gt;&lt;title: - &gt;&lt;title&gt;</value>
   </data>
   <data name="&gt;&gt;option_seriesFormat.ZOrder" xml:space="preserve">
     <value>2</value>
@@ -1329,8 +1302,8 @@
   <data name="watchedFolders.Size" type="System.Drawing.Size, System.Drawing">
     <value>120, 95</value>
   </data>
-  <data name="displayDropTargetToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>175, 22</value>
+  <data name="btnSeriesBrowse.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
   </data>
   <data name="btnMovieScan.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -1338,8 +1311,8 @@
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>6, 13</value>
   </data>
-  <data name="groupMovies.Text" xml:space="preserve">
-    <value>Movie scan mode</value>
+  <data name="groupSeries.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 7</value>
   </data>
   <data name="&gt;&gt;headTitle.Name" xml:space="preserve">
     <value>headTitle</value>
@@ -1356,8 +1329,8 @@
   <data name="comboBox1.Location" type="System.Drawing.Point, System.Drawing">
     <value>50, 66</value>
   </data>
-  <data name="&gt;&gt;scanMovieProgressbar.ZOrder" xml:space="preserve">
-    <value>1</value>
+  <data name="&gt;&gt;notifyIcon.Name" xml:space="preserve">
+    <value>notifyIcon</value>
   </data>
   <data name="option_moveMovies.Text" xml:space="preserve">
     <value>Move Movies to the folder:</value>
@@ -1368,8 +1341,8 @@
   <data name="optionGroupOthers.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="&gt;&gt;scanMovieList.ZOrder" xml:space="preserve">
-    <value>3</value>
+  <data name="&gt;&gt;tabControl.ZOrder" xml:space="preserve">
+    <value>4</value>
   </data>
   <data name="&gt;&gt;label1.Name" xml:space="preserve">
     <value>label1</value>
@@ -1383,8 +1356,11 @@
   <data name="&gt;&gt;contextOptionRename.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;deleteSelectedWatcherToolStripMenuItem.Name" xml:space="preserve">
-    <value>deleteSelectedWatcherToolStripMenuItem</value>
+  <data name="displayDropTargetToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>175, 22</value>
+  </data>
+  <data name="groupMovies.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 7</value>
   </data>
   <data name="label1.Text" xml:space="preserve">
     <value>Scan movies in folder:</value>
@@ -1398,8 +1374,8 @@
   <data name="&gt;&gt;addWatchFolder.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="watchedFolders.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
+  <data name="&gt;&gt;headMoviefile.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="tabControl.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 8.25pt</value>
@@ -1425,14 +1401,14 @@
   <data name="btnMoviesBrowse.Location" type="System.Drawing.Point, System.Drawing">
     <value>577, 30</value>
   </data>
-  <data name="&gt;&gt;headFilename.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="moviePathLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="optionSysTray.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
   <data name="&gt;&gt;optionDropTarget.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>0</value>
   </data>
   <data name="tabMovies.Text" xml:space="preserve">
     <value>Movies</value>
@@ -1446,8 +1422,8 @@
   <data name="optionGroupSeries.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="movieSelAll.Text" xml:space="preserve">
-    <value>select all</value>
+  <data name="watchedFolders.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="&gt;&gt;contextProposals.Name" xml:space="preserve">
     <value>contextProposals</value>
@@ -1458,14 +1434,17 @@
   <data name="headMoviefile.Width" type="System.Int32, mscorlib">
     <value>180</value>
   </data>
-  <data name="label_watchType.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 23</value>
+  <data name="&gt;&gt;headFilename.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;headNewfile.Name" xml:space="preserve">
     <value>headNewfile</value>
   </data>
   <data name="tabWatch.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
+  </data>
+  <data name="label_watchType.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 23</value>
   </data>
   <data name="&gt;&gt;movieSelAll.Parent" xml:space="preserve">
     <value>tabMovies</value>
@@ -1527,8 +1506,8 @@
   <data name="labelTVOutput.Text" xml:space="preserve">
     <value>Output Format:</value>
   </data>
-  <data name="&gt;&gt;btnSeriesBrowse.Name" xml:space="preserve">
-    <value>btnSeriesBrowse</value>
+  <data name="&gt;&gt;btnMoviesBrowse.Name" xml:space="preserve">
+    <value>btnMoviesBrowse</value>
   </data>
   <data name="&gt;&gt;optionStartMinimized.Parent" xml:space="preserve">
     <value>optionGroupOthers</value>
@@ -1542,8 +1521,8 @@
   <data name="&gt;&gt;displayDropTargetToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="movieSelNone.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left</value>
+  <data name="label_watchType.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
   <data name="btnSeriesScan.Text" xml:space="preserve">
     <value>Start scan</value>
@@ -1554,14 +1533,17 @@
   <data name="&gt;&gt;label_watchType.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="addWatchFolder.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
+  <data name="&gt;&gt;movieSelAll.Name" xml:space="preserve">
+    <value>movieSelAll</value>
+  </data>
+  <data name="movieRename.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
   </data>
   <data name="contextRename.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="&gt;&gt;watchedFolders.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ListBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="$this.Text" xml:space="preserve">
+    <value>MediaRenamer</value>
   </data>
   <data name="labelTVOutput.TabIndex" type="System.Int32, mscorlib">
     <value>12</value>
@@ -1569,11 +1551,11 @@
   <data name="movieSelNone.Location" type="System.Drawing.Point, System.Drawing">
     <value>87, 372</value>
   </data>
-  <data name="movieSelAll.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 372</value>
+  <data name="label1.ToolTip" xml:space="preserve">
+    <value />
   </data>
-  <data name="btnMovieScan.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+  <data name="tvRenameEpisodes.Text" xml:space="preserve">
+    <value>rename selected episodes</value>
   </data>
   <data name="optionGroupMovies.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
     <value>GrowAndShrink</value>
@@ -1584,29 +1566,32 @@
   <data name="&gt;&gt;runWatcherToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="optionGroupOthers.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Top</value>
+  <data name="$this.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="&gt;&gt;btnMovePath.Name" xml:space="preserve">
     <value>btnMovePath</value>
   </data>
-  <data name="&gt;&gt;scanMovieList.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ListView, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="groupSeries.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="movieSelNone.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
-  </data>
   <data name="tvSelAll.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
   </data>
-  <data name="&gt;&gt;label_watchPath.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;scanMovieList.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ListView, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="scanSeriesProgressbar.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
+  <data name="labelMovieOutpu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>130, 23</value>
+  </data>
+  <data name="btnSeriesBrowse.Size" type="System.Drawing.Size, System.Drawing">
+    <value>27, 23</value>
+  </data>
+  <data name="btnMoviesBrowse.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;groupMovies.Name" xml:space="preserve">
+    <value>groupMovies</value>
+  </data>
+  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;btnMovePath.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -1614,17 +1599,26 @@
   <data name="&gt;&gt;comboBox1.Parent" xml:space="preserve">
     <value>optionGroupOthers</value>
   </data>
-  <data name="btnMoviesBrowse.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
+  <data name="movieSelNone.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="option_seriesFormat.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
+  </data>
+  <data name="tabMovies.Size" type="System.Drawing.Size, System.Drawing">
+    <value>706, 403</value>
   </data>
   <data name="option_seriesFormat.AutoCompleteCustomSource5" xml:space="preserve">
     <value>s&lt;season2&gt;e&lt;episode2&gt;&lt;title: - &gt;&lt;title&gt;</value>
   </data>
-  <data name="headFilename.Text" xml:space="preserve">
-    <value>Filename</value>
+  <data name="&gt;&gt;toolStripSeparator1.Name" xml:space="preserve">
+    <value>toolStripSeparator1</value>
   </data>
   <data name="labelMovieOutpu.ToolTip" xml:space="preserve">
     <value />
+  </data>
+  <data name="movieScanPath.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
   </data>
   <data name="option_seriesFormat.AutoCompleteCustomSource1" xml:space="preserve">
     <value>&lt;series&gt; - s&lt;season2&gt;e&lt;episod2&gt;&lt;title: - &gt;&lt;title&gt;</value>
@@ -1638,14 +1632,14 @@
   <data name="optionSysTray.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="headNewfile.Width" type="System.Int32, mscorlib">
-    <value>180</value>
+  <data name="&gt;&gt;btnAppAbout.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;tabOptions.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;tabMovies.Parent" xml:space="preserve">
+    <value>tabControl</value>
   </data>
-  <data name="tabMovies.Size" type="System.Drawing.Size, System.Drawing">
-    <value>706, 403</value>
+  <data name="tabControl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
   </data>
   <data name="movieSelNone.Text" xml:space="preserve">
     <value>select none</value>
@@ -1662,14 +1656,14 @@
   <data name="&gt;&gt;option_movieFormat.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="movieScanPath.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
+  <data name="option_movieTargetLocation.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
   </data>
   <data name="moviePathLabel.Location" type="System.Drawing.Point, System.Drawing">
     <value>7, 16</value>
   </data>
-  <data name="tabSeries.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+  <data name="&gt;&gt;btnMovieScanStop.Name" xml:space="preserve">
+    <value>btnMovieScanStop</value>
   </data>
   <data name="sysTrayExit.Text" xml:space="preserve">
     <value>Exit</value>
@@ -1686,11 +1680,14 @@
   <data name="&gt;&gt;moviePathLabel.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="option_seriesFormat.TabIndex" type="System.Int32, mscorlib">
-    <value>13</value>
+  <data name="groupMovies.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="&gt;&gt;optionGroupSeries.Parent" xml:space="preserve">
     <value>tabOptions</value>
+  </data>
+  <data name="scanMovieProgressbar.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
   </data>
   <data name="&gt;&gt;labelTVSource.Parent" xml:space="preserve">
     <value>optionGroupSeries</value>
@@ -1722,11 +1719,11 @@
   <data name="&gt;&gt;deleteSelectedWatcherToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;optionSysTray.Parent" xml:space="preserve">
-    <value>optionGroupOthers</value>
+  <data name="&gt;&gt;btnSeriesScanStop.Name" xml:space="preserve">
+    <value>btnSeriesScanStop</value>
   </data>
-  <data name="scanMovieProgressbar.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
+  <data name="btnMovieScan.Location" type="System.Drawing.Point, System.Drawing">
+    <value>610, 30</value>
   </data>
   <data name="tabSeries.Text" xml:space="preserve">
     <value>TV Series</value>
@@ -1742,6 +1739,9 @@
   </data>
   <data name="&gt;&gt;toolTip.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="optionGroupSeries.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
   </data>
   <data name="seriesScanPath.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1792,8 +1792,8 @@
         AAAAAAAAAA8AAAAPAAAADwAAAA8AAB+PAAA=
 </value>
   </data>
-  <data name="option_movieFormat.AutoCompleteCustomSource" xml:space="preserve">
-    <value>&lt;moviename&gt; (&lt;year&gt;&lt;disk:,CD&gt;&lt;disk&gt;&lt;lang:,&gt;&lt;lang&gt;)</value>
+  <data name="&gt;&gt;optionGroupMovies.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="headEpisode.Text" xml:space="preserve">
     <value>Episode</value>
@@ -1801,8 +1801,8 @@
   <data name="optionGroupMovies.Location" type="System.Drawing.Point, System.Drawing">
     <value>5, 88</value>
   </data>
-  <data name="&gt;&gt;tabSeries.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="option_seriesFormat.Location" type="System.Drawing.Point, System.Drawing">
+    <value>142, 16</value>
   </data>
   <data name="movieRename.ToolTip" xml:space="preserve">
     <value />
@@ -1819,26 +1819,26 @@
   <data name="seriesScanPath.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
-  <data name="&gt;&gt;headSeason.Name" xml:space="preserve">
-    <value>headSeason</value>
+  <data name="groupSeries.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
   <data name="btnSeriesBrowse.Text" xml:space="preserve">
     <value>...</value>
   </data>
-  <data name="tabMovies.ToolTip" xml:space="preserve">
-    <value />
+  <data name="option_movieFormat.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
   </data>
   <data name="&gt;&gt;scanMovieProgressbar.Parent" xml:space="preserve">
     <value>groupMovies</value>
   </data>
-  <data name="&gt;&gt;addWatchPath.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="labelMovieOutpu.Text" xml:space="preserve">
+    <value>Output Format:</value>
   </data>
-  <data name="movieRename.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Right</value>
+  <data name="&gt;&gt;headNewfile.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="sysTrayOpen.Text" xml:space="preserve">
-    <value>Show Application</value>
+  <data name="&gt;&gt;tabSeries.Parent" xml:space="preserve">
+    <value>tabControl</value>
   </data>
   <data name="&gt;&gt;contextOptionRename.Name" xml:space="preserve">
     <value>contextOptionRename</value>
@@ -1846,8 +1846,8 @@
   <data name="&gt;&gt;optionGroupMovies.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="optionStartMinimized.ToolTip" xml:space="preserve">
-    <value />
+  <data name="btnSeriesScan.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
   </data>
   <data name="tvSelAll.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -1855,20 +1855,20 @@
   <data name="option_movieFormat.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="scanSeriesProgressbar.Size" type="System.Drawing.Size, System.Drawing">
-    <value>675, 11</value>
+  <data name="&gt;&gt;optionGroupSeries.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
   <data name="&gt;&gt;contextProposals.Type" xml:space="preserve">
     <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="btnSeriesScan.Location" type="System.Drawing.Point, System.Drawing">
-    <value>610, 30</value>
+  <data name="sysTrayMenu.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="btnAppAbout.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="&gt;&gt;optionGroupOthers.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="optionGroupOthers.Size" type="System.Drawing.Size, System.Drawing">
+    <value>696, 129</value>
   </data>
   <data name="&gt;&gt;btnMovieScanStop.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
