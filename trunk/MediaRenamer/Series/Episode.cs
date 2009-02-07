@@ -378,12 +378,19 @@ namespace MediaRenamer.Series {
         }
 
         public void renameEpisodeAndMove(String targetFolder) {
+            this.renameEpisodeAndMove(targetFolder, false);
+        }
+
+        public void renameEpisodeAndMove(String targetFolder, Boolean copy) {
             if (needRenaming()) {
                 FileInfo fi = new FileInfo(filename);
                 String modifiedFilename = targetFolder + @"\" + modifiedName();
                 if (!File.Exists(modifiedFilename) ||
                     modifiedFilename.ToLower() == filename.ToLower()) {
-                    fi.MoveTo(modifiedFilename);
+                    if (copy)
+                        fi.CopyTo(modifiedFilename);
+                    else
+                        fi.MoveTo(modifiedFilename);
                     _filename = modifiedFilename;
                 }
                 else {

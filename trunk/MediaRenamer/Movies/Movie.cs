@@ -151,11 +151,18 @@ namespace MediaRenamer.Movies {
         }
 
         public void renameMovieAndMove(String targetFolder) {
+            this.renameMovieAndMove(targetFolder, false);
+        }
+
+        public void renameMovieAndMove(String targetFolder, Boolean copy) {
             if (needRenaming()) {
                 FileInfo fi = new FileInfo(filename);
                 String modifiedFilename = targetFolder + @"\" + modifiedName();
                 if (!File.Exists(modifiedFilename)) {
-                    fi.MoveTo(modifiedFilename);
+                    if (copy)
+                        fi.CopyTo(modifiedFilename);
+                    else
+                        fi.MoveTo(modifiedFilename);
                     _filename = modifiedFilename;
                 }
                 else {
