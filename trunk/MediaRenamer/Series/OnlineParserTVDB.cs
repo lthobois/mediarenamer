@@ -49,7 +49,8 @@ namespace MediaRenamer.Series {
         public static String parserName = "TheTVDB.com";
 
         public OnlineParserTVDB() {
-            zipCache = episodeCache.Replace(".xml", ".zip");
+            zipCache = String.Format(episodeCache, "compressed", "data");
+            zipCache = zipCache.Replace(".xml", ".zip");
             Object data;
             data = Settings.GetValueAsObject<List<String>>(TVDBMirrors);
             if (data != null)
@@ -161,8 +162,12 @@ namespace MediaRenamer.Series {
             WebClient cli = new WebClient();
             XmlDocument xml = new XmlDocument();
 
+            if (show.ID == String.Empty) {
+                File.Delete(episodeCache);
+            }
+
             if (!File.Exists(episodeCache)) {
-                if (show.ID != null && show.Year > 0) {
+                if (show.ID != String.Empty) {
                     //I know which series - just download it
                     cli.DownloadFile(String.Format(detailUrl, randomMirror(), show.ID, languages[show.Lang]),
                         zipCache);
@@ -224,7 +229,7 @@ namespace MediaRenamer.Series {
                     if (nodes.Count != 1 && shows.Count == 0) {
                         while (true) {
                             InputDialog input = new InputDialog("Couldn't find the matching series - please enter a valid series name:", Application.ProductName, ep.series);
-                            if (input.ShowDialog(mainForm.instance) == DialogResult.OK) {
+                            if (input.ShowDialog() == DialogResult.OK) {
                                 String seriesName = input.value;
                                 cli.DownloadFile(String.Format(queryUrl, seriesName), searchCache);
                                 xml.Load(searchCache);
@@ -259,7 +264,10 @@ namespace MediaRenamer.Series {
                         // Found series directly.
                         show.ID = xml.SelectSingleNode("//Data/Series/seriesid").InnerText;
                         show.Name = xml.SelectSingleNode("//Data/Series/SeriesName").InnerText;
-                        show.Year = Int32.Parse(xml.SelectSingleNode("//Data/Series/FirstAired").InnerText.Substring(0, 4));
+                        XmlNode showNode = xml.SelectSingleNode("//Data/Series/FirstAired");
+                        if (showNode != null) {
+                            show.Year = Int32.Parse(showNode.InnerText.Substring(0, 4));
+                        }
                         foreach (String lang in languages.Keys) {
                             showClass showtmp = new showClass();
                             showtmp.ID = show.ID;
@@ -286,7 +294,7 @@ namespace MediaRenamer.Series {
             if (File.Exists(episodeCache)) {
                 DateTime dt = File.GetLastWriteTime(episodeCache);
                 // Check if cache is outdated
-                if (DateTime.Now.Subtract(dt).TotalDays > 3) {
+                if (DateTime.Now.Subtract(dt).TotalDays > 5) {
                     File.Delete(episodeCache);
                     cli.DownloadFile(String.Format(detailUrl, randomMirror(), show.ID, show.Lang),
                         zipCache);
@@ -303,17 +311,22 @@ namespace MediaRenamer.Series {
                 ep.language = "en";
 
             show.Name = xml.SelectSingleNode("//Data/Series/SeriesName").InnerText;
+            show.ID = xml.SelectSingleNode("//Data/Series/id").InnerText;
+            XmlNode yearNode = xml.SelectSingleNode("//Data/Series/FirstAired");
+            if (yearNode != null && yearNode.InnerText != String.Empty && yearNode.InnerText.Length >= 4) {
+                show.Year = Int32.Parse(yearNode.InnerText.Substring(0, 4));
+            }
 
             // Find title for episode
             XmlNodeList episodes = xml.GetElementsByTagName("Episode");
             if (episodes.Count > 0) {
                 // Search episode
-                foreach (XmlNode node in episodes) {
-                    Int32 season = Int32.Parse(node.SelectSingleNode("SeasonNumber").InnerText);
-                    Int32 episode = Int32.Parse(node.SelectSingleNode("EpisodeNumber").InnerText);
+                foreach (XmlNode episodeXml in episodes) {
+                    Int32 season = Int32.Parse(episodeXml.SelectSingleNode("SeasonNumber").InnerText);
+                    Int32 episode = Int32.Parse(episodeXml.SelectSingleNode("EpisodeNumber").InnerText);
 
                     if (season == ep.season && episode == ep.episode) {
-                        ep.title = node.SelectSingleNode("EpisodeName").InnerText;
+                        ep.title = episodeXml.SelectSingleNode("EpisodeName").InnerText;
 
                         if (ep.episodes.Length > 1) {
                             if (ep.title.EndsWith(")")) {
@@ -338,7 +351,9 @@ namespace MediaRenamer.Series {
             ZipFile zipFile = ZipFile.Read(zipCache);
             foreach (ZipEntry entry in zipFile) {
                 if (entry.FileName == lang + ".xml") {
-                    entry.Extract(File.OpenWrite(episodeCache));
+                    FileStream stream = File.OpenWrite(episodeCache);
+                    entry.Extract(stream);
+                    stream.Close();
                 }
             }
         }

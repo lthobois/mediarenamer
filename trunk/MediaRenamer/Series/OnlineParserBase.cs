@@ -30,7 +30,7 @@ namespace MediaRenamer.Series {
                 @"\" + Application.ProductName + @"\series\" + parserName + @"\";
             if (!Directory.Exists(cacheDir)) Directory.CreateDirectory(cacheDir);
             episodeCache = cacheDir + "{0}_{1}.xml";
-            parserDataCache = parserName + ".seriesdata.json";
+            parserDataCache = parserName + ".seriesdata";
 
             searchCache = String.Format(episodeCache, "search", "data");
 
@@ -56,7 +56,7 @@ namespace MediaRenamer.Series {
             showDlg.setEpisodeData(ep);
             showDlg.addShows(shows);
 
-            if (showDlg.ShowDialog(mainForm.instance) == DialogResult.OK) {
+            if (showDlg.ShowDialog() == DialogResult.OK) {
                 return showDlg.selectedShow;
             }
             else {
@@ -69,15 +69,18 @@ namespace MediaRenamer.Series {
             try {
                 showClass show = new showClass();
                 show.Name = ep.series;
-                String seriesOld = ep.series;
+                String seriesOld = ep.series.ToLower();
 
-                if (seriesList.ContainsKey(seriesOld.ToLower())) {
-                    show = (showClass)seriesList[seriesOld.ToLower()];
+                if (seriesList.ContainsKey(seriesOld)) {
+                    show = (showClass)seriesList[seriesOld];
                     ep.series = show.Name;
                 }
                 else if (seriesList.ContainsKey(ep.altSeries.ToLower())) {
                     show = (showClass)seriesList[ep.altSeries.ToLower()];
                     ep.series = show.Name;
+                }
+                else {
+                    // No data found yet.
                 }
                 seriesHash = MD5.createHash(show.Name);
                 episodeCache = String.Format(episodeCache, seriesHash, ep.season);
@@ -86,14 +89,14 @@ namespace MediaRenamer.Series {
 
                 bool hr = getSeriesData(ref show, ref ep);
 
-                if (show != null && show.ID != "" && show.Year > 0) {
+                if (show != null && show.ID != "") {
                     bool listChanged = false;
                     if (!seriesList.ContainsKey(ep.series.ToLower())) {
                         seriesList.Add(ep.series.ToLower(), show);
                         listChanged = true;
                     }
-                    if (!seriesList.ContainsKey(seriesOld.ToLower())) {
-                        seriesList.Add(seriesOld.ToLower(), show);
+                    if (!seriesList.ContainsKey(seriesOld)) {
+                        seriesList.Add(seriesOld, show);
                         listChanged = true;
                     }
                     if (!seriesList.ContainsKey(show.Name.ToLower())) {

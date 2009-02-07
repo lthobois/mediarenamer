@@ -175,15 +175,10 @@ namespace MediaRenamer {
         }
 
         private void btnMovieScan_Click(object sender, EventArgs e) {
-            if (parseMoviesThread != null && parseMoviesThread.IsAlive) {
-                parseMoviesThread.Abort();
-                movie_ScanDone();
-                return;
-            }
-
             if (!validPath(movieScanPath.Text)) return;
 
-            btnMovieScan.Text = resources.GetString("scanStop");
+            btnMovieScan.Visible = false;
+            btnMovieScanStop.Visible = true;
             movieScanPath.Enabled = false;
             btnMoviesBrowse.Enabled = false;
             optionGroupMovies.Enabled = false;
@@ -205,7 +200,8 @@ namespace MediaRenamer {
                 Invoke(new ScanDone(movie_ScanDone), null);
                 return;
             }
-            btnMovieScan.Text = resources.GetString("scanStart");
+            btnMovieScan.Visible = true;
+            btnMovieScanStop.Visible = false;
             movieScanPath.Enabled = true;
             btnMoviesBrowse.Enabled = true;
             optionGroupMovies.Enabled = true;
@@ -246,15 +242,10 @@ namespace MediaRenamer {
         }
 
         private void btnSeriesScan_Click(object sender, EventArgs e) {
-            if (parseSeriesThread != null && parseSeriesThread.IsAlive) {
-                parseSeriesThread.Abort();
-                series_ScanDone();
-                return;
-            }
-
             if (!validPath(seriesScanPath.Text)) return;
 
-            btnSeriesScan.Text = resources.GetString("scanStop");
+            btnSeriesScanStop.Visible = true;
+            btnSeriesScan.Visible = false;
             seriesScanPath.Enabled = false;
             btnSeriesBrowse.Enabled = false;
             optionGroupSeries.Enabled = false;
@@ -276,7 +267,9 @@ namespace MediaRenamer {
                 Invoke(new ScanDone(series_ScanDone), null);
                 return;
             }
-            btnSeriesScan.Text = resources.GetString("scanStart");
+
+            btnSeriesScan.Visible = true;
+            btnSeriesScanStop.Visible = false;
             seriesScanPath.Enabled = true;
             btnSeriesBrowse.Enabled = true;
             optionGroupSeries.Enabled = true;
@@ -586,6 +579,24 @@ namespace MediaRenamer {
 
         private void optionSeriesParser_SelectedIndexChanged(object sender, EventArgs e) {
             Settings.SetValue(SettingKeys.SeriesParser, optionSeriesParser.SelectedItem.ToString());
+        }
+
+        private void groupSeries_Enter(object sender, EventArgs e) {
+
+        }
+
+        private void btnSeriesScanStop_Click(object sender, EventArgs e) {
+            if (parseSeriesThread != null && parseSeriesThread.IsAlive) {
+                parseSeriesThread.Abort();
+                series_ScanDone();
+            }
+        }
+
+        private void btnMovieScanStop_Click(object sender, EventArgs e) {
+            if (parseMoviesThread != null && parseMoviesThread.IsAlive) {
+                parseMoviesThread.Abort();
+                movie_ScanDone();
+            }
         }
     }
 }

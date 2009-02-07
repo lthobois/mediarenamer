@@ -117,11 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="&gt;&gt;labelEpisode.Parent" xml:space="preserve">
-    <value>$this</value>
+  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="btnSkip.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
   </data>
   <data name="btnSkip.Text" xml:space="preserve">
     <value>Skip</value>
+  </data>
+  <data name="labelFile.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="&gt;&gt;btnSkip.Name" xml:space="preserve">
     <value>btnSkip</value>
@@ -129,7 +133,6 @@
   <data name="&gt;&gt;showList.Name" xml:space="preserve">
     <value>showList</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="btnOk.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
@@ -167,20 +170,23 @@
   <data name="showList.Size" type="System.Drawing.Size, System.Drawing">
     <value>366, 199</value>
   </data>
-  <data name="&gt;&gt;btnOk.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
   <data name="&gt;&gt;btnOk.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
   <data name="&gt;&gt;showList.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
+  <data name="&gt;&gt;btnSkip.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
   <data name="&gt;&gt;labelEpisode.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
   <data name="&gt;&gt;btnOk.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;labelEpisode.Name" xml:space="preserve">
+    <value>labelEpisode</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>System.Windows.Forms.Form, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -190,9 +196,6 @@
   </data>
   <data name="&gt;&gt;labelFile.Name" xml:space="preserve">
     <value>labelFile</value>
-  </data>
-  <data name="labelEpisode.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
   </data>
   <data name="labelFile.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -212,14 +215,14 @@
   <data name="&gt;&gt;btnSkip.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="labelEpisode.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
   <data name="labelEpisode.Text" xml:space="preserve">
     <value>Episode:</value>
   </data>
   <data name="&gt;&gt;btnSkip.ZOrder" xml:space="preserve">
     <value>2</value>
-  </data>
-  <data name="&gt;&gt;btnOk.Name" xml:space="preserve">
-    <value>btnOk</value>
   </data>
   <data name="&gt;&gt;labelFile.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -227,11 +230,8 @@
   <data name="labelFile.Size" type="System.Drawing.Size, System.Drawing">
     <value>26, 13</value>
   </data>
-  <data name="&gt;&gt;labelEpisode.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;labelEpisode.Name" xml:space="preserve">
-    <value>labelEpisode</value>
+  <data name="labelEpisode.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
@@ -240,17 +240,17 @@
   <data name="btnSkip.Size" type="System.Drawing.Size, System.Drawing">
     <value>112, 23</value>
   </data>
-  <data name="btnSkip.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;btnSkip.Parent" xml:space="preserve">
+  <data name="&gt;&gt;labelEpisode.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="labelEpisode.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
+  <data name="&gt;&gt;labelEpisode.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="labelFile.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="&gt;&gt;btnOk.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;btnOk.Name" xml:space="preserve">
+    <value>btnOk</value>
   </data>
   <data name="btnOk.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
