@@ -52,6 +52,7 @@
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.RenameDrop_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.RenameDrop_DragEnter);
             this.Resize += new System.EventHandler(this.RenameDrop_Resize);
+            this.DragOver += new System.Windows.Forms.DragEventHandler(this.RenameDrop_DragEnter);
             this.ResumeLayout(false);
 
         }

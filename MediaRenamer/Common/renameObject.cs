@@ -8,6 +8,7 @@ using MediaRenamer.Movies;
 namespace MediaRenamer.Common {
     public class renameObject {
         private String _filename;
+        public Boolean copyFile = false;
 
         public renameObject(String file) {
             _filename = file;
@@ -21,7 +22,7 @@ namespace MediaRenamer.Common {
                     SeriesLocations locations = new SeriesLocations();
                     String path = locations.getEpisodePath(ep);
                     if (Directory.Exists(path)) {
-                        ep.renameEpisodeAndMove(path);
+                        ep.renameEpisodeAndMove(path, copyFile);
                         locations.addSeriesLocation(ep);
                     }
                     else {
@@ -34,7 +35,7 @@ namespace MediaRenamer.Common {
                 if (movie.needRenaming()) {
                     if (Settings.GetValueAsBool(SettingKeys.MoveMovies)) {
                         String path = Settings.GetValueAsString(SettingKeys.MovieLocation);
-                        movie.renameMovieAndMove(path);
+                        movie.renameMovieAndMove(path, copyFile);
                     }
                     else {
                         movie.renameMovie();

@@ -62,7 +62,15 @@ namespace MediaRenamer
             // make sure they're actually dropping files (not text or anything else)
             if (e.Data.GetDataPresent(DataFormats.FileDrop, false) == true)
             {
-                e.Effect = DragDropEffects.All;
+                if ((e.KeyState & 8) == 8) {
+                    e.Effect = DragDropEffects.Copy;
+                }
+                else if ((e.KeyState & 4) == 4) {
+                    e.Effect = DragDropEffects.Move;
+                }
+                else {
+                    e.Effect = DragDropEffects.Move;
+                }
             }
         }
 
@@ -77,6 +85,9 @@ namespace MediaRenamer
             foreach (string file in files)
             {
                 renameObject tmp = new renameObject(file);
+                if (e.Effect == DragDropEffects.Copy) {
+                    tmp.copyFile = true;
+                }
                 Thread renameThread = new Thread(new ThreadStart(tmp.rename));
                 renameThread.Start();
             }
