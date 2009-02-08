@@ -35,7 +35,8 @@ namespace MediaRenamer.Movies {
         public static String[] words = { "XVID", "widescreen", "AC3", "SVCD", "VCD",
 									 "DVDRIP", "DVDSCR", "DVD",
 									 "HDTV", "PDTV", "VTV", "EFNET",
-									 "EDTV", "DIVX", "PROPER", "tvrip" };
+									 "EDTV", "DIVX", "PROPER", "tvrip",
+                                     "1080", "720"};
 
         public Movie(String fname) {
             _filename = fname;

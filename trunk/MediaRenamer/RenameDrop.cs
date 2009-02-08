@@ -85,7 +85,7 @@ namespace MediaRenamer
             foreach (string file in files)
             {
                 renameObject tmp = new renameObject(file);
-                if (e.Effect == DragDropEffects.Copy) {
+                if ((e.KeyState & 8) == 8) {
                     tmp.copyFile = true;
                 }
                 Thread renameThread = new Thread(new ThreadStart(tmp.rename));
