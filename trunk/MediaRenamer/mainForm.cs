@@ -421,11 +421,11 @@ namespace MediaRenamer {
         }
 
         private void seriesScanPath_TextUpdate(object sender, EventArgs e) {
-            btnMovieScan.Enabled = Directory.Exists(seriesScanPath.Text);
+            btnSeriesScan.Enabled = Directory.Exists(seriesScanPath.Text);
         }
 
         private void movieScanPath_TextUpdate(object sender, EventArgs e) {
-            btnSeriesScan.Enabled = Directory.Exists(movieScanPath.Text);
+            btnMovieScan.Enabled = Directory.Exists(movieScanPath.Text);
         }
 
         private void tvSelAll_Click(object sender, EventArgs e) {
