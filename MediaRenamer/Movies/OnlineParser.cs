@@ -216,7 +216,7 @@ namespace MediaRenamer.Movies {
                     }
                 }
 
-                if (movieDlg.ShowDialog(mainForm.dialogOwner) == DialogResult.OK) {
+                if (movieDlg.ShowDialog() == DialogResult.OK) {
                     setMovieTitle(ref movie, (movieDlg as SelectMovie).selectedMovie);
                 }
                 movieDlg.Dispose();

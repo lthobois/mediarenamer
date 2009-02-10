@@ -209,8 +209,10 @@ namespace MediaRenamer.Movies {
 
             foreach (char c in badPathChars)
                 renameFormat = renameFormat.Replace(c, '.');
-            FileInfo fi = new FileInfo(filename);
-            renameFormat += fi.Extension.ToLower();
+            if (!Directory.Exists(filename)) {
+                FileInfo fi = new FileInfo(filename);
+                renameFormat += fi.Extension.ToLower();
+            }
             return renameFormat;
         }
 

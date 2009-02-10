@@ -133,9 +133,7 @@ namespace MediaRenamer.Movies {
         }
 
         private void showList_SelectedIndexChanged(object sender, System.EventArgs e) {
-            if (selectedMovie != null) {
-                selectedMovie = movieList.SelectedItem.ToString();
-            }
+            selectedMovie = movieList.SelectedItem.ToString();
         }
 
         private void showList_DoubleClick(object sender, System.EventArgs e) {

@@ -508,7 +508,6 @@
             this.toolTip.SetToolTip(this.movieScanPath, resources.GetString("movieScanPath.ToolTip"));
             this.movieScanPath.SelectedIndexChanged += new System.EventHandler(this.movieScanPath_TextUpdate);
             this.movieScanPath.Leave += new System.EventHandler(this.movieScanPath_Leave);
-            this.movieScanPath.TextUpdate += new System.EventHandler(this.movieScanPath_TextUpdate);
             this.movieScanPath.TextChanged += new System.EventHandler(this.movieScanPath_TextUpdate);
             // 
             // btnMovieScanStop
