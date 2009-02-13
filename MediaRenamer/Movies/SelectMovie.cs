@@ -20,16 +20,19 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using MediaRenamer;
 using MediaRenamer.Common;
+using System.IO;
 
 namespace MediaRenamer.Movies {
     /// <summary>
     /// Zusammenfassung für SelectMovie.
     /// </summary>
     public class SelectMovie : System.Windows.Forms.Form {
-        public String selectedMovie = null;
+        public movieData selectedMovie = null;
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.Button btnSkip;
         private System.Windows.Forms.ListBox movieList;
+        private Label labelMovie;
+        private Label labelFile;
         /// <summary>
         /// Erforderliche Designervariable.
         /// </summary>
@@ -68,63 +71,61 @@ namespace MediaRenamer.Movies {
             this.btnOk = new System.Windows.Forms.Button();
             this.movieList = new System.Windows.Forms.ListBox();
             this.btnSkip = new System.Windows.Forms.Button();
+            this.labelMovie = new System.Windows.Forms.Label();
+            this.labelFile = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnOk
             // 
-            this.btnOk.AccessibleDescription = null;
-            this.btnOk.AccessibleName = null;
             resources.ApplyResources(this.btnOk, "btnOk");
-            this.btnOk.BackgroundImage = null;
-            this.btnOk.Font = null;
             this.btnOk.Name = "btnOk";
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
             // movieList
             // 
-            this.movieList.AccessibleDescription = null;
-            this.movieList.AccessibleName = null;
             resources.ApplyResources(this.movieList, "movieList");
-            this.movieList.BackgroundImage = null;
-            this.movieList.Font = null;
             this.movieList.Name = "movieList";
             this.movieList.SelectedIndexChanged += new System.EventHandler(this.showList_SelectedIndexChanged);
             this.movieList.DoubleClick += new System.EventHandler(this.showList_DoubleClick);
             // 
             // btnSkip
             // 
-            this.btnSkip.AccessibleDescription = null;
-            this.btnSkip.AccessibleName = null;
-            resources.ApplyResources(this.btnSkip, "btnSkip");
-            this.btnSkip.BackgroundImage = null;
             this.btnSkip.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnSkip.Font = null;
+            resources.ApplyResources(this.btnSkip, "btnSkip");
             this.btnSkip.Name = "btnSkip";
             this.btnSkip.Click += new System.EventHandler(this.btnSkip_Click);
+            // 
+            // labelMovie
+            // 
+            resources.ApplyResources(this.labelMovie, "labelMovie");
+            this.labelMovie.Name = "labelMovie";
+            // 
+            // labelFile
+            // 
+            resources.ApplyResources(this.labelFile, "labelFile");
+            this.labelFile.Name = "labelFile";
             // 
             // SelectMovie
             // 
             this.AcceptButton = this.btnOk;
-            this.AccessibleDescription = null;
-            this.AccessibleName = null;
             resources.ApplyResources(this, "$this");
-            this.BackgroundImage = null;
             this.CancelButton = this.btnSkip;
+            this.Controls.Add(this.labelFile);
+            this.Controls.Add(this.labelMovie);
             this.Controls.Add(this.btnSkip);
             this.Controls.Add(this.movieList);
             this.Controls.Add(this.btnOk);
-            this.Font = null;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.Icon = null;
             this.Name = "SelectMovie";
             this.Load += new System.EventHandler(this.SelectMovie_Load);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
         #endregion
 
-        public void addMovie(String movieName) {
-            movieList.Items.Add(movieName);
+        public void addMovie(movieData movie) {
+            movieList.Items.Add(movie);
         }
 
         private void SelectMovie_Load(object sender, System.EventArgs e) {
@@ -133,7 +134,7 @@ namespace MediaRenamer.Movies {
         }
 
         private void showList_SelectedIndexChanged(object sender, System.EventArgs e) {
-            selectedMovie = movieList.SelectedItem.ToString();
+            selectedMovie = movieList.SelectedItem as movieData;
         }
 
         private void showList_DoubleClick(object sender, System.EventArgs e) {
@@ -148,6 +149,12 @@ namespace MediaRenamer.Movies {
 
         private void btnOk_Click(object sender, System.EventArgs e) {
             DialogResult = DialogResult.OK;
+        }
+
+        public void setMovieData(Movie m) {
+            labelMovie.Text = String.Format("{0} ({1})", m.title, m.year);
+            FileInfo fi = new FileInfo(m.filename);
+            labelFile.Text = fi.Name;
         }
     }
 }

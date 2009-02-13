@@ -37,7 +37,8 @@ namespace MediaRenamer.Common {
         MovieLocation,
         MoveMovies,
         SeriesData,
-        SeriesParser
+        SeriesParser,
+        MoviesParser
 
     }
     public class SettingKeyNotAvailableEception : Exception {

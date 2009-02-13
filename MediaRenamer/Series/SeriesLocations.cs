@@ -93,6 +93,10 @@ namespace MediaRenamer.Series {
                             previous = path.ToCharArray();
                             generic = path.ToCharArray();
                         }
+                        if (previous.Length < path.Length) {
+                            Array.Resize<Char>(ref previous, path.Length);
+                            Array.Resize<Char>(ref generic, path.Length);
+                        }
                         for (int i = 0; i < path.Length; ++i) {
                             if (path[i].Equals(previous[i])) {
                                 generic[i] = path[i];

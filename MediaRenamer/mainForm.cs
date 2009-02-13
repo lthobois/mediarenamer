@@ -29,7 +29,6 @@ using System.Resources;
 namespace MediaRenamer {
     public partial class mainForm : Form {
         public static mainForm instance = null;
-        public static Form dialogOwner = null;
         public RenameDrop dropform = new RenameDrop();
 
         ResourceManager resources = null;
@@ -42,7 +41,6 @@ namespace MediaRenamer {
 
             resources = new ResourceManager(typeof(mainForm));
             mainForm.instance = this;
-            mainForm.dialogOwner = this;
         }
 
         private void mainForm_Load(object sender, EventArgs e) {
@@ -92,12 +90,21 @@ namespace MediaRenamer {
 
             String parserName = Settings.GetValueAsString(SettingKeys.SeriesParser);
             if (parserName == String.Empty) {
-                parserName = OnlineParserEPW.parserName;
+                parserName = OnlineParserTVDB.parserName;
                 Settings.SetValue(SettingKeys.SeriesParser, OnlineParserEPW.parserName);
             }
             optionSeriesParser.Items.Add(OnlineParserEPW.parserName);
             optionSeriesParser.Items.Add(OnlineParserTVDB.parserName);
             optionSeriesParser.SelectedItem = parserName;
+
+            parserName = Settings.GetValueAsString(SettingKeys.MoviesParser);
+            if (parserName == String.Empty) {
+                parserName = OnlineParserTMDB.parserName;
+                Settings.SetValue(SettingKeys.MoviesParser, OnlineParserTMDB.parserName);
+            }
+            optionMovieParser.Items.Add(OnlineParserTMDB.parserName);
+            optionMovieParser.Items.Add(OnlineParserIMDB.parserName);
+            optionMovieParser.SelectedItem = parserName;
 
             /*if (VistaGlass.IsGlassSupported()) {
                 VistaGlass.Margins marg = new VistaGlass.Margins();
@@ -488,11 +495,9 @@ namespace MediaRenamer {
             Int32 dropPadding = 20;
             if (visible) {
                 dropform.Show();
-                mainForm.dialogOwner = dropform;
             }
             else {
                 dropform.Hide();
-                mainForm.dialogOwner = this;
             }
             dropform.Left = Screen.PrimaryScreen.WorkingArea.Width - dropform.Width - dropPadding;
             dropform.Top = Screen.PrimaryScreen.WorkingArea.Height - dropform.Height - dropPadding;
@@ -597,6 +602,10 @@ namespace MediaRenamer {
                 parseMoviesThread.Abort();
                 movie_ScanDone();
             }
+        }
+
+        private void optionMovieParser_SelectedIndexChanged(object sender, EventArgs e) {
+            Settings.SetValue(SettingKeys.MoviesParser, optionMovieParser.SelectedItem.ToString());
         }
     }
 }
