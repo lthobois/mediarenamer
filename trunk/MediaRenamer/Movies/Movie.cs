@@ -107,12 +107,15 @@ namespace MediaRenamer.Movies {
 
         #endregion
 
-        public bool compareTitles(String foundTitle) {
-            String fTitle = foundTitle;
+        public bool compareTitles(movieData founddata) {
+            String fTitle = founddata.Name;
             String oTitle = _title;
 
             if (_year > 0) {
                 oTitle += " (" + _year.ToString() + ")";
+            }
+            if (founddata.Year > 0) {
+                fTitle += " (" + founddata.Year.ToString() + ")";
             }
             foreach (Char c in badPathChars) {
                 fTitle = fTitle.Replace(c.ToString(), " ");
@@ -361,8 +364,19 @@ namespace MediaRenamer.Movies {
                 name = name.Trim();
                 movie.title = name;
 
-                OnlineParser oparse = new OnlineParser();
-                oparse.getMovieData(ref movie);
+                // find title using online parser
+                OnlineParserBase parser = null;
+                String selectedParser = Settings.GetValueAsString(SettingKeys.MoviesParser);
+                if (selectedParser == OnlineParserIMDB.parserName) {
+                    parser = new OnlineParserIMDB();
+                }
+                else if (selectedParser == OnlineParserTMDB.parserName) {
+                    parser = new OnlineParserTMDB();
+                }
+                else {
+                    parser = new OnlineParserIMDB();
+                }
+                parser.getMovieData(ref movie);
             }
             catch (Exception E) {
                 Log.Add("ParseFile: " + E.Message);

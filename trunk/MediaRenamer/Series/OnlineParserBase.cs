@@ -13,6 +13,7 @@ namespace MediaRenamer.Series {
         internal Hashtable seriesList;
 
         internal String seriesHash;
+        internal String baseCache;
         internal String episodeCache;
         internal String searchCache;
 
@@ -29,10 +30,10 @@ namespace MediaRenamer.Series {
             String cacheDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
                 @"\" + Application.ProductName + @"\series\" + parserName + @"\";
             if (!Directory.Exists(cacheDir)) Directory.CreateDirectory(cacheDir);
-            episodeCache = cacheDir + "{0}_{1}.xml";
+            baseCache = cacheDir + "{0}_{1}.xml";
             parserDataCache = parserName + ".seriesdata";
 
-            searchCache = String.Format(episodeCache, "search", "data");
+            searchCache = String.Format(baseCache, "search", "data");
 
             Object table = Settings.GetValueAsObject<Hashtable>(parserDataCache);
             if (table != null) {
@@ -83,7 +84,7 @@ namespace MediaRenamer.Series {
                     // No data found yet.
                 }
                 seriesHash = MD5.createHash(show.Name);
-                episodeCache = String.Format(episodeCache, seriesHash, ep.season);
+                episodeCache = String.Format(baseCache, seriesHash, ep.season);
 
                 if (ep.special) return;
 

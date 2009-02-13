@@ -49,7 +49,7 @@ namespace MediaRenamer.Series {
         public static String parserName = "TheTVDB.com";
 
         public OnlineParserTVDB() {
-            zipCache = String.Format(episodeCache, "compressed", "data");
+            zipCache = String.Format(baseCache, "compressed", "data");
             zipCache = zipCache.Replace(".xml", ".zip");
             Object data;
             data = Settings.GetValueAsObject<List<String>>(TVDBMirrors);
@@ -84,7 +84,7 @@ namespace MediaRenamer.Series {
              *   </Mirror>
              * </Mirrors>
              */
-            String mirrorFile = String.Format(episodeCache, "TVDB", "mirror");
+            String mirrorFile = String.Format(baseCache, "TVDB", "mirror");
 
             WebClient cli = new WebClient();
             cli.DownloadFile(mirrorUrl, mirrorFile);
@@ -127,7 +127,7 @@ namespace MediaRenamer.Series {
              *   [...]
              * </Languages>
              */
-            String languageFile = String.Format(episodeCache, "TVDB", "languages");
+            String languageFile = String.Format(baseCache, "TVDB", "languages");
 
             WebClient cli = new WebClient();
             cli.DownloadFile(languageUrl, languageFile);
@@ -161,6 +161,8 @@ namespace MediaRenamer.Series {
         override public bool getSeriesData(ref showClass show, ref Episode ep) {
             WebClient cli = new WebClient();
             XmlDocument xml = new XmlDocument();
+
+            episodeCache = String.Format(baseCache, seriesHash, "all");
 
             if (show.ID == String.Empty) {
                 File.Delete(episodeCache);

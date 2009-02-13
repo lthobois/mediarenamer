@@ -96,7 +96,9 @@
       <DependentUpon>mainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Movies\Movie.cs" />
-    <Compile Include="Movies\OnlineParser.cs" />
+    <Compile Include="Movies\OnlineParserBase.cs" />
+    <Compile Include="Movies\OnlineParserIMDB.cs" />
+    <Compile Include="Movies\OnlineParserTMDB.cs" />
     <Compile Include="Movies\Parser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -141,6 +143,7 @@
       <DependentUpon>RenameDrop.cs</DependentUpon>
     </Compile>
     <Compile Include="Series\Episode.cs" />
+    <Compile Include="Movies\movieData.cs" />
     <Compile Include="Series\OnlineParserTVDB.cs" />
     <Compile Include="Series\OnlineParserEPW.cs" />
     <Compile Include="Series\OnlineParserBase.cs" />
