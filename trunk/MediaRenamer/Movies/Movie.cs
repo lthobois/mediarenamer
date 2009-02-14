@@ -24,7 +24,7 @@ namespace MediaRenamer.Movies {
     /// Zusammenfassung für Episode.
     /// </summary>
     public class Movie {
-        public String baseDir = "";
+        private String _baseDir = "";
         private String _filename = "";
         private String _title = "";
         private String _language = "";
@@ -43,6 +43,18 @@ namespace MediaRenamer.Movies {
         }
 
         #region get/set Methods
+
+        public String baseDir {
+            get {
+                return _baseDir;
+            }
+            set {
+                _baseDir = value;
+                if (!_baseDir.EndsWith(@"\")) {
+                    _baseDir += @"\";
+                }
+            }
+        }
 
         public String title {
             get {
@@ -237,16 +249,17 @@ namespace MediaRenamer.Movies {
             return str;
         }
 
-        public static Movie parseFile(String file, String moviesPath) {
+        public static Movie parseFile(String file) {
             Movie movie = new Movie(file);
-            movie.baseDir = moviesPath;
+            FileInfo fi = new FileInfo(file);
+            movie.baseDir = fi.DirectoryName;
             Regex reg = null;
             Match m = null;
             MatchCollection mcol = null;
 
             try {
                 String name = file;
-                name = name.Remove(0, moviesPath.Length);
+                name = name.Remove(0, movie.baseDir.Length);
                 if (name.IndexOf(@"\") > 0) {
                     name = name.Substring(0, name.IndexOf(@"\"));
                 }
@@ -267,10 +280,10 @@ namespace MediaRenamer.Movies {
                     name = eregi_replace("-([a-zA-Z0-9!]*)", "", name);
                 }
                 else if (File.Exists(file)) {
-                    FileInfo fi = new FileInfo(name);
-                    name = eregi_replace("-([a-zA-Z0-9!]*)" + fi.Extension, "", name);
-                    if (fi.Extension.Length > 0) {
-                        name = name.Replace(fi.Extension, "");
+                    FileInfo fname = new FileInfo(name);
+                    name = eregi_replace("-([a-zA-Z0-9!]*)" + fname.Extension, "", name);
+                    if (fname.Extension.Length > 0) {
+                        name = name.Replace(fname.Extension, "");
                     }
                 }
 
