@@ -31,7 +31,7 @@ namespace MediaRenamer.Common {
                 }
             }
             else {
-                Movie movie = Movie.parseFile(fi.FullName, fi.DirectoryName + @"\");
+                Movie movie = Movie.parseFile(fi.FullName);
                 if (movie.needRenaming()) {
                     if (Settings.GetValueAsBool(SettingKeys.MoveMovies)) {
                         String path = Settings.GetValueAsString(SettingKeys.MovieLocation);
