@@ -25,6 +25,7 @@ using System.Windows.Forms;
 using System.Collections;
 using System.Collections.Generic;
 using Ionic.Utils.Zip;
+using System.Threading;
 
 namespace MediaRenamer.Series {
     /// <summary>
@@ -161,6 +162,7 @@ namespace MediaRenamer.Series {
         override public bool getSeriesData(ref showClass show, ref Episode ep) {
             WebClient cli = new WebClient();
             XmlDocument xml = new XmlDocument();
+            String url = "";
 
             episodeCache = String.Format(baseCache, seriesHash, "all");
 
@@ -171,8 +173,8 @@ namespace MediaRenamer.Series {
             if (!File.Exists(episodeCache)) {
                 if (show.ID != String.Empty) {
                     //I know which series - just download it
-                    cli.DownloadFile(String.Format(detailUrl, randomMirror(), show.ID, languages[show.Lang]),
-                        zipCache);
+                    url = String.Format(detailUrl, randomMirror(), show.ID, languages[show.Lang]);
+                    cli.DownloadFile(url, zipCache);
                     extractXml(languages[show.Lang].ToString());
                     xml.Load(episodeCache);
                 }
@@ -284,8 +286,8 @@ namespace MediaRenamer.Series {
                     if (show != null) {
                         ep.language = (String)languages[show.Lang];
                         ep.series = show.Name;
-                        cli.DownloadFile(String.Format(detailUrl, randomMirror(), show.ID, ep.language),
-                            zipCache);
+                        url = String.Format(detailUrl, randomMirror(), show.ID, ep.language);
+                        cli.DownloadFile(url, zipCache);
                         extractXml(languages[show.Lang].ToString());
                     }
                     shows.Clear();
@@ -297,10 +299,17 @@ namespace MediaRenamer.Series {
                 DateTime dt = File.GetLastWriteTime(episodeCache);
                 // Check if cache is outdated
                 if (DateTime.Now.Subtract(dt).TotalDays > 5) {
-                    File.Delete(episodeCache);
-                    cli.DownloadFile(String.Format(detailUrl, randomMirror(), show.ID, show.Lang),
-                        zipCache);
-                    extractXml(languages[show.Lang].ToString());
+                    try {
+                        url = String.Format(detailUrl, randomMirror(), show.ID, languages[show.Lang]);
+                        cli.DownloadFile(url, zipCache);
+                        extractXml(languages[show.Lang].ToString());
+                    }
+                    catch (Exception E) {
+                        Thread.Sleep(1000);
+                        #if DEBUG
+                        Log.Error("Could not download updated episode file for " + ep.ToString(), E);
+                        #endif
+                    }
                 }
                 if (File.Exists(episodeCache)) {
                     xml.Load(episodeCache);
@@ -310,7 +319,7 @@ namespace MediaRenamer.Series {
             cli.Dispose();
 
             if (ep.language == null || ep.language == "")
-                ep.language = "en";
+                ep.language = languages[show.Lang].ToString();
 
             show.Name = xml.SelectSingleNode("//Data/Series/SeriesName").InnerText;
             show.ID = xml.SelectSingleNode("//Data/Series/id").InnerText;
@@ -351,6 +360,7 @@ namespace MediaRenamer.Series {
 
         private void extractXml(String lang) {
             ZipFile zipFile = ZipFile.Read(zipCache);
+            File.Delete(episodeCache);
             foreach (ZipEntry entry in zipFile) {
                 if (entry.FileName == lang + ".xml") {
                     FileStream stream = File.OpenWrite(episodeCache);

@@ -274,7 +274,9 @@ namespace MediaRenamer.Series {
                 }
             }
             catch (Exception E) {
-                Log.Add("ParseFile(" + ep.filename + "): " + E.Message);
+                #if DEBUG
+                MessageBox.Show("Error parsing file\n" + ep.filename + "\n\n" + E.Message);
+                #endif
             }
 
             return ep;
@@ -387,11 +389,18 @@ namespace MediaRenamer.Series {
                 String modifiedFilename = targetFolder + @"\" + modifiedName();
                 if (!File.Exists(modifiedFilename) ||
                     modifiedFilename.ToLower() == filename.ToLower()) {
-                    if (copy)
-                        fi.CopyTo(modifiedFilename);
-                    else
-                        fi.MoveTo(modifiedFilename);
-                    _filename = modifiedFilename;
+                    try {
+                        if (copy)
+                            fi.CopyTo(modifiedFilename);
+                        else
+                            fi.MoveTo(modifiedFilename);
+                        _filename = modifiedFilename;
+                    }
+                    catch (Exception E) {
+                        #if DEBUG
+                        Log.Error("Unable to move or copy file. Do you have write access to that folder?", E);
+                        #endif
+                    }
                 }
                 else {
                     MessageBox.Show("A file with the same name already exists. \nYou cannot rename the file " + fi.Name, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);

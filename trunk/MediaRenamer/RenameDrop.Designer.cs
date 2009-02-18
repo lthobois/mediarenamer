@@ -28,7 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            this.progressLayout = new System.Windows.Forms.FlowLayoutPanel();
+            this.progressTooltip = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
+            // 
+            // progressLayout
+            // 
+            this.progressLayout.Location = new System.Drawing.Point(0, 64);
+            this.progressLayout.Name = "progressLayout";
+            this.progressLayout.Size = new System.Drawing.Size(64, 100);
+            this.progressLayout.TabIndex = 0;
             // 
             // RenameDrop
             // 
@@ -37,10 +47,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(48, 30);
+            this.Controls.Add(this.progressLayout);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(64, 64);
+            this.MaximumSize = new System.Drawing.Size(64, 256);
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(64, 64);
             this.Name = "RenameDrop";
@@ -58,6 +69,10 @@
         }
 
         #endregion
+
+        private System.Windows.Forms.FlowLayoutPanel progressLayout;
+        private System.Windows.Forms.ToolTip progressTooltip;
+
 
 
     }

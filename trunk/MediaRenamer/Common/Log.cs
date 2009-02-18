@@ -26,5 +26,13 @@ namespace MediaRenamer.Common {
             //MessageBox.Show(frm.Name);
             //mainForm frm = (mainForm.instance as mainForm);
         }
+
+        public static void Error(string p, Exception E) {
+            MessageBox.Show(p + "\n" +
+                E.InnerException + "\n" +
+                E.Message + "\n" +
+                E.Source + "\n" +
+                E.StackTrace, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
     }
 }
