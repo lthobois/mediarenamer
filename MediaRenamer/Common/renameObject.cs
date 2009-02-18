@@ -4,14 +4,31 @@ using System.Text;
 using System.IO;
 using MediaRenamer.Series;
 using MediaRenamer.Movies;
+using System.Windows.Forms;
+using System.Threading;
 
 namespace MediaRenamer.Common {
     public class renameObject {
         private String _filename;
         public Boolean copyFile = false;
+        public ProgressBar progress = null;
 
         public renameObject(String file) {
             _filename = file;
+        }
+
+        public event RenameDone RenameDone;
+        protected virtual void OnRenameDone() {
+            RenameDone handler = RenameDone;
+            if (handler != null) {
+                handler.Invoke(this);
+            }
+        }
+
+        public void progressHover(object sender, EventArgs e) {
+            ToolTip tip = new ToolTip();
+            tip.SetToolTip(this.progress, (copyFile?"Copying":"Moving") + ": " + _filename);
+            tip.Dispose();
         }
 
         public void rename() {
@@ -42,6 +59,7 @@ namespace MediaRenamer.Common {
                     }
                 }
             }
+            this.OnRenameDone();
         }
     }
 }

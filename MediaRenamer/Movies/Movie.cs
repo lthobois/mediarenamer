@@ -175,11 +175,18 @@ namespace MediaRenamer.Movies {
                 FileInfo fi = new FileInfo(filename);
                 String modifiedFilename = targetFolder + @"\" + modifiedName();
                 if (!File.Exists(modifiedFilename)) {
-                    if (copy)
-                        fi.CopyTo(modifiedFilename);
-                    else
-                        fi.MoveTo(modifiedFilename);
-                    _filename = modifiedFilename;
+                    try {
+                        if (copy)
+                            fi.CopyTo(modifiedFilename);
+                        else
+                            fi.MoveTo(modifiedFilename);
+                        _filename = modifiedFilename;
+                    }
+                    catch (Exception E) {
+                        #if DEBUG
+                        Log.Error("Unable to move or copy file. Do you have write access to that folder?", E);
+                        #endif
+                    }
                 }
                 else {
                     MessageBox.Show("A file with the same name already exists. \nYou cannot rename the file " + fi.Name, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -392,7 +399,7 @@ namespace MediaRenamer.Movies {
                 parser.getMovieData(ref movie);
             }
             catch (Exception E) {
-                Log.Add("ParseFile: " + E.Message);
+                Log.Error("Error Parsing file" + movie.filename, E);
             }
             return movie;
         }

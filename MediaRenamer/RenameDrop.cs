@@ -82,28 +82,59 @@ namespace MediaRenamer
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
 
             // loop through the string array, adding each filename to the ListBox
-            foreach (string file in files)
-            {
+            foreach (string file in files) {
                 renameObject tmp = new renameObject(file);
                 if ((e.KeyState & 8) == 8) {
                     tmp.copyFile = true;
                 }
+                tmp.progress = attachProgressBar();
+                tmp.progress.MouseHover += new EventHandler(tmp.progressHover);
+                tmp.RenameDone += new RenameDone(onRenameDone);
+
                 Thread renameThread = new Thread(new ThreadStart(tmp.rename));
                 renameThread.Start();
             }
         }
 
+        private ProgressBar attachProgressBar() {
+            ProgressBar progress = new ProgressBar();
+            progress.Size = new Size(this.ClientRectangle.Width, 10);
+            progress.Location = new Point(0, this.ClientRectangle.Height + 3);
+            this.setSize(this.Height + progress.Height);
+            progress.Maximum = 1000;
+            progress.Value = 5;
+            progress.Style = ProgressBarStyle.Marquee;
+            progressLayout.Controls.Add(progress);
+            return progress;
+        }
+
+        void onRenameDone(renameObject ren) {
+            if (this.InvokeRequired) {
+                this.Invoke(new RenameDone(onRenameDone), ren);
+                return;
+            }
+            progressLayout.Controls.Remove(ren.progress);
+            this.setSize(this.Height - ren.progress.Height);
+            ren.progress.Dispose();
+            ren.progress = null;
+        }
+
         private void RenameDrop_Paint(object sender, PaintEventArgs e)
         {
             Image img = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("MediaRenamer.Resources.dropTarget.png"));
-            RectangleF pos = new RectangleF(0, 0, this.ClientRectangle.Width, this.ClientRectangle.Height);
+            RectangleF pos = new RectangleF(0, 0, this.ClientRectangle.Width, this.ClientRectangle.Width);
             e.Graphics.DrawImage(img, pos);
         }
 
         private void RenameDrop_Resize(object sender, EventArgs e)
         {
-            this.Width = 64;
-            this.Height = 64;
+        }
+
+        private void setSize(int _h) {
+            this.Location = new Point(this.Location.X, this.Location.Y - (_h - this.Size.Height));
+            this.Size = new Size(64, _h);
+            progressLayout.Height = this.Size.Height - 64;
+            progressLayout.Location = new Point(0, this.ClientRectangle.Width);
         }
     }
 }

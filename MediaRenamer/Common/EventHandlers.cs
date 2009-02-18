@@ -19,6 +19,9 @@ using MediaRenamer.Series;
 namespace MediaRenamer.Common {
     public delegate void ScanDone();
     public delegate void ScanProgressHandler(int pos, int max);
+
     public delegate void ListMovieHandler(Movie m);
     public delegate void ListEpisodeHandler(Episode ep);
+
+    public delegate void RenameDone(renameObject ren);
 }

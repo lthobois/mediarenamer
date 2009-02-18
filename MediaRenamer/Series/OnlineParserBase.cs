@@ -126,7 +126,12 @@ namespace MediaRenamer.Series {
                 }
             }
             catch (Exception E) {
-                Log.Add("getEpisodeData(): " + ep.series + "\n" + ep.season + "x" + ep.episode + "\n" + ep.title + "\n\n" + E.Message + "\n" + E.StackTrace + "\n" + E.Source);
+                #if DEBUG
+                Log.Error("Error fetching online data for:\n" + 
+                    ep.filename + "\n" + 
+                    ep.series + " " + ep.season + "x" + ep.episode + " " + ep.title,
+                    E);
+                #endif
             }
         }
 

@@ -1,5 +1,5 @@
 #define AppName "Media Renamer"
-#define AppVer "2.0b4"
+#define AppVer "2.0b5"
 #define AppVerLong GetFileVersion("MediaRenamer\bin\Release\MediaRenamer.exe")
 #define AppPublisher "Benjamin Schirmer"
 #define AppURL "http://code.google.com/p/mediarenamer/"
