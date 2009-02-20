@@ -32,6 +32,11 @@ namespace MediaRenamer.Common {
         }
 
         public void rename() {
+            Random rand = new Random();
+            Thread.Sleep(rand.Next(100, 3000));
+            this.OnRenameDone();
+            return;
+
             FileInfo fi = new FileInfo(_filename.Trim());
             if (Episode.validEpisodeFile(fi.Name)) {
                 Episode ep = Episode.parseFile(fi.FullName);
