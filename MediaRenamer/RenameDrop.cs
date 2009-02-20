@@ -34,7 +34,7 @@ namespace MediaRenamer
             InitializeComponent();
 
             this.ControlBox = false;
-            this.Text = string.Empty;
+            //this.Text = string.Empty;
 
             if (VistaGlass.IsGlassSupported())
             {
@@ -42,6 +42,8 @@ namespace MediaRenamer
                 marg.Top = -1;
                 VistaGlass.ExtendGlassFrame(this.Handle, ref marg);
             }
+
+            this.resizeAndMove();
         }
 
         // make windows do the work for us by lieing to it about where the user clicked
@@ -90,6 +92,7 @@ namespace MediaRenamer
                 tmp.progress = attachProgressBar();
                 tmp.progress.MouseHover += new EventHandler(tmp.progressHover);
                 tmp.RenameDone += new RenameDone(onRenameDone);
+                this.resizeAndMove();
 
                 Thread renameThread = new Thread(new ThreadStart(tmp.rename));
                 renameThread.Start();
@@ -99,10 +102,10 @@ namespace MediaRenamer
         private ProgressBar attachProgressBar() {
             ProgressBar progress = new ProgressBar();
             progress.Size = new Size(this.ClientRectangle.Width, 10);
-            progress.Location = new Point(0, this.ClientRectangle.Height + 3);
-            this.setSize(this.Height + progress.Height);
+            progress.Location = new Point(0, this.ClientRectangle.Height);
             progress.Maximum = 1000;
             progress.Value = 5;
+            progress.Margin = new Padding(0, 0, 0, 3);
             progress.Style = ProgressBarStyle.Marquee;
             progressLayout.Controls.Add(progress);
             return progress;
@@ -114,27 +117,26 @@ namespace MediaRenamer
                 return;
             }
             progressLayout.Controls.Remove(ren.progress);
-            this.setSize(this.Height - ren.progress.Height);
+            this.resizeAndMove();
             ren.progress.Dispose();
             ren.progress = null;
         }
 
         private void RenameDrop_Paint(object sender, PaintEventArgs e)
         {
-            Image img = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("MediaRenamer.Resources.dropTarget.png"));
-            RectangleF pos = new RectangleF(0, 0, this.ClientRectangle.Width, this.ClientRectangle.Width);
-            e.Graphics.DrawImage(img, pos);
+            /*Image img = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("MediaRenamer.Resources.dropTarget.png"));
+            Double ratio = img.PhysicalDimension.Height / img.PhysicalDimension.Width;
+            Rectangle pos = new Rectangle(0, 0, this.ClientRectangle.Width, (int)(this.ClientRectangle.Width * ratio));
+            e.Graphics.DrawImage(img, pos);*/
         }
 
-        private void RenameDrop_Resize(object sender, EventArgs e)
-        {
-        }
+        private void resizeAndMove() {
+            int basicWidth = 64;
+            this.ClientSize = new Size(basicWidth, progressLayout.Location.Y + progressLayout.Height);
 
-        private void setSize(int _h) {
-            this.Location = new Point(this.Location.X, this.Location.Y - (_h - this.Size.Height));
-            this.Size = new Size(64, _h);
-            progressLayout.Height = this.Size.Height - 64;
-            progressLayout.Location = new Point(0, this.ClientRectangle.Width);
+            Int32 dropPadding = 20;
+            this.Left = Screen.PrimaryScreen.WorkingArea.Width - this.Width - dropPadding;
+            this.Top = Screen.PrimaryScreen.WorkingArea.Height - this.Height - dropPadding;
         }
     }
 }

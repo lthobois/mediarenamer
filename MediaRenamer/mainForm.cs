@@ -492,15 +492,15 @@ namespace MediaRenamer {
         }
 
         private void displayDropTarget(bool visible) {
-            Int32 dropPadding = 20;
             if (visible) {
+                if (dropform.IsDisposed) {
+                    dropform = new RenameDrop();
+                }
                 dropform.Show();
             }
             else {
                 dropform.Hide();
             }
-            dropform.Left = Screen.PrimaryScreen.WorkingArea.Width - dropform.Width - dropPadding;
-            dropform.Top = Screen.PrimaryScreen.WorkingArea.Height - dropform.Height - dropPadding;
         }
 
         private void mainForm_SizeChanged(object sender, EventArgs e) {
