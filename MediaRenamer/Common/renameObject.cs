@@ -11,10 +11,21 @@ namespace MediaRenamer.Common {
     public class renameObject {
         private String _filename;
         public Boolean copyFile = false;
-        public ProgressBar progress = null;
+
+        private ProgressBar _progress = null;
+        private ToolTip _tip = null;
 
         public renameObject(String file) {
             _filename = file;
+        }
+
+        public ProgressBar progress {
+            get {
+                return _progress;
+            }
+            set {
+                _progress = value;
+            }
         }
 
         public event RenameDone RenameDone;
@@ -26,16 +37,17 @@ namespace MediaRenamer.Common {
         }
 
         public void progressHover(object sender, EventArgs e) {
-            ToolTip tip = new ToolTip();
-            tip.SetToolTip(this.progress, (copyFile?"Copying":"Moving") + ": " + _filename);
-            tip.Dispose();
+            if (_tip == null) {
+                _tip = new ToolTip();
+                _tip.SetToolTip(this.progress, (copyFile ? "Copying" : "Moving") + ": " + _filename);
+            }
         }
 
         public void rename() {
-            Random rand = new Random();
+            /*Random rand = new Random();
             Thread.Sleep(rand.Next(100, 3000));
             this.OnRenameDone();
-            return;
+            return;*/
 
             FileInfo fi = new FileInfo(_filename.Trim());
             if (Episode.validEpisodeFile(fi.Name)) {
@@ -64,6 +76,11 @@ namespace MediaRenamer.Common {
                     }
                 }
             }
+
+            if (_tip != null) {
+                _tip.Dispose();
+            }
+
             this.OnRenameDone();
         }
     }

@@ -25,6 +25,7 @@ namespace MediaRenamer {
             str += "* EpisodeWorld.com" + nl;
             str += "* TheTVDB.com" + nl;
             str += "* IMDB.com" + nl;
+            str += "* TheMovieDB.org" + nl;
             str += nl;
             str += "Third party components:" + nl;
             str += "* JsonExSerializer for C# (http://code.google.com/p/jsonexserializer/)" + nl;
