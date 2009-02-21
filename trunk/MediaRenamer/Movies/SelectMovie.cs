@@ -117,6 +117,7 @@ namespace MediaRenamer.Movies {
             this.Controls.Add(this.btnOk);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "SelectMovie";
+            this.TopMost = true;
             this.Load += new System.EventHandler(this.SelectMovie_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

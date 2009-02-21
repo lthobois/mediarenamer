@@ -142,6 +142,7 @@ namespace MediaRenamer.Series {
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Icon = null;
             this.Name = "SelectShow";
+            this.TopMost = true;
             this.Load += new System.EventHandler(this.SelectShow_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -56,6 +56,7 @@
             this.btnOk.Font = null;
             this.btnOk.Name = "btnOk";
             this.btnOk.UseVisualStyleBackColor = true;
+            this.btnOk.UseWaitCursor = true;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
             // answerBox
@@ -66,6 +67,7 @@
             this.answerBox.BackgroundImage = null;
             this.answerBox.Font = null;
             this.answerBox.Name = "answerBox";
+            this.answerBox.UseWaitCursor = true;
             // 
             // question
             // 
@@ -74,6 +76,7 @@
             resources.ApplyResources(this.question, "question");
             this.question.Font = null;
             this.question.Name = "question";
+            this.question.UseWaitCursor = true;
             // 
             // InputDialog
             // 
@@ -89,6 +92,7 @@
             this.Font = null;
             this.Icon = null;
             this.Name = "InputDialog";
+            this.TopMost = true;
             this.ResumeLayout(false);
             this.PerformLayout();
 
