@@ -266,6 +266,9 @@ namespace MediaRenamer.Movies {
 
             try {
                 String name = file;
+                if (name.Contains("Heavy")) {
+                    name = fi.FullName;
+                }
                 name = name.Remove(0, movie.baseDir.Length);
                 if (name.IndexOf(@"\") > 0) {
                     name = name.Substring(0, name.IndexOf(@"\"));
@@ -300,6 +303,9 @@ namespace MediaRenamer.Movies {
                 if (mcol.Count > 0) {
                     m = mcol[mcol.Count - 1];
                     movie.year = Int32.Parse(m.Groups[1].Captures[0].Value);
+
+                    int pos = name.LastIndexOf(movie.year.ToString());
+                    name = name.Remove(pos, 4);
                 }
 
                 if (name.IndexOf("[") > 0) name = name.Substring(0, name.IndexOf("["));
@@ -321,8 +327,8 @@ namespace MediaRenamer.Movies {
                 }
 
                 //name = name.Replace(".", " ");
-                name = eregi_replace("([^.]{1})([.]{1})([^.]{2})", "\\1 \\3", name);
-                name = eregi_replace("([^.]{2})([.]{1})([^.]{1})", "\\1 \\3", name);
+                name = eregi_replace("([a-zA-Z0-9]{1})([.]{1})([a-zA-Z0-9]{2})", "\\1 \\3", name);
+                name = eregi_replace("([a-zA-Z0-9]{2})([.]{1})([a-zA-Z0-9]{1})", "\\1 \\3", name);
                 name = name.Replace("|", ".");
                 //name = name.Replace(",", " ");
                 name = name.Replace("_", " ");
@@ -371,12 +377,6 @@ namespace MediaRenamer.Movies {
                     }
                 }
                 */
-
-                if (movie.year > 0) {
-                    if (name.LastIndexOf(movie.year.ToString()) > 0) {
-                        name = name.Substring(0, name.LastIndexOf(movie.year.ToString()) - 1);
-                    }
-                }
 
                 while (name.IndexOf("  ") > 0) {
                     name = name.Replace("  ", " ");
