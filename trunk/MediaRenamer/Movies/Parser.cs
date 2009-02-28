@@ -19,6 +19,7 @@ using System.Windows.Forms;
 using System.Text.RegularExpressions;
 using MediaRenamer;
 using MediaRenamer.Common;
+using System.Threading;
 
 namespace MediaRenamer.Movies {
     /// <summary>
@@ -42,8 +43,7 @@ namespace MediaRenamer.Movies {
             String[] elements;
             elements = Directory.GetFileSystemEntries(folder);
             for (int i = 0; i < elements.Length; i++) {
-                if (isValidExt(elements[i]))
-                {
+                if (isValidExt(elements[i])) {
                     FileAttributes fAttr = File.GetAttributes(elements[i]);
                     if ((fAttr | FileAttributes.ReadOnly)
                         == fAttr) {
@@ -56,8 +56,10 @@ namespace MediaRenamer.Movies {
                         }
                     }
                 }
+
                 OnScanProgress(i, elements.Length - 1);
             }
+
             OnScanDone();
         }
     }
