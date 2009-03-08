@@ -36,15 +36,15 @@ namespace MediaRenamer.Series {
 
         // This are the regular Expressions to find season and episode number
         public static String[] regEx = {	
-									@"(?<season>[0-9]+)x(?<episode>[0-9]+)-(?<episode2>[0-9]+)",
-                                    @"s(?<season>[0-9]+)e(?<episode>[0-9]+)-e(?<episode2>[0-9]+)",
+									@"(?<season>[0-9]+)x(?<episode>[0-9]+)([-+]{1})(?<episode2>[0-9]+)",
+                                    @"s(?<season>[0-9]+)e(?<episode>[0-9]+)([-+]{1})e(?<episode2>[0-9]+)",
 									@"s(?<season>[0-9]+)e(?<episode>[0-9]+)e(?<episode2>[0-9]+)",
 									@"s(?<season>[0-9]+)e(?<episode>[0-9]+)",
                                     @"s(?<season>[0-9]+)ep(?<episode>[0-9]+)",
 									@"s(?<season>[0-9]+) e(?<episode>[0-9]+)",
 									@"(?<season>[0-9]+)x(?<episode>[0-9]+)",
-                                    @" (?<season>[1-9]{1})(?<episode>[0-9]{2}) ",
-                                    @" (?<season>[1-9]{1})(?<episode>[0-9]{2})\+([1-9]{1})(?<episode2>[0-9]{2}) "
+                                    @"([^a-zA-Z1-9]{1})(?<season>[1-9]{1})(?<episode>[0-9]{2})([^a-zA-Z1-9]{1})",
+                                    @"([^a-zA-Z1-9]{1})(?<season>[1-9]{1})(?<episode>[0-9]{2})([-+]{1})([1-9]{1})(?<episode2>[0-9]{2})([^a-zA-Z1-9]{1})"
 								 };
         private char[] badPathChars = { '/', '\\', ':', '*', '?', '"', '<', '>', '|' };
 
