@@ -160,7 +160,6 @@ namespace MediaRenamer.Series {
         }
 
         override public bool getSeriesData(ref showClass show, ref Episode ep) {
-            WebClient cli = new WebClient();
             XmlDocument xml = new XmlDocument();
             String url = "";
 
@@ -179,14 +178,12 @@ namespace MediaRenamer.Series {
                 if (show.ID != String.Empty) {
                     //I know which series - just download it
                     url = String.Format(detailUrl, randomMirror(), show.ID, show.Lang);
-                    cli.DownloadFile(url, zipCache);
-                    extractXml(show.Lang);
+                    downloadAndExtract(url, show.Lang);
                     xml.Load(episodeCache);
                 }
                 else {
                     // Search for series
-                    cli.DownloadFile(String.Format(queryUrl, ep.series), searchCache);
-                    xml.Load(searchCache);
+                    xml.LoadXml(searchQuery(ep.series));
 
                     List<showClass> shows = new List<showClass>();
                     XmlNodeList nodes = xml.GetElementsByTagName("Series");
@@ -205,8 +202,7 @@ namespace MediaRenamer.Series {
 
                         // Check altSeries list as well
                         if (ep.series != ep.altSeries) {
-                            cli.DownloadFile(String.Format(queryUrl, ep.altSeries), searchCache);
-                            xml.Load(searchCache);
+                            xml.LoadXml(searchQuery(ep.altSeries));
 
                             nodes = xml.GetElementsByTagName("Series");
 
@@ -228,8 +224,7 @@ namespace MediaRenamer.Series {
                             InputDialog input = new InputDialog("Couldn't find the matching series - please enter a valid series name:", Application.ProductName, ep.series);
                             if (input.ShowDialog() == DialogResult.OK) {
                                 String seriesName = input.value;
-                                cli.DownloadFile(String.Format(queryUrl, seriesName), searchCache);
-                                xml.Load(searchCache);
+                                xml.LoadXml(searchQuery(seriesName));
                                 nodes = xml.GetElementsByTagName("Series");
                                 if (nodes.Count > 0) {
                                     foreach (XmlNode node in nodes) {
@@ -259,7 +254,7 @@ namespace MediaRenamer.Series {
                         if (showNode != null) {
                             show.Year = Int32.Parse(showNode.InnerText.Substring(0, 4));
                         }
-                        show.Lang = xml.SelectSingleNode("language").InnerText;
+                        show.Lang = xml.SelectSingleNode("//Data/Series/language").InnerText;
                         shows.Add(show);
                     }
 
@@ -268,8 +263,7 @@ namespace MediaRenamer.Series {
                         ep.language = show.Lang;
                         ep.series = show.Name;
                         url = String.Format(detailUrl, randomMirror(), show.ID, ep.language);
-                        cli.DownloadFile(url, zipCache);
-                        extractXml(show.Lang);
+                        downloadAndExtract(url, show.Lang);
                     }
                     shows.Clear();
                 }
@@ -282,8 +276,7 @@ namespace MediaRenamer.Series {
                 if (DateTime.Now.Subtract(dt).TotalDays > 5) {
                     try {
                         url = String.Format(detailUrl, randomMirror(), show.ID, show.Lang);
-                        cli.DownloadFile(url, zipCache);
-                        extractXml(show.Lang);
+                        downloadAndExtract(url, show.Lang);
                     }
                     catch (Exception E) {
                         Thread.Sleep(1000);
@@ -297,7 +290,6 @@ namespace MediaRenamer.Series {
                 }
             }
 
-            cli.Dispose();
 
             if (ep.language == null || ep.language == "")
                 ep.language = show.Lang;
@@ -337,6 +329,26 @@ namespace MediaRenamer.Series {
 
             return false;
             // Done
+        }
+
+        private String searchQuery(string query) {
+            lock (OnlineParserTVDB.parserName) {
+                WebClient cli = new WebClient();
+                query = Uri.EscapeDataString(query);
+                String data = cli.DownloadString(String.Format(queryUrl, query));
+                cli.Dispose();
+                return data;
+            }
+        }
+
+        private void downloadAndExtract(string url, string lang) {
+            lock (OnlineParserTVDB.parserName) {
+                WebClient cli = new WebClient();
+                url = Uri.EscapeUriString(url);
+                cli.DownloadFile(url, zipCache);
+                cli.Dispose();
+                extractXml(lang);
+            }
         }
 
         private void extractXml(String lang) {

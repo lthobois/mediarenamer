@@ -116,16 +116,7 @@ namespace MediaRenamer.Series {
                 }
             }
 
-            FolderBrowserDialog browse = new FolderBrowserDialog();
-            browse.Description = "Please select folder for " + ep.series + " (Season " + ep.season + ").\n" +
-                "The episode will then be moved to that location. If you cancel this dialog the file will not be moved.";
-            if (browse.ShowDialog() == DialogResult.OK) {
-                return browse.SelectedPath;
-            }
-            else {
-                return "";
-            }
-
+            return null;
         }
     }
 }
