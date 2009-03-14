@@ -117,6 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="tabSeries.Text" xml:space="preserve">
+    <value>Serien</value>
+  </data>
+  <data name="tabMovies.Text" xml:space="preserve">
+    <value>Filme</value>
+  </data>
+  <data name="tabOptions.Text" xml:space="preserve">
+    <value>Optionen</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="tvRenameEpisodes.Location" type="System.Drawing.Point, System.Drawing">
     <value>498, 372</value>
@@ -160,6 +169,9 @@
   <data name="headNewname.Text" xml:space="preserve">
     <value>Neuer Dateiname</value>
   </data>
+  <data name="groupSeries.Text" xml:space="preserve">
+    <value>Serien Scanmodus</value>
+  </data>
   <data name="btnSeriesBrowse.Location" type="System.Drawing.Point, System.Drawing">
     <value>562, 30</value>
   </data>
@@ -189,12 +201,6 @@
   </data>
   <data name="btnSeriesScanStop.Text" xml:space="preserve">
     <value>Scan stoppen</value>
-  </data>
-  <data name="groupSeries.Text" xml:space="preserve">
-    <value>Serien Scanmodus</value>
-  </data>
-  <data name="tabSeries.Text" xml:space="preserve">
-    <value>Serien</value>
   </data>
   <data name="movieRename.Location" type="System.Drawing.Point, System.Drawing">
     <value>498, 372</value>
@@ -241,6 +247,9 @@
   <data name="scanMovieList.Size" type="System.Drawing.Size, System.Drawing">
     <value>691, 271</value>
   </data>
+  <data name="groupMovies.Text" xml:space="preserve">
+    <value>Filme Scanmodus</value>
+  </data>
   <data name="btnMoviesBrowse.Location" type="System.Drawing.Point, System.Drawing">
     <value>562, 30</value>
   </data>
@@ -275,11 +284,11 @@
   <data name="btnMovieScanStop.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="groupMovies.Text" xml:space="preserve">
-    <value>Filme Scanmodus</value>
+  <data name="optionGroupOthers.Size" type="System.Drawing.Size, System.Drawing">
+    <value>696, 101</value>
   </data>
-  <data name="tabMovies.Text" xml:space="preserve">
-    <value>Filme</value>
+  <data name="optionGroupOthers.Text" xml:space="preserve">
+    <value>Allgemeine Optionen</value>
   </data>
   <data name="optionDropTarget.Size" type="System.Drawing.Size, System.Drawing">
     <value>192, 17</value>
@@ -302,11 +311,11 @@
   <data name="optionStartMinimized.Text" xml:space="preserve">
     <value>Applikation minimiert starten</value>
   </data>
-  <data name="optionGroupOthers.Size" type="System.Drawing.Size, System.Drawing">
-    <value>696, 101</value>
+  <data name="optionGroupMovies.Text" xml:space="preserve">
+    <value>Optionen zur Filmsuche</value>
   </data>
-  <data name="optionGroupOthers.Text" xml:space="preserve">
-    <value>Allgemeine Optionen</value>
+  <data name="labelMovieSource.Text" xml:space="preserve">
+    <value>Online Datenquelle:</value>
   </data>
   <data name="option_moveMovies.Size" type="System.Drawing.Size, System.Drawing">
     <value>155, 17</value>
@@ -317,8 +326,8 @@
   <data name="labelMovieOutpu.Text" xml:space="preserve">
     <value>Ausgabeformat:</value>
   </data>
-  <data name="optionGroupMovies.Text" xml:space="preserve">
-    <value>Optionen zur Filmsuche</value>
+  <data name="optionGroupSeries.Text" xml:space="preserve">
+    <value>Optionen zur Seriensuche</value>
   </data>
   <data name="labelTVSource.Location" type="System.Drawing.Point, System.Drawing">
     <value>7, 41</value>
@@ -328,12 +337,6 @@
   </data>
   <data name="labelTVOutput.Text" xml:space="preserve">
     <value>Ausgabeformat:</value>
-  </data>
-  <data name="optionGroupSeries.Text" xml:space="preserve">
-    <value>Optionen zur Seriensuche</value>
-  </data>
-  <data name="tabOptions.Text" xml:space="preserve">
-    <value>Optionen</value>
   </data>
   <data name="btnAppAbout.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleLeft</value>

@@ -44,7 +44,8 @@ namespace MediaRenamer.Series {
 									@"s(?<season>[0-9]+) e(?<episode>[0-9]+)",
 									@"(?<season>[0-9]+)x(?<episode>[0-9]+)",
                                     @"([^a-zA-Z1-9]{1})(?<season>[1-9]{1})(?<episode>[0-9]{2})([^a-zA-Z1-9]{1})",
-                                    @"([^a-zA-Z1-9]{1})(?<season>[1-9]{1})(?<episode>[0-9]{2})([-+]{1})([1-9]{1})(?<episode2>[0-9]{2})([^a-zA-Z1-9]{1})"
+                                    @"([^a-zA-Z1-9]{1})(?<season>[1-9]{1})(?<episode>[0-9]{2})([-+]{1})([1-9]{1})(?<episode2>[0-9]{2})([^a-zA-Z1-9]{1})",
+                                    @"(?<season>[0-9]{2})-(?<episode>[0-9]{2})"
 								 };
         private char[] badPathChars = { '/', '\\', ':', '*', '?', '"', '<', '>', '|' };
 
@@ -371,7 +372,14 @@ namespace MediaRenamer.Series {
                 String modifiedFilename = fi.DirectoryName + @"\" + modifiedName();
                 if (!File.Exists(modifiedFilename) ||
                     modifiedFilename.ToLower() == filename.ToLower()) {
-                    fi.MoveTo(modifiedFilename);
+                    try {
+                        fi.MoveTo(modifiedFilename);
+                    }
+                    catch (Exception E) {
+                        #if DEBUG
+                        Log.Error("Unable to rename file. Is the file already in use?", E);
+                        #endif
+                    }
                 }
                 else {
                     MessageBox.Show("A file with the same name already exists. \nYou cannot rename the file " + fi.Name, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);

@@ -55,7 +55,7 @@ namespace MediaRenamer.Common {
                 if (ep.needRenaming()) {
                     SeriesLocations locations = new SeriesLocations();
                     String path = locations.getEpisodePath(ep);
-                    if (Directory.Exists(path)) {
+                    if (path != null && Directory.Exists(path)) {
                         ep.renameEpisodeAndMove(path, copyFile);
                         locations.addSeriesLocation(ep);
                     }
