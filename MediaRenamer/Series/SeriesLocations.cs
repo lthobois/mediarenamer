@@ -83,7 +83,13 @@ namespace MediaRenamer.Series {
             if (this.locations.ContainsKey(ep.series)) {
                 LocationData loc = (LocationData)this.locations[ep.series];
                 if (loc.locMap.ContainsKey(ep.season.ToString())) {
-                    return loc.locMap[ep.season.ToString()].ToString();
+                    String path = loc.locMap[ep.season.ToString()].ToString();
+                    if (!Directory.Exists(path)) {
+                        loc.locMap.Remove(ep.season.ToString());
+                        this.saveLocations();
+                        return null;
+                    }
+                    return path;
                 }
                 else if (loc.locMap.Count > 1) {
                     Char[] previous = null;
