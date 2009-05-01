@@ -10,6 +10,7 @@ using System.Threading;
 namespace MediaRenamer.Common {
     public class renameObject {
         private String _filename;
+        private String _targetName;
         public Boolean copyFile = false;
 
         private ProgressBar _progress = null;
@@ -39,7 +40,8 @@ namespace MediaRenamer.Common {
         public void progressHover(object sender, EventArgs e) {
             if (_tip == null) {
                 _tip = new ToolTip();
-                _tip.SetToolTip(this.progress, (copyFile ? "Copying" : "Moving") + ": " + _filename);
+                _tip.SetToolTip(this.progress, (copyFile ? "Copying file" : "Moving file") + "\n" + _filename +
+                     "\n to \n" + _targetName);
             }
         }
 
@@ -50,6 +52,7 @@ namespace MediaRenamer.Common {
                 if (ep.needRenaming()) {
                     SeriesLocations locations = new SeriesLocations();
                     String path = locations.getEpisodePath(ep);
+                    _targetName = ep.modifiedName();
                     if (path != null && Directory.Exists(path)) {
                         ep.renameEpisodeAndMove(path, copyFile);
                         locations.addSeriesLocation(ep);
@@ -62,6 +65,7 @@ namespace MediaRenamer.Common {
             else {
                 Movie movie = Movie.parseFile(fi.FullName);
                 if (movie.needRenaming()) {
+                    _targetName = movie.modifiedName();
                     if (Settings.GetValueAsBool(SettingKeys.MoveMovies)) {
                         String path = Settings.GetValueAsString(SettingKeys.MovieLocation);
                         movie.renameMovieAndMove(path, copyFile);

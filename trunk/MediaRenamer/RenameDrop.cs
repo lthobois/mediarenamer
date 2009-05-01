@@ -36,14 +36,9 @@ namespace MediaRenamer
             this.ControlBox = false;
             //this.Text = string.Empty;
 
-            if (VistaGlass.IsGlassSupported())
-            {
-                this.BackColor = Color.Black;
-                marg.Top = -1;
-                VistaGlass.ExtendGlassFrame(this.Handle, ref marg);
-            }
-
             this.resizeAndMove();
+
+            this.applyAero();
         }
 
         // make windows do the work for us by lieing to it about where the user clicked
@@ -122,21 +117,41 @@ namespace MediaRenamer
             ren.progress = null;
         }
 
-        private void RenameDrop_Paint(object sender, PaintEventArgs e)
-        {
-            /*Image img = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("MediaRenamer.Resources.dropTarget.png"));
-            Double ratio = img.PhysicalDimension.Height / img.PhysicalDimension.Width;
-            Rectangle pos = new Rectangle(0, 0, this.ClientRectangle.Width, (int)(this.ClientRectangle.Width * ratio));
-            e.Graphics.DrawImage(img, pos);*/
+        private void RenameDrop_Paint(object sender, PaintEventArgs e) {
+            this.applyAero();
+            this.resizeAndMove();
         }
 
         private void resizeAndMove() {
             int basicWidth = 64;
+            int dropPadding = 20;
             this.ClientSize = new Size(basicWidth, progressLayout.Location.Y + progressLayout.Height);
+            this.MaximumSize = new Size(basicWidth, Screen.PrimaryScreen.WorkingArea.Height - (dropPadding * 2));
 
-            Int32 dropPadding = 20;
             this.Left = Screen.PrimaryScreen.WorkingArea.Width - this.Width - dropPadding;
             this.Top = Screen.PrimaryScreen.WorkingArea.Height - this.Height - dropPadding;
+        }
+
+        private void applyAero() {
+            try {
+                if (VistaGlass.IsGlassSupported()) {
+                    this.BackColor = Color.Black;
+                    dropTargetImg.BackColor = Color.Transparent;
+                    marg.Top = -1;
+                    VistaGlass.ExtendGlassFrame(this.Handle, ref marg);
+                }
+                else {
+                    this.noAero();
+                }
+            }
+            catch {
+                this.noAero();
+            }
+        }
+
+        private void noAero() {
+            this.BackColor = SystemColors.GradientInactiveCaption;
+            dropTargetImg.BackColor = SystemColors.GradientInactiveCaption;
         }
     }
 }
