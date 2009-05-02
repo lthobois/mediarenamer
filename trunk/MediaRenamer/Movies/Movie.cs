@@ -303,9 +303,17 @@ namespace MediaRenamer.Movies {
                 if (mcol.Count > 0) {
                     m = mcol[mcol.Count - 1];
                     movie.year = Int32.Parse(m.Groups[1].Captures[0].Value);
+                    name = name.Remove(name.LastIndexOf(movie.year.ToString()));
 
-                    int pos = name.LastIndexOf(movie.year.ToString());
-                    name = name.Remove(pos, 4);
+                    // Don't use 1080 from 1080p for the year.
+                    if (movie.year == 1080) {
+                        movie.year = 0;
+                        if (mcol.Count > 1) {
+                            m = mcol[mcol.Count - 2];
+                            movie.year = Int32.Parse(m.Groups[1].Captures[0].Value);
+                            name = name.Remove(name.LastIndexOf(movie.year.ToString()));
+                        }
+                    }
                 }
 
                 if (name.IndexOf("[") > 0) name = name.Substring(0, name.IndexOf("["));
