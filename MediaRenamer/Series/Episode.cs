@@ -290,6 +290,13 @@ namespace MediaRenamer.Series {
         /// <param name="file">filename</param>
         /// <returns>true if valid, false if invalid</returns>
         public static bool validEpisodeFile(String file) {
+            // remove some strings in the filename since they might throw off
+            // the validEpisodeFile method.
+            file = file.Replace("1080p", "");
+            file = file.Replace("720p", "");
+            file = file.Replace("x264", "");
+            file = file.Replace("h.264", "");
+
             String[] regEx2 = Episode.regEx;
             FileInfo fi = new FileInfo(file);
             foreach (String pat in regEx2) {
