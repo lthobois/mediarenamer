@@ -12,6 +12,7 @@ namespace MediaRenamer.Common {
         private String _filename;
         private String _targetName;
         public Boolean copyFile = false;
+        public Boolean localRename = false;
 
         private ProgressBar _progress = null;
         private ToolTip _tip = null;
@@ -49,30 +50,26 @@ namespace MediaRenamer.Common {
             FileInfo fi = new FileInfo(_filename.Trim());
             if (Episode.validEpisodeFile(fi.Name)) {
                 Episode ep = Episode.parseFile(fi.FullName);
-                if (ep.needRenaming()) {
-                    SeriesLocations locations = new SeriesLocations();
-                    String path = locations.getEpisodePath(ep);
-                    _targetName = ep.modifiedName();
-                    if (path != null && Directory.Exists(path)) {
-                        ep.renameEpisodeAndMove(path, copyFile);
-                        locations.addSeriesLocation(ep);
-                    }
-                    else {
-                        ep.renameEpisode();
-                    }
+                SeriesLocations locations = new SeriesLocations();
+                String path = locations.getEpisodePath(ep);
+                _targetName = ep.modifiedName();
+                if (!localRename && path != null && Directory.Exists(path)) {
+                    ep.renameEpisodeAndMove(path, copyFile);
+                    locations.addSeriesLocation(ep);
+                }
+                else {
+                    ep.renameEpisode();
                 }
             }
             else {
                 Movie movie = Movie.parseFile(fi.FullName);
-                if (movie.needRenaming()) {
-                    _targetName = movie.modifiedName();
-                    if (Settings.GetValueAsBool(SettingKeys.MoveMovies)) {
-                        String path = Settings.GetValueAsString(SettingKeys.MovieLocation);
-                        movie.renameMovieAndMove(path, copyFile);
-                    }
-                    else {
-                        movie.renameMovie();
-                    }
+                _targetName = movie.modifiedName();
+                if (!localRename && Settings.GetValueAsBool(SettingKeys.MoveMovies)) {
+                    String path = Settings.GetValueAsString(SettingKeys.MovieLocation);
+                    movie.renameMovieAndMove(path, copyFile);
+                }
+                else {
+                    movie.renameMovie();
                 }
             }
 

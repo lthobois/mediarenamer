@@ -607,5 +607,26 @@ namespace MediaRenamer {
         private void optionMovieParser_SelectedIndexChanged(object sender, EventArgs e) {
             Settings.SetValue(SettingKeys.MoviesParser, optionMovieParser.SelectedItem.ToString());
         }
+
+        private void btnHelp_Click(object sender, EventArgs e) {
+            MessageBox.Show(
+                "Here are some tipps for using the application:\n\n" +
+                "The dropTarget:\n" +
+                "========================================\n" +
+                "If you press Alt, Shift or Control, the dropTarget behaves differently:\n" +
+                "Alt+Drop:\nRename the file locally. This means the file will just be renamed and not copied or movied to a new folder.\n\n" +
+                "Ctrl+Drop:\nCopy the file with the new name to the series/movies location. The old file will remain untouched.\n\n" +
+                "Shift+Drop:\nMovie the file to the series/movies location with the new name (Default).\n\n" +
+                "\n", 
+                Application.ProductName,
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
+        }
+
+        private void sysTrayMenu_MouseDoubleClick(object sender, MouseEventArgs e) {
+            sysTrayOpen_Click(sender, e);
+        }
+
+
     }
 }
