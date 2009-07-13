@@ -65,6 +65,9 @@ namespace MediaRenamer
                 else if ((e.KeyState & 4) == 4) {
                     e.Effect = DragDropEffects.Move;
                 }
+                else if ((e.KeyState & 32) == 32) {
+                    e.Effect = DragDropEffects.Link;
+                }
                 else {
                     e.Effect = DragDropEffects.Move;
                 }
@@ -78,20 +81,41 @@ namespace MediaRenamer
             // foreach loop in place of "files", but this is easier to understand.)
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
 
+            bool copy = false;
+            bool locally = false;
+            if ((e.KeyState & 8) == 8) {
+                copy = true;
+            }
+            if ((e.KeyState & 32) == 32) {
+                locally = true;
+            }
+            
             // loop through the string array, adding each filename to the ListBox
             foreach (string file in files) {
-                renameObject tmp = new renameObject(file);
-                if ((e.KeyState & 8) == 8) {
-                    tmp.copyFile = true;
+                if (Directory.Exists(file)) {
+                    String[] dirFiles = Directory.GetFiles(file);
+                    foreach (string dirFile in dirFiles) {
+                        createRenameThread(dirFile, false, true);
+                    }
                 }
-                tmp.progress = attachProgressBar();
-                tmp.progress.MouseHover += new EventHandler(tmp.progressHover);
-                tmp.RenameDone += new RenameDone(onRenameDone);
-                this.resizeAndMove();
+                else {
+                    createRenameThread(file, copy, locally);
+                }
 
-                Thread renameThread = new Thread(new ThreadStart(tmp.rename));
-                renameThread.Start();
             }
+        }
+
+        private void createRenameThread(string file, bool copy, bool locally) {
+            renameObject tmp = new renameObject(file);
+            tmp.copyFile = copy;
+            tmp.localRename = locally;
+            tmp.progress = attachProgressBar();
+            tmp.progress.MouseHover += new EventHandler(tmp.progressHover);
+            tmp.RenameDone += new RenameDone(onRenameDone);
+            this.resizeAndMove();
+
+            Thread renameThread = new Thread(new ThreadStart(tmp.rename));
+            renameThread.Start();
         }
 
         private ProgressBar attachProgressBar() {

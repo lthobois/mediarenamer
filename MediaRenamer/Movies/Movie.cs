@@ -171,26 +171,24 @@ namespace MediaRenamer.Movies {
         }
 
         public void renameMovieAndMove(String targetFolder, Boolean copy) {
-            if (needRenaming()) {
-                FileInfo fi = new FileInfo(filename);
-                String modifiedFilename = targetFolder + @"\" + modifiedName();
-                if (!File.Exists(modifiedFilename)) {
-                    try {
-                        if (copy)
-                            fi.CopyTo(modifiedFilename);
-                        else
-                            fi.MoveTo(modifiedFilename);
-                        _filename = modifiedFilename;
-                    }
-                    catch (Exception E) {
-                        #if DEBUG
+            FileInfo fi = new FileInfo(filename);
+            String modifiedFilename = targetFolder + @"\" + modifiedName();
+            if (!File.Exists(modifiedFilename)) {
+                try {
+                    if (copy)
+                        fi.CopyTo(modifiedFilename);
+                    else
+                        fi.MoveTo(modifiedFilename);
+                    _filename = modifiedFilename;
+                }
+                catch (Exception E) {
+#if DEBUG
                         Log.Error("Unable to move or copy file. Do you have write access to that folder?", E);
-                        #endif
-                    }
+#endif
                 }
-                else {
-                    MessageBox.Show("A file with the same name already exists. \nYou cannot rename the file " + fi.Name, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+            }
+            else {
+                MessageBox.Show("A file with the same name already exists. \nYou cannot rename the file " + fi.Name, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

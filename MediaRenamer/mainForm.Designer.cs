@@ -107,6 +107,7 @@
             this.btnAppAbout = new System.Windows.Forms.Button();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.btnHelp = new System.Windows.Forms.Button();
             this.tabControl.SuspendLayout();
             this.tabSeries.SuspendLayout();
             this.contextRename.SuspendLayout();
@@ -896,6 +897,8 @@
             this.sysTrayExit});
             this.sysTrayMenu.Name = "sysTrayMenu";
             this.toolTip.SetToolTip(this.sysTrayMenu, resources.GetString("sysTrayMenu.ToolTip"));
+            this.sysTrayMenu.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.sysTrayMenu_MouseDoubleClick);
+            this.sysTrayMenu.MouseClick += new System.Windows.Forms.MouseEventHandler(this.sysTrayMenu_MouseDoubleClick);
             // 
             // sysTrayOpen
             // 
@@ -956,6 +959,18 @@
             // 
             resources.ApplyResources(this.folderBrowserDialog, "folderBrowserDialog");
             // 
+            // btnHelp
+            // 
+            this.btnHelp.AccessibleDescription = null;
+            this.btnHelp.AccessibleName = null;
+            resources.ApplyResources(this.btnHelp, "btnHelp");
+            this.btnHelp.BackgroundImage = null;
+            this.btnHelp.Font = null;
+            this.btnHelp.Name = "btnHelp";
+            this.toolTip.SetToolTip(this.btnHelp, resources.GetString("btnHelp.ToolTip"));
+            this.btnHelp.UseVisualStyleBackColor = true;
+            this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
+            // 
             // mainForm
             // 
             this.AccessibleDescription = null;
@@ -964,6 +979,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = null;
             this.Controls.Add(this.btnAppAbout);
+            this.Controls.Add(this.btnHelp);
             this.Controls.Add(this.tabControl);
             this.Font = null;
             this.Name = "mainForm";
@@ -1071,6 +1087,7 @@
         private System.Windows.Forms.Button btnMovieScanStop;
         private System.Windows.Forms.Label labelMovieSource;
         private System.Windows.Forms.ComboBox optionMovieParser;
+        private System.Windows.Forms.Button btnHelp;
     }
 }
 

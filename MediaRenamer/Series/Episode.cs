@@ -38,13 +38,15 @@ namespace MediaRenamer.Series {
         public static String[] regEx = {	
 									@"(?<season>[0-9]+)x(?<episode>[0-9]+)([-+]{1})(?<episode2>[0-9]+)",
                                     @"s(?<season>[0-9]+)e(?<episode>[0-9]+)([-+]{1})e(?<episode2>[0-9]+)",
+                                    @"s(?<season>[0-9]+)e(?<episode>[0-9]+)([-+]{1})(?<episode2>[0-9]+)",
+                                    @"s(?<season>[0-9]+)e(?<episode>[0-9]+)([-+.]{1})s([0-9]+)e(?<episode2>[0-9]+)",
 									@"s(?<season>[0-9]+)e(?<episode>[0-9]+)e(?<episode2>[0-9]+)",
 									@"s(?<season>[0-9]+)e(?<episode>[0-9]+)",
                                     @"s(?<season>[0-9]+)ep(?<episode>[0-9]+)",
 									@"s(?<season>[0-9]+) e(?<episode>[0-9]+)",
 									@"(?<season>[0-9]+)x(?<episode>[0-9]+)",
-                                    @"([^a-zA-Z1-9]{1})(?<season>[1-9]{1})(?<episode>[0-9]{2})([^a-zA-Z1-9]{1})",
-                                    @"([^a-zA-Z1-9]{1})(?<season>[1-9]{1})(?<episode>[0-9]{2})([-+]{1})([1-9]{1})(?<episode2>[0-9]{2})([^a-zA-Z1-9]{1})",
+                                    @"([^a-zA-Z0-9]+)(?<season>[1-9]{1})(?<episode>[0-9]{2})([^a-zA-Z0-9]+)",
+                                    @"([^a-zA-Z0-9]+)(?<season>[1-9]{1})(?<episode>[0-9]{2})([-+]{1})([1-9]{1})(?<episode2>[0-9]{2})([^a-zA-Z0-9]{1})",
                                     @"(?<season>[0-9]{2})-(?<episode>[0-9]{2})"
 								 };
         private char[] badPathChars = { '/', '\\', ':', '*', '?', '"', '<', '>', '|' };
@@ -399,27 +401,25 @@ namespace MediaRenamer.Series {
         }
 
         public void renameEpisodeAndMove(String targetFolder, Boolean copy) {
-            if (needRenaming()) {
-                FileInfo fi = new FileInfo(filename);
-                String modifiedFilename = targetFolder + @"\" + modifiedName();
-                if (!File.Exists(modifiedFilename) ||
-                    modifiedFilename.ToLower() == filename.ToLower()) {
-                    try {
-                        if (copy)
-                            fi.CopyTo(modifiedFilename);
-                        else
-                            fi.MoveTo(modifiedFilename);
-                        _filename = modifiedFilename;
-                    }
-                    catch (Exception E) {
-                        #if DEBUG
+            FileInfo fi = new FileInfo(filename);
+            String modifiedFilename = targetFolder + @"\" + modifiedName();
+            if (!File.Exists(modifiedFilename) ||
+                modifiedFilename.ToLower() == filename.ToLower()) {
+                try {
+                    if (copy)
+                        fi.CopyTo(modifiedFilename);
+                    else
+                        fi.MoveTo(modifiedFilename);
+                    _filename = modifiedFilename;
+                }
+                catch (Exception E) {
+#if DEBUG
                         Log.Error("Unable to move or copy file. Do you have write access to that folder?", E);
-                        #endif
-                    }
+#endif
                 }
-                else {
-                    MessageBox.Show("A file with the same name already exists. \nYou cannot rename the file " + fi.Name, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+            }
+            else {
+                MessageBox.Show("A file with the same name already exists. \nYou cannot rename the file " + fi.Name, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
