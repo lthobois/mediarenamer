@@ -175,6 +175,10 @@ namespace MediaRenamer.Movies {
             String modifiedFilename = targetFolder + @"\" + modifiedName();
             if (!File.Exists(modifiedFilename)) {
                 try {
+                    FileInfo newFile = new FileInfo(modifiedFilename);
+                    if (!Directory.Exists(newFile.DirectoryName)) {
+                        Directory.CreateDirectory(newFile.DirectoryName);
+                    }
                     if (copy)
                         fi.CopyTo(modifiedFilename);
                     else

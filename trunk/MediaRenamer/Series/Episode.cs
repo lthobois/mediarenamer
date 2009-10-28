@@ -405,6 +405,9 @@ namespace MediaRenamer.Series {
             String modifiedFilename = targetFolder + @"\" + modifiedName();
             if (!File.Exists(modifiedFilename) ||
                 modifiedFilename.ToLower() == filename.ToLower()) {
+                if (!Directory.Exists(targetFolder)) {
+                    Directory.CreateDirectory(targetFolder);
+                }
                 try {
                     if (copy)
                         fi.CopyTo(modifiedFilename);
