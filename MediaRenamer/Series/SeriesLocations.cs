@@ -123,12 +123,18 @@ namespace MediaRenamer.Series {
                 else if (loc.locMap.Count == 1) {
                     foreach (String path in loc.locMap.Values) {
                         String seasonPath = path;
-                        String previousSeason = (ep.season - 1).ToString();
-                        int pos = path.LastIndexOf(previousSeason);
-                        seasonPath = seasonPath.Remove(pos, previousSeason.Length);
-                        seasonPath = seasonPath.Insert(pos, ep.season.ToString());
-                        if (!Directory.Exists(seasonPath)) {
-                            Directory.CreateDirectory(seasonPath);
+                        if (ep.season > 1) {
+                            String previousSeason = (ep.season - 1).ToString();
+                            int pos = path.LastIndexOf(previousSeason);
+                            if (pos > 0) {
+                                seasonPath = seasonPath.Remove(pos, previousSeason.Length);
+                                seasonPath = seasonPath.Insert(pos, ep.season.ToString());
+                            }
+                            if (!Directory.Exists(seasonPath)) {
+                                Directory.CreateDirectory(seasonPath);
+                                loc.locMap[ep.season.ToString()] = seasonPath;
+                                this.saveLocations();
+                            }
                         }
                         return seasonPath;
                     }
