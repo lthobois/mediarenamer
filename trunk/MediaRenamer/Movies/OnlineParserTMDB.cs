@@ -35,8 +35,9 @@ namespace MediaRenamer.Movies {
                 XmlNodeList nodes = xml.GetElementsByTagName("movie");
                 foreach (XmlNode node in nodes) {
                     Int32 year = 0;
-                    if (node.SelectSingleNode("release") != null) {
-                        year = Int32.Parse(node.SelectSingleNode("release").InnerText.Substring(0, 4));
+                    XmlNode release = node.SelectSingleNode("release");
+                    if (release != null && release.InnerText.Length > 0) {
+                        year = Int32.Parse(release.InnerText.Substring(0, 4));
                     }
                     else {
                         year = movie.year;
