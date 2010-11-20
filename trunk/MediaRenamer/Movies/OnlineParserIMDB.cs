@@ -63,11 +63,12 @@ namespace MediaRenamer.Movies {
                 movieEnc = movieEnc.Replace(" ", "+");
                 movieEnc = movieEnc.Replace(movie.year.ToString(), "");
 
-                String url = "http://us.imdb.com/search/title?";
+                String url = "http://akas.imdb.com/search/title?";
                 url += String.Format("release_date={0},", movie.year.ToString());
                 url += String.Format("&title={0}", movieEnc);
                 url += "&title_type=feature,tv_movie,tv_series,mini_series";
                 WebClient cli = new WebClient();
+                cli.Headers.Add(HttpRequestHeader.AcceptLanguage, "en-US");
                 data = cli.DownloadString(url);
                 StreamWriter swr = new StreamWriter(movieCache, false);
                 swr.Write(data);
