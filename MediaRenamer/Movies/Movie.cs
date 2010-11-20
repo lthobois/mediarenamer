@@ -63,21 +63,8 @@ namespace MediaRenamer.Movies {
             set {
                 String val = value;
                 val = val.Trim();
-                Regex reg = new Regex("&#([0-9]+);");
-                MatchCollection mcol = null;
-                mcol = reg.Matches(val);
-                if (mcol.Count > 0) {
-                    foreach (Match m in mcol) {
-                        Char c = (Char)Int32.Parse(m.Groups[1].Captures[0].Value);
-                        val = val.Replace(
-                            m.Groups[0].Captures[0].Value,
-                            c.ToString()
-                            );
-                    }
-                }
+                val = System.Web.HttpUtility.HtmlDecode(val);
                 val = val.Replace("\"", "");
-                val = val.Replace("&quot;", "");
-                val = val.Replace("&amp;", "&");
                 val = val.Replace("(V)", "");
                 val = val.Replace("  ", " ");
                 _title = val;

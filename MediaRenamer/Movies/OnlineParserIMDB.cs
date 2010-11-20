@@ -63,7 +63,7 @@ namespace MediaRenamer.Movies {
                 movieEnc = movieEnc.Replace(" ", "+");
                 movieEnc = movieEnc.Replace(movie.year.ToString(), "");
 
-                String url = "http://www.imdb.com/search/title?";
+                String url = "http://us.imdb.com/search/title?";
                 url += String.Format("release_date={0},", movie.year.ToString());
                 url += String.Format("&title={0}", movieEnc);
                 url += "&title_type=feature,tv_movie,tv_series,mini_series";
