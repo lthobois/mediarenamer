@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Text;
 
@@ -8,7 +9,7 @@ namespace MediaRenamer.Common {
         internal String[] extension = {
             ".avi", ".mkv", ".mpg", ".mpeg", ".mov", ".wmv",
 			".rpm", ".ogm", ".srt", ".sub", ".mp4", ".divx",
-            ".idx", ".rar"};
+            ".idx", ".rar", ".ts", ".m2ts",".iso", ".smi"};
 
         internal String scanPath = "";
 
@@ -53,6 +54,21 @@ namespace MediaRenamer.Common {
             }
             return false;
         }
-        
+
+        protected bool isDVD(string filePath) {
+            if (File.GetAttributes(filePath).HasFlag(FileAttributes.Directory)) {
+                foreach (String subFilePath in Directory.GetFileSystemEntries(filePath)) {
+                    if (subFilePath.ToUpper().EndsWith("VIDEO_TS")) {
+                        if (File.GetAttributes(subFilePath).HasFlag(FileAttributes.Directory)) {
+                            foreach (String childVIDEO_TS in Directory.GetFileSystemEntries(subFilePath)) {
+                                if (childVIDEO_TS.ToUpper().EndsWith(".VOB"))
+                                    return true;
+                            }
+                        }
+                    }
+                }
+            }
+            return false;
+        }
     }
 }
