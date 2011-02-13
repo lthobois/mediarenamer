@@ -57,6 +57,15 @@ namespace MediaRenamer.Movies {
                     }
                 }
 
+                if (isDVD(elements[i]))
+                {
+                    Movie movie = Movie.parseFile(elements[i]);
+                    if (movie.needRenaming())
+                    {
+                        OnListMovie(movie);
+                    }
+                }
+
                 OnScanProgress(i, elements.Length - 1);
             }
 
