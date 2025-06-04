@@ -184,7 +184,11 @@ namespace MediaRenamer.Series {
                         break;
                     }
                     else {
-                        dir = di.Parent.FullName;
+                        if (di.Parent != null) {
+                            dir = di.Parent.FullName;
+                        } else {
+                            dir = null;
+                        }
                     }
                 }
 
